@@ -2,26 +2,25 @@ import SectionTitle from './SectionTitle';
 import perfilImg from '../assets/perfil.png'; 
 
 function About() {
-  const features = [
+  const education = [
     {
-      icon: "💡",
-      title: "Pensamiento Creativo",
-      description: "Soluciones innovadoras para problemas complejos"
+      icon: "🎓",
+      title: "Bachiller científico",
+      center: "Instituto Santa Bárbara (Langreo)",
+      years: "2019 - 2021"
     },
     {
-      icon: "🚀",
-      title: "Desarrollo Ágil",
-      description: "Metodologías modernas para entregas rápidas"
+      icon: "💻",
+      title: "Ingeniería Informática en Tecnologías de la Información",
+      center: "EPI Gijón",
+      years: "2021 - 2025"
     },
     {
-      icon: "🎯",
-      title: "Orientado a Resultados",
-      description: "Enfocado en objetivos medibles y KPIs"
-    },
-    {
-      icon: "🤝",
-      title: "Trabajo en Equipo",
-      description: "Colaboración efectiva y comunicación clara"
+      icon: "🌍",
+      title: "Ingegneria Informatica ",
+      center: "Università degli Studi di Salerno",
+      years: "2024 - 2025",
+      note: "Año Erasmus"
     }
   ];
 
@@ -70,25 +69,33 @@ function About() {
         <div className="space-y-6">
           <div className="space-y-4">
             <p className="text-gray-300 text-lg leading-relaxed">
-              Soy un <span className="text-purple-400 font-semibold">estudiante de Ingeniería en Informática</span> en Tecnologías de la Información, 
-              apasionado por crear aplicaciones web modernas y funcionales.
+              Soy un <span className="text-purple-400 font-semibold">Estudiante de Ingeniería en Informática</span> en Tecnologías de la Información, 
+              me gustaría especializarme en ciberseguridad y ciberinteligencia.
             </p>
             <p className="text-gray-400 leading-relaxed">
-              A lo largo de mi formación he desarrollado proyectos en diversos lenguajes de programación, así como diseño web. 
-              Soy una persona curiosa, con ganas de aprender y aportar en entornos grupales.
+              Durante mi formación he trabajado con diversos lenguajes de programación y tecnologías web, 
+              siempre buscando aprender nuevas herramientas y metodologías para crear soluciones eficientes.
             </p>
           </div>
 
-          {/* Features Grid */}
-          <div className="grid grid-cols-2 gap-4 pt-4">
-            {features.map((feature, index) => (
-              <div 
+          {/* Lista de centros de estudio */}
+          <div className="relative flex flex-col items-start pt-4 pl-8">
+            {/* Línea vertical a la izquierda */}
+            <div className="absolute left-0 top-8 bottom-8 w-1 bg-gradient-to-b from-purple-500 via-pink-500 to-blue-400 opacity-40 z-0"></div>
+            {education.map((edu, index) => (
+              <div
                 key={index}
-                className="bg-white/5 border border-white/10 rounded-xl p-4 hover:bg-purple-500/10 hover:border-purple-500/30 transition-all duration-300 group/card"
+                className="relative z-10 w-full mb-8 last:mb-0"
+                style={{ marginLeft: '0.5rem' }} // separa la tarjeta de la línea
               >
-                <div className="text-3xl mb-2 group-hover/card:scale-110 transition-transform">{feature.icon}</div>
-                <h3 className="font-semibold text-white mb-1 text-sm">{feature.title}</h3>
-                <p className="text-xs text-gray-400">{feature.description}</p>
+                <div className="bg-white/5 border border-white/10 rounded-xl p-4 flex-1 hover:bg-purple-500/10 hover:border-purple-500/30 transition-all duration-300">
+                  <h3 className="font-semibold text-white mb-1 text-base">{edu.title}</h3>
+                  <p className="text-sm text-gray-400 mb-1">{edu.center}</p>
+                  <p className="text-xs text-gray-400">{edu.years}</p>
+                  {edu.note && (
+                    <p className="text-xs text-pink-400 mt-1">{edu.note}</p>
+                  )}
+                </div>
               </div>
             ))}
           </div>
