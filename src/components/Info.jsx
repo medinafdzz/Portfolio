@@ -1,34 +1,75 @@
+import { useState, useEffect } from 'react';
 import Button from './Button';
 
 function Info() {
   const text1 = "¡Hola!";
   const text2 = "Soy Alejandro Medina";
+  const [displayedText1, setDisplayedText1] = useState("");
+  const [displayedText2, setDisplayedText2] = useState("");
+  const [showCursor1, setShowCursor1] = useState(true);
+  const [showCursor2, setShowCursor2] = useState(false);
+  
+  useEffect(() => {
+    const startAnimation = () => {
+      let index1 = 0;
+      let index2 = 0;
+      
+      // Resetear textos
+      setDisplayedText1("");
+      setDisplayedText2("");
+      setShowCursor1(true);
+      setShowCursor2(false);
+      
+      // Escribir primera línea
+      const timer1 = setInterval(() => {
+        if (index1 < text1.length) {
+          setDisplayedText1(text1.slice(0, index1 + 1));
+          index1++;
+        } else {
+          clearInterval(timer1);
+          setShowCursor1(false);
+          setShowCursor2(true);
+          
+          // Iniciar segunda línea después de un breve delay
+          setTimeout(() => {
+            const timer2 = setInterval(() => {
+              if (index2 < text2.length) {
+                setDisplayedText2(text2.slice(0, index2 + 1));
+                index2++;
+              } else {
+                clearInterval(timer2);
+                setTimeout(() => setShowCursor2(false), 500);
+              }
+            }, 80);
+          }, 300);
+        }
+      }, 100);
+    };
+    
+    // Iniciar la primera animación
+    startAnimation();
+    
+    // Repetir cada 15 segundos
+    const repeatInterval = setInterval(() => {
+      startAnimation();
+    }, 15000);
+    
+    return () => {
+      clearInterval(repeatInterval);
+    };
+  }, []);
   
   return (
     <div className="text-center space-y-8 max-w-4xl mx-auto px-4">
-      {/* Título principal con efecto hover letra por letra */}
+      {/* Título principal con efecto typewriter */}
       <h1 className="text-5xl md:text-7xl font-bold leading-tight pb-2">
-        <span className="block text-white mb-2 hover-text">
-          {text1.split('').map((char, index) => (
-            <span 
-              key={index} 
-              className="hover-letter inline-block transition-all duration-300"
-              style={{ transitionDelay: `${index * 20}ms` }}
-            >
-              {char === ' ' ? '\u00A0' : char}
-            </span>
-          ))}
+        <span className="block text-white mb-2">
+          {displayedText1}
+          {showCursor1 && <span className="animate-pulse">|</span>}
         </span>
-        <span className="block bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 hover-text pb-2">
-          {text2.split('').map((char, index) => (
-            <span 
-              key={index} 
-              className="hover-letter inline-block transition-all duration-300"
-              style={{ transitionDelay: `${index * 20}ms` }}
-            >
-              {char === ' ' ? '\u00A0' : char}
-            </span>
-          ))}
+        <span className="block bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 animate-gradient">
+          {displayedText2}
+          {showCursor2 && <span className="text-purple-400 animate-pulse">|</span>}
         </span>
       </h1>
 

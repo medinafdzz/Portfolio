@@ -3,6 +3,7 @@ import Info from './components/Info';
 import About from './components/About';
 import Projects from './components/Projects';
 import Skills from './components/Skills';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -50,13 +51,7 @@ function App() {
         </section>
         
         {/* Footer */}
-        <footer className="bg-gray-950 py-8 snap-start">
-          <div className="container mx-auto px-4 text-center text-gray-400">
-            <p className="text-sm">
-              © {new Date().getFullYear()} Mi Portfolio. Hecho con React + Tailwind CSS
-            </p>
-          </div>
-        </footer>
+        <Footer />
       </main>
     </div>
   );
