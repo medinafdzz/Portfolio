@@ -6,50 +6,58 @@ import Skills from './components/Skills';
 
 function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100">
-      {/* Header fijo en la parte superior */}
+    <div className="h-screen overflow-y-scroll snap-y snap-mandatory scrollbar-hide bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100">
+      {/* Header fijo */}
       <Header />
       
-      {/* Contenedor principal con márgenes y espaciado */}
-      <main className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Sección de información personal - Inicio */}
-        <section id="inicio" className="py-12 md:py-20 scroll-mt-20">
-          <Info />
+      {/* Contenido principal */}
+      <main>
+        {/* Hero Section */}
+        <section id="inicio" className="h-screen flex items-center justify-center snap-start">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            <Info />
+          </div>
         </section>
         
-        {/* Separador visual sutil */}
-        <div className="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent my-8"></div>
+        {/* Separador full width */}
+        <div className="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent"></div>
         
-        {/* Sección Acerca de mí */}
-        <section id="about" className="py-12 md:py-16 scroll-mt-20">
-          <About />
+        {/* About Section */}
+        <section id="about" className="h-screen flex items-center justify-center snap-start">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-20 overflow-y-auto scrollbar-hide">
+            <About />
+          </div>
         </section>
         
-        {/* Separador visual sutil */}
-        <div className="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent my-8"></div>
+        {/* Separador full width */}
+        <div className="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent"></div>
         
-        {/* Sección de Habilidades */}
-        <section id="skills" className="py-12 md:py-16 scroll-mt-20">
-          <Skills />
+        {/* Skills Section */}
+        <section id="skills" className="h-screen flex items-center justify-center snap-start">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-20 overflow-y-auto scrollbar-hide">
+            <Skills />
+          </div>
         </section>
         
-        {/* Separador visual sutil */}
-        <div className="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent my-8"></div>
+        {/* Separador full width */}
+        <div className="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent"></div>
         
-        {/* Sección de Proyectos */}
-        <section id="projects" className="py-12 md:py-16 pb-20 scroll-mt-20">
-          <Projects />
+        {/* Projects Section */}
+        <section id="projects" className="h-screen flex items-center justify-center snap-start">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-20 overflow-y-auto scrollbar-hide">
+            <Projects />
+          </div>
         </section>
+        
+        {/* Footer */}
+        <footer className="bg-gray-950 py-8 snap-start">
+          <div className="container mx-auto px-4 text-center text-gray-400">
+            <p className="text-sm">
+              © {new Date().getFullYear()} Mi Portfolio. Hecho con React + Tailwind CSS
+            </p>
+          </div>
+        </footer>
       </main>
-      
-      {/* Footer opcional */}
-      <footer className="bg-gray-950 py-8 mt-12">
-        <div className="container mx-auto px-4 text-center text-gray-400">
-          <p className="text-sm">
-            © {new Date().getFullYear()} Mi Portfolio. Hecho con React + Tailwind CSS
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }
