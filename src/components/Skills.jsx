@@ -1,5 +1,5 @@
 function Skills() {
-    return (
+        return (
         <section>
             <h2>Habilidades</h2>
             <ul>
@@ -13,5 +13,6 @@ function Skills() {
         </section>
     );
 }
+
 
 export default Skills;
