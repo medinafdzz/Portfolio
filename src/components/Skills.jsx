@@ -58,7 +58,7 @@ function Skills() {
   };
 
   return (
-    <div>
+    <div className="pt-[clamp(5rem,6vw,6rem)]">
       <SectionTitle subtitle="Tecnologías y herramientas que domino">
         Habilidades Técnicas
       </SectionTitle>

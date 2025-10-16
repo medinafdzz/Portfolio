@@ -29,10 +29,10 @@ function Header() {
 
   return (
     <header 
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 w-full z-50 transition-all duration-300 border-b ${
         scrolled 
-          ? 'backdrop-blur-md bg-gradient-to-r from-slate-950/95 via-purple-950/95 to-slate-900/95 border-purple-500/20 shadow-lg shadow-purple-500/10' 
-          : 'bg-transparent border-white/10'
+          ? 'backdrop-blur-md bg-gradient-to-r from-slate-950/95 via-purple-950/95 to-slate-900/95 border-purple-500/30 shadow-lg shadow-purple-500/10' 
+          : 'backdrop-blur-sm bg-slate-950/50 border-white/10'
       }`}
     >
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">

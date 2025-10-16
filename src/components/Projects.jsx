@@ -43,21 +43,21 @@ function Projects() {
   ];
 
   return (
-    <div>
+    <div className="scale-[clamp(0.85,0.9vw,1)] pt-[clamp(5rem,6vw,6rem)]">
       <SectionTitle subtitle="Explora mis proyectos más recientes y destacados">
         Proyectos Destacados
       </SectionTitle>
 
       {/* Grid de proyectos */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-[clamp(0.75rem,1vw,1rem)]">
         {projects.map((project, index) => (
           <ProjectCard key={index} {...project} />
         ))}
       </div>
 
       {/* Call to action */}
-      <div className="mt-8 text-center">
-        <p className="text-gray-400 mb-4 text-sm">¿Quieres ver más proyectos?</p>
+      <div className="mt-[clamp(1.5rem,2vw,2rem)] text-center">
+        <p className="text-gray-400 mb-[clamp(0.75rem,1vw,1rem)] text-[clamp(0.75rem,1.2vw,0.875rem)]">¿Quieres ver más proyectos?</p>
         <a
           href="https://github.com/medinafdzz?tab=repositories"
           target="_blank"
