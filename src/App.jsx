@@ -1,12 +1,14 @@
+import Header from './components/Header';
+
 function App() {
-  const nombre = "Alejandro";
-  const profesion = "Ingeniero Informático en Tecnologías de la Información";
+  const nombre = "Tu Nombre";
+  const profesion = "Desarrollador Web";
   
   return (
     <div>
+      <Header />
       <h1>{nombre} - {profesion}</h1>
-      <p>Desarrollador full-stack especializado en Java y Python</p>
-      <p>"Siempre dispuesto a aprender y mejorar"</p>
+      <p>Bienvenido a mi portfolio</p>
     </div>
   );
 }
