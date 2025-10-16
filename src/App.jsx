@@ -12,8 +12,8 @@ function App() {
       
       {/* Contenedor principal con márgenes y espaciado */}
       <main className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Sección de información personal */}
-        <section className="py-12 md:py-20">
+        {/* Sección de información personal - Inicio */}
+        <section id="inicio" className="py-12 md:py-20 scroll-mt-20">
           <Info />
         </section>
         
@@ -21,7 +21,7 @@ function App() {
         <div className="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent my-8"></div>
         
         {/* Sección Acerca de mí */}
-        <section className="py-12 md:py-16">
+        <section id="about" className="py-12 md:py-16 scroll-mt-20">
           <About />
         </section>
         
@@ -29,7 +29,7 @@ function App() {
         <div className="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent my-8"></div>
         
         {/* Sección de Habilidades */}
-        <section className="py-12 md:py-16">
+        <section id="skills" className="py-12 md:py-16 scroll-mt-20">
           <Skills />
         </section>
         
@@ -37,7 +37,7 @@ function App() {
         <div className="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent my-8"></div>
         
         {/* Sección de Proyectos */}
-        <section className="py-12 md:py-16 pb-20">
+        <section id="projects" className="py-12 md:py-16 pb-20 scroll-mt-20">
           <Projects />
         </section>
       </main>

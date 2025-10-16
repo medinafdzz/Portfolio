@@ -12,25 +12,34 @@ function Header() {
   }, []);
 
   const navItems = [
-    { name: 'Inicio', href: '#' },
+    { name: 'Inicio', href: '#inicio' },      
     { name: 'Sobre mí', href: '#about' },
     { name: 'Habilidades', href: '#skills' },
     { name: 'Proyectos', href: '#projects' },
   ];
 
+  const handleContactClick = (e) => {
+    e.preventDefault();
+    const email = 'amedinaf.it@gmail.com';
+    const subject = 'Consulta';
+    const body = 'Hola, me gustaría contactar contigo...';
+    
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
   return (
     <header 
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         scrolled 
-          ? 'backdrop-blur-md bg-black/50 border-b border-white/10 shadow-lg' 
-          : 'bg-transparent'
+          ? 'backdrop-blur-md bg-gradient-to-r from-slate-950/95 via-purple-950/95 to-slate-900/95 border-purple-500/20 shadow-lg shadow-purple-500/10' 
+          : 'bg-transparent border-white/10'
       }`}
     >
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="flex justify-between items-center h-20">
-          {/* Logo */}
-          <a href="#" className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400 hover:scale-110 transition-transform">
-            {'<Portfolio />'}
+          {/* Logo con el nombre*/}
+          <a href="#inicio" className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400 hover:scale-110 transition-transform">
+            {'<Medinafdzz />'}
           </a>
 
           {/* Desktop Navigation */}
@@ -48,13 +57,13 @@ function Header() {
             ))}
           </ul>
 
-          {/* CTA Button */}
-          <a
-            href="#contact"
-            className="hidden md:block px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+          {/* Boton de contacto */}
+          <button
+            onClick={handleContactClick}
+            className="hidden md:flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
           >
-            Contactar
-          </a>
+            <span>Contactar</span>
+          </button>
 
           {/* Mobile Menu Button */}
           <button className="md:hidden text-white p-2">
