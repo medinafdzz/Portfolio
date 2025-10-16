@@ -48,6 +48,15 @@ function Skills() {
     { number: "100%", label: "Compromiso" }
   ];
 
+  const bgColors = {
+    purple: "bg-purple-500/20",
+    blue: "bg-blue-500/20",
+    green: "bg-green-500/20",
+    cyan: "bg-cyan-500/20",
+    orange: "bg-orange-500/20",
+    pink: "bg-pink-500/20"
+  };
+
   return (
     <div>
       <SectionTitle subtitle="Tecnologías y herramientas que domino">
@@ -63,7 +72,7 @@ function Skills() {
           >
             {/* Header de la categoría */}
             <div className="flex items-center gap-3 mb-4">
-              <div className={`w-10 h-10 rounded-lg bg-${category.color}-500/20 flex items-center justify-center group-hover:scale-110 transition-transform`}>
+              <div className={`w-10 h-10 rounded-lg ${bgColors[category.color]} flex items-center justify-center group-hover:scale-110 transition-transform`}>
                 <span className="text-2xl">{category.icon}</span>
               </div>
               <h3 className="text-xl font-bold text-white">{category.title}</h3>
