@@ -7,7 +7,7 @@ function Skills() {
       title: "Frontend",
       color: "purple",
       icon: "🎨",
-      skills: ["HTML5", "CSS3","JavaScript","React","Tailwind CSS"]
+      skills: ["HTML5", "CSS3", "JavaScript", "React", "Tailwind CSS"]
     },
     {
       title: "Backend",
@@ -22,10 +22,22 @@ function Skills() {
       skills: ["PostgreSQL", "MySQL", "MariaDB"]
     },
     {
-      title: "Herramientas CI/CD y Testing",
+      title: "DevOps & Cloud",
+      color: "cyan",
+      icon: "☁️",
+      skills: ["Docker", "Azure", "GitHub Actions", "CI/CD"]
+    },
+    {
+      title: "Testing & QA",
       color: "orange",
-      icon: "🛠️",
-      skills: ["Git", "Docker", "Azure", "FindSecBugs", "SonarCloud", "JaCoCo", "PiTest"]
+      icon: "🧪",
+      skills: ["FindSecBugs", "SonarCloud", "JaCoCo", "PiTest"]
+    },
+    {
+      title: "Control de Versiones",
+      color: "pink",
+      icon: "🔀",
+      skills: ["Git", "GitHub", "Bitbucket"]
     }
   ];
 
@@ -42,8 +54,8 @@ function Skills() {
         Habilidades Técnicas
       </SectionTitle>
 
-      {/* Grid de categorías de habilidades */}
-      <div className="grid md:grid-cols-2 gap-6 mb-12">
+      {/* Grid de categorías de habilidades - Ahora en 3 columnas */}
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
         {skillCategories.map((category, index) => (
           <div
             key={index}
