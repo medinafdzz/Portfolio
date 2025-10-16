@@ -62,12 +62,12 @@ function Info() {
   return (
     <div className="text-center space-y-8 max-w-4xl mx-auto px-4">
       {/* Título principal con efecto typewriter */}
-      <h1 className="text-5xl md:text-7xl font-bold leading-tight pb-2">
-        <span className="block text-white mb-2">
+      <h1 className="text-5xl md:text-7xl font-bold leading-relaxed pb-6">
+        <span className="block text-white mb-4">
           {displayedText1}
           {showCursor1 && <span className="animate-pulse">|</span>}
         </span>
-        <span className="block bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 animate-gradient">
+        <span className="block bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 animate-gradient pb-4">
           {displayedText2}
           {showCursor2 && <span className="text-purple-400 animate-pulse">|</span>}
         </span>
