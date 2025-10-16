@@ -1,69 +1,61 @@
-import Badge from './Badge';
+import Button from './Button';
 
-function ProjectCard({ title, description, image, tags, github, demo }) {
+function ProjectCard({ title, description, tags, github, demo }) {
   return (
-    <div className="group relative backdrop-blur-sm bg-white/5 rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2">
-      {/* Imagen del proyecto */}
-      <div className="relative h-48 overflow-hidden bg-gradient-to-br from-purple-900/50 to-pink-900/50">
-        {image ? (
-          <img 
-            src={image} 
-            alt={title}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-6xl">
-            💻
-          </div>
-        )}
-        {/* Overlay con botones */}
-        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
-          {github && (
-            <a
-              href={github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-lg text-white hover:bg-white/30 transition-colors"
-            >
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-              </svg>
-            </a>
-          )}
-          {demo && (
-            <a
-              href={demo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg text-white transition-colors flex items-center gap-2"
-            >
-              <span>Demo</span>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-            </a>
-          )}
-        </div>
-      </div>
-
-      {/* Contenido */}
-      <div className="p-6 space-y-4">
-        <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">
+    <div className="group backdrop-blur-sm bg-white/5 rounded-xl p-5 border border-white/10 hover:bg-white/10 hover:border-purple-500/30 transition-all duration-300 hover:scale-[1.02] flex flex-col h-full">
+      {/* Header */}
+      <div className="flex items-start justify-between mb-3">
+        <h3 className="text-lg font-bold text-white group-hover:text-purple-400 transition-colors line-clamp-1">
           {title}
         </h3>
-        <p className="text-gray-400 text-sm leading-relaxed line-clamp-3">
-          {description}
-        </p>
+        <svg className="w-5 h-5 text-gray-400 group-hover:text-purple-400 transition-colors flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      </div>
 
-        {/* Tags */}
-        {tags && tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 pt-2">
-            {tags.map((tag, index) => (
-              <Badge key={index} color="purple" size="sm">
-                {tag}
-              </Badge>
-            ))}
-          </div>
+      {/* Description */}
+      <p className="text-gray-400 text-sm mb-4 line-clamp-3 flex-grow">
+        {description}
+      </p>
+
+      {/* Tags */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        {tags.map((tag, index) => (
+          <span
+            key={index}
+            className="px-2 py-1 text-xs bg-purple-500/20 text-purple-300 rounded-md border border-purple-500/30"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      {/* Actions */}
+      <div className="flex gap-2 mt-auto">
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => window.open(github, '_blank')}
+          className="flex-1"
+        >
+          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+          </svg>
+          <span className="text-xs">Código</span>
+        </Button>
+        
+        {demo && (
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => window.open(demo, '_blank')}
+            className="flex-1"
+          >
+            <span className="text-xs">Demo</span>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </Button>
         )}
       </div>
     </div>
