@@ -9,19 +9,19 @@ function About() {
       center: "Instituto Santa Bárbara (Langreo)",
       years: "2019 - 2021"
     },
+        {
+      icon: "🌍",
+      title: "Ingegneria Informatica ",
+      center: "Università degli Studi di Salerno",
+      years: "2024 - 2025",
+      note: "Año Erasmus"
+    },
     {
       icon: "💻",
       title: "Ingeniería Informática en Tecnologías de la Información",
       center: "EPI Gijón",
       years: "2021 - 2025"
     },
-    {
-      icon: "🌍",
-      title: "Ingegneria Informatica ",
-      center: "Università degli Studi di Salerno",
-      years: "2024 - 2025",
-      note: "Año Erasmus"
-    }
   ];
 
   return (
@@ -73,8 +73,9 @@ function About() {
               me gustaría especializarme en ciberseguridad y ciberinteligencia.
             </p>
             <p className="text-gray-400 leading-relaxed">
-              Durante mi formación he trabajado con diversos lenguajes de programación y tecnologías web, 
-              siempre buscando aprender nuevas herramientas y metodologías para crear soluciones eficientes.
+              Durante mi formación he trabajado con diversos lenguajes de programación y tecnologías que me han
+              ayudado a aumentar mi Tech Stack. Además, he desarrollado habilidades en gestión de proyectos y trabajo en equipo,
+              lo que me permite adaptarme rápidamente a los diferentes entornos laborales. 
             </p>
           </div>
 
