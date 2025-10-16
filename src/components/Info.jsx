@@ -13,15 +13,15 @@ function Info() {
 
       {/* Subtítulo */}
       <p className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-        Estudiante de Ingeniería en Informática en Tecnologías de la Información
+        Ingeniero Informático en Tecnologías de la Información
       </p>
 
       {/* Descripción adicional */}
       <p className="text-gray-500 max-w-xl mx-auto">
-         A lo largo de mi formación he desarrollado proyectos
-        en diversos lenguajes de programación, así como diseño web. Soy
-        una persona curiosa, con ganas de aprender y aportar en
-        entornos grupales.
+          Me considero una persona autodidacta y curiosa, desde pequeño me han apasionado los ordenadores
+          y la tecnología, lo que me llevó a estudiar esta carrera. Disfruto aprendiendo
+          nuevas herramientas y lenguajes. Soy un fiel partidario de que la práctica lleva al conocimiento.
+
       </p>
 
       {/* Botones de acción */}
