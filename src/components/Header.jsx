@@ -29,29 +29,29 @@ function Header() {
 
   return (
     <header 
-      className={`fixed top-0 w-full z-50 transition-all duration-300 border-b ${
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         scrolled 
-          ? 'backdrop-blur-md bg-gradient-to-r from-slate-950/95 via-purple-950/95 to-slate-900/95 border-purple-500/30 shadow-lg shadow-purple-500/10' 
-          : 'backdrop-blur-sm bg-slate-950/50 border-white/10'
+          ? 'backdrop-blur-md bg-gradient-to-r from-slate-950/95 via-purple-950/95 to-slate-900/95 border-purple-500/20 shadow-lg shadow-purple-500/10' 
+          : 'bg-transparent border-white/10'
       }`}
     >
-      <nav className="container mx-auto px-[clamp(0.75rem,1.5vw,1rem)] sm:px-[clamp(1rem,1.5vw,1.5rem)] lg:px-[clamp(1.5rem,2vw,2rem)] max-w-7xl">
-        <div className="flex justify-between items-center h-[clamp(4rem,5vw,5rem)]">
+      <nav className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div className="flex justify-between items-center h-20">
           {/* Logo con el nombre*/}
-          <a href="#inicio" className="text-[clamp(1.25rem,2vw,1.5rem)] font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400 hover:scale-110 transition-transform tracking-tight">
+          <a href="#inicio" className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400 hover:scale-110 transition-transform">
             {'<Medinafdzz />'}
           </a>
 
           {/* Desktop Navigation */}
-          <ul className="hidden md:flex items-center gap-[clamp(1.5rem,2vw,2rem)]">
+          <ul className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
               <li key={item.name}>
                 <a
                   href={item.href}
-                  className="text-gray-300 hover:text-white transition-colors duration-300 relative group text-[clamp(0.875rem,1.2vw,1rem)] font-medium tracking-wide"
+                  className="text-gray-300 hover:text-white transition-colors duration-300 relative group"
                 >
                   {item.name}
-                  <span className="absolute -bottom-1 left-0 w-0 h-[clamp(0.125rem,0.15vw,0.125rem)] bg-gradient-to-r from-purple-500 to-pink-500 group-hover:w-full transition-all duration-300"></span>
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 group-hover:w-full transition-all duration-300"></span>
                 </a>
               </li>
             ))}
@@ -60,7 +60,7 @@ function Header() {
           {/* Boton de contacto */}
           <button
             onClick={handleContactClick}
-            className="hidden md:flex items-center gap-[clamp(0.375rem,0.5vw,0.5rem)] px-[clamp(1rem,1.5vw,1.5rem)] py-[clamp(0.5rem,0.625vw,0.625rem)] bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg text-[clamp(0.875rem,1.2vw,1rem)] tracking-wide"
+            className="hidden md:flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
           >
             <span>Contactar</span>
           </button>

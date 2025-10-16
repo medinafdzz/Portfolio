@@ -38,11 +38,12 @@ function Info() {
       </p>
 
       {/* Descripción adicional */}
-      <p className="text-gray-500 max-w-xl mx-auto">
+      <p className="text-gray-500 max-w-xl mx-auto text-center">
           Me considero una persona autodidacta y curiosa, desde pequeño me han apasionado los ordenadores
           y la tecnología, lo que me llevó a estudiar esta carrera. Disfruto aprendiendo
-          nuevas herramientas y lenguajes. Soy un fiel partidario de que la práctica lleva al conocimiento.
-
+          nuevas herramientas y lenguajes.
+          <br />
+          Soy un fiel partidario de que la práctica lleva al conocimiento.
       </p>
 
       {/* Botones de acción */}

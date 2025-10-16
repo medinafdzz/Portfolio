@@ -3,7 +3,6 @@ import Info from './components/Info';
 import About from './components/About';
 import Projects from './components/Projects';
 import Skills from './components/Skills';
-import Footer from './components/Footer';
 
 function App() {
   return (
@@ -44,17 +43,20 @@ function App() {
         <div className="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent"></div>
         
         {/* Projects Section */}
-        <section id="projects" className="min-h-screen flex items-center justify-center snap-start">
+        <section id="projects" className="h-screen flex items-center justify-center snap-start">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-20 overflow-y-auto scrollbar-hide">
             <Projects />
           </div>
         </section>
         
-        {/* Separador full width */}
-        <div className="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent"></div>
-        
-        {/* Footer - Componente separado */}
-        <Footer />
+        {/* Footer */}
+        <footer className="bg-gray-950 py-8 snap-start">
+          <div className="container mx-auto px-4 text-center text-gray-400">
+            <p className="text-sm">
+              © {new Date().getFullYear()} Mi Portfolio. Hecho con React + Tailwind CSS
+            </p>
+          </div>
+        </footer>
       </main>
     </div>
   );
