@@ -7,31 +7,31 @@ function Skills() {
       title: "Frontend",
       color: "purple",
       icon: "🎨",
-      skills: ["React", "JavaScript", "TypeScript", "HTML5", "CSS3", "Tailwind CSS", "Next.js", "Redux"]
+      skills: ["HTML5", "CSS3","JavaScript","React","Tailwind CSS"]
     },
     {
       title: "Backend",
       color: "blue",
       icon: "⚙️",
-      skills: ["Node.js", "Express", "Python", "Django", "REST APIs", "GraphQL"]
+      skills: ["Python", "Java", "C++", "Flask", "Node.js"]
     },
     {
       title: "Bases de Datos",
       color: "green",
       icon: "💾",
-      skills: ["MongoDB", "PostgreSQL", "MySQL", "Firebase", "Redis"]
+      skills: ["PostgreSQL", "MySQL", "MariaDB"]
     },
     {
-      title: "Herramientas",
+      title: "Herramientas CI/CD y Testing",
       color: "orange",
       icon: "🛠️",
-      skills: ["Git", "Docker", "AWS", "Figma", "Postman", "VS Code"]
+      skills: ["Git", "Docker", "Azure", "FindSecBugs", "SonarCloud", "JaCoCo", "PiTest"]
     }
   ];
 
   const stats = [
-    { number: "3+", label: "Años de experiencia" },
-    { number: "20+", label: "Proyectos completados" },
+    { number: "0+", label: "Años de experiencia" },
+    { number: "6+", label: "Proyectos completados" },
     { number: "15+", label: "Tecnologías dominadas" },
     { number: "100%", label: "Compromiso" }
   ];
