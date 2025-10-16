@@ -27,10 +27,10 @@ function About() {
   return (
     <div>
       <SectionTitle subtitle="Conoce más sobre mi trayectoria y experiencia">
-        Sobre Mí
+        Sobre mí
       </SectionTitle>
 
-      <div className="grid md:grid-cols-2 gap-12 items-center">
+      <div className="grid md:grid-cols-2 gap-10 items-center">
         {/* Imagen/Avatar */}
         <div className="relative group flex justify-center">
           {/* Glow effect de fondo */}
@@ -42,7 +42,7 @@ function About() {
             <div className="absolute -inset-2 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full opacity-75 blur-sm group-hover:opacity-100 animate-pulse"></div>
             
             {/* Círculo con imagen */}
-            <div className="relative w-56 h-56 sm:w-64 sm:h-64 rounded-full overflow-hidden border-2 border-purple-400/50 shadow-2xl shadow-purple-500/20 group-hover:scale-105 transition-all duration-500">
+            <div className="relative w-52 h-52 sm:w-60 sm:h-60 rounded-full overflow-hidden border-2 border-purple-400/50 shadow-2xl shadow-purple-500/20 group-hover:scale-105 transition-all duration-500">
               <img 
                 src={perfilImg} 
                 alt="Alejandro Medina - Foto de perfil" 
@@ -66,8 +66,8 @@ function About() {
         </div>
 
         {/* Contenido */}
-        <div className="space-y-6">
-          <div className="space-y-4">
+        <div className="space-y-5">
+          <div className="space-y-3">
             <p className="text-gray-300 text-lg leading-relaxed">
               Soy un <span className="text-purple-400 font-semibold">Estudiante de Ingeniería en Informática</span> en Tecnologías de la Información, 
               me gustaría especializarme en ciberseguridad y ciberinteligencia.
@@ -80,16 +80,16 @@ function About() {
           </div>
 
           {/* Lista de centros de estudio */}
-          <div className="relative flex flex-col items-start pt-4 pl-8">
+          <div className="relative flex flex-col items-start pt-3 pl-7">
             {/* Línea vertical a la izquierda */}
             <div className="absolute left-0 top-8 bottom-8 w-1 bg-gradient-to-b from-purple-500 via-pink-500 to-blue-400 opacity-40 z-0"></div>
             {education.map((edu, index) => (
               <div
                 key={index}
-                className="relative z-10 w-full mb-8 last:mb-0"
+                className="relative z-10 w-full mb-6 last:mb-0"
                 style={{ marginLeft: '0.5rem' }} // separa la tarjeta de la línea
               >
-                <div className="bg-white/5 border border-white/10 rounded-xl p-4 flex-1 hover:bg-purple-500/10 hover:border-purple-500/30 transition-all duration-300">
+                <div className="bg-white/5 border border-white/10 rounded-xl p-3.5 flex-1 hover:bg-purple-500/10 hover:border-purple-500/30 transition-all duration-300">
                   <h3 className="font-semibold text-white mb-1 text-base">{edu.title}</h3>
                   <p className="text-sm text-gray-400 mb-1">{edu.center}</p>
                   <p className="text-xs text-gray-400">{edu.years}</p>
