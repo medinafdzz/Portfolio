@@ -7,35 +7,47 @@ function Info() {
       <h1 className="text-5xl md:text-7xl font-bold leading-tight">
         <span className="block text-white mb-2">Hola, soy</span>
         <span className="block bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 animate-gradient">
-          Tu Nombre
+          Alejandro Medina
         </span>
       </h1>
 
       {/* Subtítulo */}
       <p className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-        Desarrollador Full Stack especializado en crear experiencias web modernas y escalables
+        Estudiante de Ingeniería en Informática en Tecnologías de la Información
       </p>
 
       {/* Descripción adicional */}
       <p className="text-gray-500 max-w-xl mx-auto">
-        Transformo ideas en productos digitales funcionales y atractivos. 
-        Apasionado por el código limpio y las mejores prácticas.
+         A lo largo de mi formación he desarrollado proyectos
+        en diversos lenguajes de programación, así como diseño web. Soy
+        una persona curiosa, con ganas de aprender y aportar en
+        entornos grupales.
       </p>
 
       {/* Botones de acción */}
       <div className="flex flex-wrap gap-4 justify-center pt-4">
-        <Button variant="primary" size="lg">
+        <Button 
+          variant="primary" 
+          size="lg"
+          onClick={() => window.open('https://github.com/medinafdzz?tab=repositories', '_blank')}
+        >
           <span>Ver Proyectos</span>
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
         </Button>
-        <Button variant="secondary" size="lg">
+        
+        {/* Enlace directo como <a> */}
+        <a 
+          href="/CV.pdf" 
+          download="CV_Alejandro_Medina.pdf"
+          className="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-sm font-semibold transition-all duration-300 rounded-lg"
+        >
           <span>Descargar CV</span>
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
-        </Button>
+        </a>
       </div>
 
       {/* Indicador de scroll */}
