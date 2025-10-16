@@ -44,13 +44,16 @@ function App() {
         <div className="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent"></div>
         
         {/* Projects Section */}
-        <section id="projects" className="h-screen flex items-center justify-center snap-start">
+        <section id="projects" className="min-h-screen flex items-center justify-center snap-start">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-20 overflow-y-auto scrollbar-hide">
             <Projects />
           </div>
         </section>
         
-        {/* Footer */}
+        {/* Separador full width */}
+        <div className="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent"></div>
+        
+        {/* Footer - Componente separado */}
         <Footer />
       </main>
     </div>
