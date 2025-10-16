@@ -2,19 +2,16 @@ import Button from './Button';
 
 function ProjectCard({ title, description, tags, github, demo }) {
   return (
-    <div className="group backdrop-blur-sm bg-white/5 rounded-xl p-5 border border-white/10 hover:bg-white/10 hover:border-purple-500/30 transition-all duration-300 hover:scale-[1.02] flex flex-col h-full">
+    <div className="backdrop-blur-sm bg-white/5 rounded-2xl p-6 flex flex-col h-full hover:bg-purple-500/10 hover:scale-[1.02] transition-all duration-300">
       {/* Header */}
-      <div className="flex items-start justify-between mb-3">
-        <h3 className="text-lg font-bold text-white group-hover:text-purple-400 transition-colors line-clamp-1">
+      <div className="mb-4">
+        <h3 className="text-xl font-bold text-white line-clamp-1">
           {title}
         </h3>
-        <svg className="w-5 h-5 text-gray-400 group-hover:text-purple-400 transition-colors flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-        </svg>
       </div>
 
       {/* Description */}
-      <p className="text-gray-400 text-sm mb-4 line-clamp-3 flex-grow">
+      <p className="text-gray-400 text-sm mb-4 line-clamp-2 flex-grow">
         {description}
       </p>
 
