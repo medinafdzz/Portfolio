@@ -1,13 +1,34 @@
 import Button from './Button';
 
 function Info() {
+  const text1 = "¡Hola!";
+  const text2 = "Soy Alejandro Medina";
+  
   return (
     <div className="text-center space-y-8 max-w-4xl mx-auto px-4">
-      {/* Título principal */}
-      <h1 className="text-5xl md:text-7xl font-bold leading-tight">
-        <span className="block text-white mb-2">Hola, soy</span>
-        <span className="block bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 animate-gradient">
-          Alejandro Medina
+      {/* Título principal con efecto hover letra por letra */}
+      <h1 className="text-5xl md:text-7xl font-bold leading-tight pb-2">
+        <span className="block text-white mb-2 hover-text">
+          {text1.split('').map((char, index) => (
+            <span 
+              key={index} 
+              className="hover-letter inline-block transition-all duration-300"
+              style={{ transitionDelay: `${index * 20}ms` }}
+            >
+              {char === ' ' ? '\u00A0' : char}
+            </span>
+          ))}
+        </span>
+        <span className="block bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 hover-text pb-2">
+          {text2.split('').map((char, index) => (
+            <span 
+              key={index} 
+              className="hover-letter inline-block transition-all duration-300"
+              style={{ transitionDelay: `${index * 20}ms` }}
+            >
+              {char === ' ' ? '\u00A0' : char}
+            </span>
+          ))}
         </span>
       </h1>
 

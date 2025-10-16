@@ -95,4 +95,19 @@
   .scrollbar-custom::-webkit-scrollbar-thumb:hover {
     background: rgba(139, 92, 246, 0.5);
   }
+
+  /* Efecto hover letra por letra */
+  .hover-text:hover .hover-letter {
+    color: #a855f7;
+    transform: translateY(-2px);
+  }
+
+  .hover-letter {
+    cursor: default;
+  }
+
+  .hover-letter:hover {
+    color: #e879f9 !important;
+    transform: translateY(-5px) scale(1.1) !important;
+  }
 }
