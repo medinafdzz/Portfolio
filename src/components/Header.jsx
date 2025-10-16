@@ -1,15 +1,7 @@
 function Header() {
   return (
-    <header>
-      <nav>
-        <h2>Mi Logo</h2>
-        <ul>
-          <li>Inicio</li>
-          <li>Sobre mí</li>
-          <li>Proyectos</li>
-          <li>Contacto</li>
-        </ul>
-      </nav>
+    <header className="bg-blue-600 p-5">
+      <h1 className="text-white text-2xl font-bold">Mi Portfolio</h1>
     </header>
   );
 }
