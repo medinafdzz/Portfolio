@@ -114,14 +114,14 @@ function Info() {
       </div>
 
       {/* Texto indicador de scroll */}
-      <div className="pt-4 md:pt-6">
-        <p className="text-xs xs:text-sm sm:text-base text-gray-500 mb-2">
+      <div className="pt-1">
+        <p className="text-xs xs:text-sm sm:text-base text-gray-500 mb-0.5">
           Continúa deslizando
         </p>
       </div>
 
       {/* Indicador de scroll */}
-      <div className="animate-bounce">
+      <div className="animate-bounce pt-0">
         <svg className="w-6 h-6 mx-auto text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>
