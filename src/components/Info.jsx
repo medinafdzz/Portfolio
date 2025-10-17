@@ -75,7 +75,7 @@ function Info() {
 
       {/* Subtítulo con mejor escalado */}
       <p className="text-base xs:text-lg sm:text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-        Ingeniero Informático en Tecnologías de la Información
+        Ingeniero Informático <br />en Tecnologías de la Información
       </p>
 
       {/* Descripción con mejor espaciado en móviles */}
@@ -114,9 +114,20 @@ function Info() {
       </div>
 
       {/* Indicador de scroll */}
-      <div className="pt-12 animate-bounce">
-        <svg className="w-6 h-6 mx-auto text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      <div className="absolute bottom-14 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-6">
+        <p className="text-xs sm:text-sm text-gray-400 animate-pulse">
+          Sigue deslizando
+        </p>
+        <svg
+          className="w-6 h-6 text-gray-400 animate-bounce"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
         </svg>
       </div>
     </div>
