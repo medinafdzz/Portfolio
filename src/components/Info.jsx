@@ -114,8 +114,8 @@ function Info() {
       </div>
 
       {/* Texto indicador de scroll */}
-      <div className="pt-8">
-        <p className="text-xs xs:text-sm sm:text-base text-gray-500 mb-4">
+      <div className="pt-4 md:pt-6">
+        <p className="text-xs xs:text-sm sm:text-base text-gray-500 mb-2">
           Continúa deslizando
         </p>
       </div>
