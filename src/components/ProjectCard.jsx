@@ -2,16 +2,16 @@ import Button from './Button';
 
 function ProjectCard({ title, description, tags, github, demo }) {
   return (
-    <div className="backdrop-blur-sm bg-white/5 rounded-2xl p-6 flex flex-col h-full hover:bg-purple-500/10 hover:scale-[1.02] transition-all duration-300">
+    <div className="backdrop-blur-sm bg-white/5 rounded-2xl p-4 xs:p-5 md:p-6 flex flex-col h-full hover:bg-purple-500/10 hover:scale-[1.02] transition-all duration-300">
       {/* Header */}
-      <div className="mb-4">
-        <h3 className="text-xl font-bold text-white line-clamp-1">
+      <div className="mb-3 md:mb-4">
+        <h3 className="text-base xs:text-lg md:text-xl font-bold text-white line-clamp-1">
           {title}
         </h3>
       </div>
 
-      {/* Description */}
-      <p className="text-gray-400 text-sm mb-4 line-clamp-2 flex-grow">
+      {/* Description - aumentar líneas visibles en móvil */}
+      <p className="text-xs xs:text-sm text-gray-400 mb-3 md:mb-4 line-clamp-3 flex-grow">
         {description}
       </p>
 

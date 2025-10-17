@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <footer className="bg-gradient-to-br from-slate-950 via-purple-950/50 to-slate-900 py-[clamp(2rem,4vw,4rem)] snap-start">
+    <footer className="bg-gradient-to-br from-slate-950 via-purple-950/50 to-slate-900 py-6 xs:py-8 md:py-[clamp(2rem,4vw,4rem)] lg:snap-start">
       <div className="container mx-auto px-4 text-center">
         <p className="text-gray-400 text-[clamp(0.75rem,1.2vw,0.875rem)] mb-[clamp(0.75rem,1vw,1rem)]">
           © {new Date().getFullYear()} Alejandro Medina - Portfolio

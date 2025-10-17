@@ -7,14 +7,14 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="h-screen overflow-y-scroll snap-y snap-mandatory scrollbar-hide bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100">
+    <div className="min-h-screen overflow-y-auto bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100 lg:snap-y lg:snap-mandatory lg:overflow-y-scroll lg:h-screen">
       {/* Header fijo */}
       <Header />
       
       {/* Contenido principal */}
       <main>
         {/* Hero Section */}
-        <section id="inicio" className="h-screen flex items-center justify-center snap-start">
+        <section id="inicio" className="min-h-screen flex items-center justify-center pt-24 pb-12 md:pt-20 md:pb-10 lg:pt-0 lg:pb-0 lg:snap-start">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <Info />
           </div>
@@ -24,8 +24,8 @@ function App() {
         <div className="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent"></div>
         
         {/* About Section */}
-        <section id="about" className="h-screen flex items-center justify-center snap-start">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-20 overflow-y-auto scrollbar-hide">
+        <section id="about" className="min-h-screen flex items-center justify-center py-20 md:py-16 lg:py-0 lg:snap-start">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl overflow-y-auto scrollbar-hide">
             <About />
           </div>
         </section>
@@ -34,8 +34,8 @@ function App() {
         <div className="h-px bg-gradient-to-r from-transparent via-gray-700 to-transparent"></div>
         
         {/* Skills Section */}
-        <section id="skills" className="h-screen flex items-center justify-center snap-start">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-20 overflow-y-auto scrollbar-hide">
+        <section id="skills" className="min-h-screen flex items-center justify-center py-20 md:py-16 lg:py-0 lg:snap-start">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl overflow-y-auto scrollbar-hide">
             <Skills />
           </div>
         </section>

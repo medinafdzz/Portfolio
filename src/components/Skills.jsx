@@ -63,12 +63,12 @@ function Skills() {
         Habilidades Técnicas
       </SectionTitle>
 
-      {/* Grid de categorías de habilidades - Ahora en 3 columnas */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+      {/* Grid de categorías de habilidades con mejor adaptación para móviles */}
+      <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-4 xs:gap-5 md:gap-6 mb-8 md:mb-12">
         {skillCategories.map((category, index) => (
           <div
             key={index}
-            className="backdrop-blur-sm bg-white/5 rounded-2xl p-6 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 group"
+            className="backdrop-blur-sm bg-white/5 rounded-2xl p-4 xs:p-5 md:p-6 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 group"
           >
             {/* Header de la categoría */}
             <div className="flex items-center gap-3 mb-4">
@@ -90,8 +90,8 @@ function Skills() {
         ))}
       </div>
 
-      {/* Estadísticas */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {/* Estadísticas con mejor adaptación para móviles */}
+      <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-3 xs:gap-4">
         {stats.map((stat, index) => (
           <div 
             key={index} 

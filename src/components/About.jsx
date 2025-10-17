@@ -30,9 +30,9 @@ function About() {
         Sobre mí
       </SectionTitle>
 
-      <div className="grid md:grid-cols-2 gap-10 items-center">
-        {/* Imagen/Avatar */}
-        <div className="relative group flex justify-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-center">
+        {/* Mejorar contenedor de la imagen para móviles */}
+        <div className="relative group flex justify-center mb-6 md:mb-0">
           {/* Glow effect de fondo */}
           <div className="absolute inset-0 bg-gradient-to-r from-purple-600/30 to-pink-600/30 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           
@@ -42,7 +42,7 @@ function About() {
             <div className="absolute -inset-2 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full opacity-75 blur-sm group-hover:opacity-100 animate-pulse"></div>
             
             {/* Círculo con imagen */}
-            <div className="relative w-52 h-52 sm:w-60 sm:h-60 rounded-full overflow-hidden border-2 border-purple-400/50 shadow-2xl shadow-purple-500/20 group-hover:scale-105 transition-all duration-500">
+            <div className="relative w-32 h-32 xs:w-40 xs:h-40 sm:w-52 sm:h-52 md:w-60 md:h-60 rounded-full overflow-hidden border-2 border-purple-400/50 shadow-2xl shadow-purple-500/20 group-hover:scale-105 transition-all duration-500">
               <img 
                 src={perfilImg} 
                 alt="Alejandro Medina - Foto de perfil" 
@@ -64,9 +64,9 @@ function About() {
             <div className="absolute bottom-20 -right-7 w-2 h-2 bg-blue-400 rounded-full animate-ping"></div>
           </div>
         </div>
-
-        {/* Contenido */}
-        <div className="space-y-5">
+        
+        {/* Contenido con mejor espaciado */}
+        <div className="space-y-3 md:space-y-5 px-1 xs:px-4">
           <div className="space-y-3">
             <p className="text-gray-300 text-lg leading-relaxed">
               Soy un <span className="text-purple-400 font-semibold">Estudiante de Ingeniería en Informática</span> en Tecnologías de la Información, 

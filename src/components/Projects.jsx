@@ -48,8 +48,8 @@ function Projects() {
         Proyectos Destacados
       </SectionTitle>
 
-      {/* Grid de proyectos */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Grid de proyectos con mejor adaptación para móviles */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 xs:gap-4">
         {projects.map((project, index) => (
           <ProjectCard key={index} {...project} />
         ))}

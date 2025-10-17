@@ -62,7 +62,7 @@ function Info() {
   return (
     <div className="text-center space-y-8 max-w-4xl mx-auto px-4">
       {/* Título principal con efecto typewriter */}
-      <h1 className="text-5xl md:text-7xl font-bold leading-relaxed pb-6">
+      <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold leading-tight md:leading-relaxed pb-4 md:pb-6">
         <span className="block text-white mb-4">
           {displayedText1}
           {showCursor1 && <span className="animate-pulse">|</span>}
@@ -73,13 +73,13 @@ function Info() {
         </span>
       </h1>
 
-      {/* Subtítulo */}
-      <p className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+      {/* Subtítulo con mejor escalado */}
+      <p className="text-base xs:text-lg sm:text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
         Ingeniero Informático en Tecnologías de la Información
       </p>
 
-      {/* Descripción adicional */}
-      <p className="text-gray-500 max-w-xl mx-auto text-center">
+      {/* Descripción con mejor espaciado en móviles */}
+      <p className="text-xs xs:text-sm sm:text-base text-gray-500 max-w-xl mx-auto text-center px-4">
           Me considero una persona autodidacta y curiosa, desde pequeño me han apasionado los ordenadores
           y la tecnología, lo que me llevó a estudiar esta carrera. Disfruto aprendiendo
           nuevas herramientas y lenguajes.
@@ -87,8 +87,8 @@ function Info() {
           Soy un fiel partidario de que la práctica lleva al conocimiento.
       </p>
 
-      {/* Botones de acción */}
-      <div className="flex flex-wrap gap-4 justify-center pt-4">
+      {/* Botones con mejor espaciado */}
+      <div className="flex flex-col xs:flex-row flex-wrap gap-3 xs:gap-4 justify-center pt-4">
         <Button 
           variant="primary" 
           size="lg"

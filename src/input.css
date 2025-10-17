@@ -10,6 +10,15 @@
   body {
     @apply text-gray-100 antialiased;
   }
+
+  /* Mejora el comportamiento de scroll en iOS */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* ---- Layout and snap behavior ---- */
@@ -65,5 +74,15 @@ section#skills .backdrop-blur-sm:hover {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+}
+
+/* Desactivar snap en móviles, solo en pantallas grandes */
+@media (max-width: 1024px) {
+  .lg\:snap-y, .lg\:snap-mandatory {
+    scroll-snap-type: none;
+  }
+  section {
+    scroll-snap-align: none !important;
   }
 }

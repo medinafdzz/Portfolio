@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,6 +26,10 @@ function Header() {
     const body = 'Hola, me gustaría contactar contigo...';
     
     window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
   };
 
   return (
@@ -66,12 +71,45 @@ function Header() {
           </button>
 
           {/* Mobile Menu Button */}
-          <button className="md:hidden text-white p-2">
+          <button 
+            className="md:hidden text-white p-2"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
         </div>
+
+        {/* Menú móvil */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute top-20 left-0 right-0 bg-gray-900/95 backdrop-blur-md border-b border-white/10 shadow-lg">
+            <ul className="flex flex-col py-6 px-6">
+              {navItems.map((item) => (
+                <li key={item.name} className="py-3">
+                  <a
+                    href={item.href}
+                    className="text-gray-300 hover:text-white transition-colors duration-300 block w-full text-lg"
+                    onClick={closeMobileMenu}
+                  >
+                    {item.name}
+                  </a>
+                </li>
+              ))}
+              <li className="py-3 mt-3">
+                <button
+                  onClick={(e) => {
+                    handleContactClick(e);
+                    closeMobileMenu();
+                  }}
+                  className="flex w-full items-center justify-center gap-2 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-medium"
+                >
+                  <span>Contactar</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+        )}
       </nav>
     </header>
   );
