@@ -70,14 +70,10 @@ function About() {
           <div className="space-y-3">
             <p className="text-center md:text-left text-gray-400 leading-relaxed">
               <span className="font-bold">
-                Soy un Estudiante de Ingeniería en Informática en Tecnologías de la Información, 
-                me gustaría especializarme en ciberseguridad y ciberinteligencia.
+                Soy un Estudiante de Ingeniería en Informática en Tecnologías de la Información, me gustaría especializarme en ciberseguridad y ciberinteligencia.
               </span>
               <br /><br />
-              Durante mi formación he trabajado con diversos lenguajes de programación y tecnologías 
-              que me han ayudado a aumentar mi Tech Stack. 
-              Además, he desarrollado habilidades de gestión y trabajo en equipo, 
-              lo que me permite adaptarme rápidamente a los diferentes entornos laborales.
+              Durante mi formación he trabajado con diversos lenguajes de programación y tecnologías que me han ayudado a aumentar mi Tech Stack. Además, he desarrollado habilidades en gestión de proyectos y trabajo en equipo, lo que me permite adaptarme rápidamente a los diferentes entornos laborales.
             </p>
           </div>
 
