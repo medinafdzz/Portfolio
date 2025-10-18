@@ -1,0 +1,14 @@
+# Our security policy
+# For more information, see RFC 9116: https://www.rfc-editor.org/rfc/rfc9116.html
+
+Contact: https://github.com/medinafdzz/Portfolio/issues
+Contact: mailto:security@example.com
+Expires: 2026-10-18T23:59:59.000Z
+Preferred-Languages: en, es
+Canonical: https://medinafdzz.github.io/.well-known/security.txt
+
+# Policy
+Policy: https://github.com/medinafdzz/Portfolio/security/policy
+
+# If you believe you have found a security vulnerability in this project,
+# please report it responsibly through the contact methods listed above.
