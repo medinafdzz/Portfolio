@@ -46,5 +46,5 @@ export default defineConfig({
       ...common
     }
   },
-  base: '/portfolio/'
+  base: '/'
 })
