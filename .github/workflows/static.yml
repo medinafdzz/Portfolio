@@ -44,6 +44,13 @@ jobs:
       - name: Build React app
         run: npm run build
       
+      - name: Add .nojekyll file
+        run: touch ./dist/.nojekyll
+      
+      - name: Copy CNAME if exists
+        run: if [ -f CNAME ]; then cp CNAME ./dist/; fi
+        continue-on-error: true
+      
       - name: Setup Pages
         uses: actions/configure-pages@v4
       
