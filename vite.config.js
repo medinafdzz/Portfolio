@@ -45,5 +45,6 @@ export default defineConfig({
       'Content-Security-Policy': cspPreview,
       ...common
     }
-  }
+  },
+  base: '/portfolio/'
 })
