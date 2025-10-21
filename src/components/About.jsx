@@ -68,12 +68,14 @@ function About() {
         {/* Contenido con mejor espaciado */}
         <div className="space-y-3 md:space-y-5 px-1 xs:px-4">
           <div className="space-y-3">
-            <p className="text-center md:text-left text-gray-400 leading-relaxed">
-              <span className="font-bold">
+            <p className="text-center md:text-left text-gray-400 text-sm xs:text-base md:text-lg leading-relaxed xs:leading-6 md:leading-7 tracking-wide">
+              <span className="font-bold block">
                 Soy un Estudiante de Ingeniería en Informática en Tecnologías de la Información, me gustaría especializarme en ciberseguridad y ciberinteligencia.
               </span>
-              <br /><br />
-              Durante mi formación he trabajado con diversos lenguajes de programación y tecnologías que me han ayudado a aumentar mi Tech Stack. Además, he desarrollado habilidades en gestión de proyectos y trabajo en equipo, lo que me permite adaptarme rápidamente a los diferentes entornos laborales.
+
+              <span className="block mt-3">
+                Durante mi formación he trabajado con diversos lenguajes de programación y tecnologías que me han ayudado a aumentar mi Tech Stack. Además, he desarrollado habilidades en gestión de proyectos y trabajo en equipo, lo que me permite adaptarme rápidamente a los diferentes entornos laborales.
+              </span>
             </p>
           </div>
 

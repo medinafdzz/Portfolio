@@ -79,12 +79,11 @@ function Info() {
       </p>
 
       {/* Descripción con mejor espaciado en móviles */}
-      <p className="text-xs xs:text-sm sm:text-base text-gray-500 max-w-xl mx-auto text-center px-4">
+      <p className="text-xs xs:text-sm sm:text-base text-gray-500 max-w-xl mx-auto text-center px-3 leading-relaxed xs:leading-6 sm:leading-7 md:leading-8 tracking-wide mt-4">
           Me considero una persona autodidacta y curiosa, desde pequeño me han apasionado los ordenadores
           y la tecnología, lo que me llevó a estudiar esta carrera. Disfruto aprendiendo
           nuevas herramientas y lenguajes.
-          <br />
-          Soy un fiel partidario de que la práctica lleva al conocimiento.
+          <span className="block mt-2">Soy un fiel partidario de que la práctica lleva al saber.</span>
       </p>
 
       {/* Botones con mejor espaciado */}
