@@ -74,8 +74,7 @@ function About() {
               </span>
 
               <span className="block mt-3">
-                Durante mi formación he trabajado con diversos lenguajes de programación y tecnologías que me han ayudado a aumentar mi Tech Stack. Además, he desarrollado habilidades en gestión de proyectos y trabajo en equipo, lo que me permite adaptarme rápidamente a los diferentes entornos laborales.
-              </span>
+                He trabajado con distintos lenguajes y tecnologías que han fortalecido mi Tech Stack, además de desarrollar habilidades en gestión de proyectos y trabajo en equipo que me permiten adaptarme con rapidez a nuevos entornos. </span>
             </p>
           </div>
 
