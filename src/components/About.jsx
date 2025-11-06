@@ -25,7 +25,7 @@ function About() {
   ];
 
   return (
-    <div>
+    <div className="mt-6 md:mt-10">
       <SectionTitle subtitle="Conoce más sobre mi trayectoria y experiencia">
         Sobre mí
       </SectionTitle>
