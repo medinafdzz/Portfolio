@@ -32,14 +32,14 @@ function About() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-center">
         {/* Mejorar contenedor de la imagen para móviles */}
-        <div className="relative group flex justify-center mb-6 md:mb-0">
+        <div className="relative group flex justify-center mb-6 md:mb-0 px-6 sm:px-10">
           {/* Glow effect de fondo */}
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-600/30 to-pink-600/30 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div className="absolute inset-6 sm:inset-8 bg-gradient-to-r from-purple-600/30 to-pink-600/30 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           
           {/* Contenedor de la imagen */}
           <div className="relative">
             {/* Anillo animado exterior */}
-            <div className="absolute -inset-2 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full opacity-75 blur-sm group-hover:opacity-100 animate-pulse"></div>
+            <div className="absolute -inset-1 sm:-inset-2 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full opacity-60 sm:opacity-75 blur-sm transform transition-transform duration-500 group-hover:opacity-100 group-hover:scale-105 animate-pulse"></div>
             
             {/* Círculo con imagen */}
             <div className="relative w-32 h-32 xs:w-40 xs:h-40 sm:w-52 sm:h-52 md:w-60 md:h-60 rounded-full overflow-hidden border-2 border-purple-400/50 shadow-2xl shadow-purple-500/20 group-hover:scale-105 transition-all duration-500">
