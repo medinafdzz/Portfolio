@@ -39,12 +39,6 @@ footer p:last-of-type { margin-bottom: 0.75rem !important; }
 footer .flex { gap: 1.25rem !important; }
 footer svg { width: 1.25rem !important; height: 1.25rem !important; }
 
-/* Skills grid cards: add same hover animation as Projects */
-section#skills .backdrop-blur-sm:hover {
-  transform: scale(1.02);
-  background-color: rgba(168, 85, 247, 0.1) !important; /* purple-500/10 */
-}
-
 
 @layer utilities {
   .animation-delay-2000 {

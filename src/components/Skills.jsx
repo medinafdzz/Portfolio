@@ -49,12 +49,12 @@ function Skills() {
   ];
 
   const bgColors = {
-    purple: "bg-purple-500/20",
-    blue: "bg-blue-500/20",
-    green: "bg-green-500/20",
-    cyan: "bg-cyan-500/20",
-    orange: "bg-orange-500/20",
-    pink: "bg-pink-500/20"
+    purple: "bg-purple-500/15 border-purple-500/30",
+    blue: "bg-blue-500/15 border-blue-500/30",
+    green: "bg-green-500/15 border-green-500/30",
+    cyan: "bg-cyan-500/15 border-cyan-500/30",
+    orange: "bg-orange-500/15 border-orange-500/30",
+    pink: "bg-pink-500/15 border-pink-500/30"
   };
 
   return (
@@ -63,46 +63,62 @@ function Skills() {
         Habilidades Técnicas
       </SectionTitle>
 
-      {/* Grid de categorías de habilidades con mejor adaptación para móviles */}
-      <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-4 xs:gap-5 md:gap-6 mb-8 md:mb-12">
-        {skillCategories.map((category, index) => (
-          <div
-            key={index}
-            className="backdrop-blur-sm bg-white/5 rounded-2xl p-4 xs:p-5 md:p-6 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 group"
-          >
-            {/* Header de la categoría */}
-            <div className="flex items-center gap-3 mb-4">
-              <div className={`w-10 h-10 rounded-lg ${bgColors[category.color]} flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                <span className="text-2xl">{category.icon}</span>
+      <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm px-5 xs:px-6 md:px-8 lg:px-10 py-6 md:py-10">
+        <div className="pointer-events-none absolute -bottom-36 left-10 h-64 w-64 rounded-full bg-gradient-to-tr from-blue-500/40 via-cyan-500/30 to-transparent blur-3xl opacity-70"></div>
+
+        <div className="relative flex flex-col gap-10 lg:flex-row lg:items-stretch lg:min-h-[420px]">
+          <div className="flex-1 lg:max-w-sm flex flex-col justify-between gap-8">
+            <div className="space-y-4">
+              <div className="flex flex-col items-center text-center w-full">
+                <h3 className="text-5xl md:text-6xl font-black tracking-tight text-white">Tech Stack</h3>
+                <div className="mt-2 h-1 w-32 md:w-40 rounded-full bg-gradient-to-r from-purple-500 to-pink-500"></div>
               </div>
-              <h3 className="text-xl font-bold text-white">{category.title}</h3>
             </div>
 
-            {/* Skills badges */}
-            <div className="flex flex-wrap gap-2">
-              {category.skills.map((skill, skillIndex) => (
-                <Badge key={skillIndex} color={category.color} size="md">
-                  {skill}
-                </Badge>
+            <div className="grid grid-cols-2 gap-4 auto-rows-fr">
+              {stats.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-2xl border border-white/10 bg-white/5 px-5 py-6"
+                >
+                  <div className="text-3xl md:text-4xl font-bold text-white">{stat.number}</div>
+                  <p className="mt-2 text-xs font-medium uppercase tracking-[0.25em] text-gray-400">
+                    {stat.label}
+                  </p>
+                </div>
               ))}
             </div>
           </div>
-        ))}
-      </div>
 
-      {/* Estadísticas con mejor adaptación para móviles */}
-      <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-3 xs:gap-4">
-        {stats.map((stat, index) => (
-          <div 
-            key={index} 
-            className="text-center p-6 backdrop-blur-sm bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 hover:scale-105 transition-all duration-300"
-          >
-            <div className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400 mb-2">
-              {stat.number}
+          <div className="flex-1">
+            <div className="grid auto-rows-fr gap-4 sm:grid-cols-2 xl:grid-cols-3 h-full">
+              {skillCategories.map((category) => (
+                <div
+                  key={category.title}
+                  className={`group relative flex h-full flex-col rounded-2xl border px-5 py-5 transition-all duration-300 hover:-translate-y-1 hover:border-white/30 hover:bg-white/10 cursor-pointer ${bgColors[category.color]}`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.25em] text-gray-400">Área</p>
+                      <h4 className="mt-2 text-lg font-semibold text-white">{category.title}</h4>
+                    </div>
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-2xl">
+                      <span>{category.icon}</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {category.skills.map((skill) => (
+                      <Badge key={skill} color={category.color} size="sm">
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="text-sm text-gray-400">{stat.label}</div>
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );
