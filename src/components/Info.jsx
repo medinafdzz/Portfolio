@@ -1,93 +1,34 @@
-import { useState, useEffect } from 'react';
 import Button from './Button';
 
 function Info() {
-  const text1 = "¡Hola!";
-  const text2 = "Soy Alejandro Medina";
-  const [displayedText1, setDisplayedText1] = useState("");
-  const [displayedText2, setDisplayedText2] = useState("");
-  const [showCursor1, setShowCursor1] = useState(true);
-  const [showCursor2, setShowCursor2] = useState(false);
-  
-  useEffect(() => {
-    const startAnimation = () => {
-      let index1 = 0;
-      let index2 = 0;
-      
-      // Resetear textos
-      setDisplayedText1("");
-      setDisplayedText2("");
-      setShowCursor1(true);
-      setShowCursor2(false);
-      
-      // Escribir primera línea
-      const timer1 = setInterval(() => {
-        if (index1 < text1.length) {
-          setDisplayedText1(text1.slice(0, index1 + 1));
-          index1++;
-        } else {
-          clearInterval(timer1);
-          setShowCursor1(false);
-          setShowCursor2(true);
-          
-          // Iniciar segunda línea después de un breve delay
-          setTimeout(() => {
-            const timer2 = setInterval(() => {
-              if (index2 < text2.length) {
-                setDisplayedText2(text2.slice(0, index2 + 1));
-                index2++;
-              } else {
-                clearInterval(timer2);
-                setTimeout(() => setShowCursor2(false), 500);
-              }
-            }, 80);
-          }, 300);
-        }
-      }, 100);
-    };
-    
-    // Iniciar la primera animación
-    startAnimation();
-    
-    // Repetir cada 15 segundos
-    const repeatInterval = setInterval(() => {
-      startAnimation();
-    }, 15000);
-    
-    return () => {
-      clearInterval(repeatInterval);
-    };
-  }, []);
-  
   return (
     <div className="text-center space-y-8 max-w-4xl mx-auto px-4">
-      {/* Título principal con efecto typewriter */}
-      <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold leading-tight md:leading-relaxed pb-4 md:pb-6">
-        <span className="block text-white mb-4">
-          {displayedText1}
-          {showCursor1 && <span className="animate-pulse">|</span>}
-        </span>
-        <span className="block bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 animate-gradient pb-4">
-          {displayedText2}
-          {showCursor2 && <span className="text-purple-400 animate-pulse">|</span>}
+      <div className="flex items-center justify-center gap-3">
+        <span className="h-1 w-14 rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-blue-400"></span>
+        <span className="h-1 w-4 rounded-full bg-white/30"></span>
+      </div>
+
+      <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight md:leading-[1.15]">
+        <span className="block text-white">¡Hola!</span>
+        <span className="mt-2 block pb-2 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 animate-gradient">
+          Soy Alejandro Medina
         </span>
       </h1>
 
-      {/* Subtítulo con mejor escalado */}
-      <p className="text-base xs:text-lg sm:text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+      <div className="mx-auto mt-4 h-px w-24 bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
+
+      <p className="text-base xs:text-lg sm:text-xl md:text-2xl text-gray-300">
         Ingeniero Informático en Tecnologías de la Información
       </p>
 
-      {/* Descripción con mejor espaciado en móviles */}
-      <p className="text-xs xs:text-sm sm:text-base text-gray-500 max-w-xl mx-auto text-center px-3 leading-relaxed xs:leading-6 sm:leading-7 md:leading-8 tracking-wide mt-4">
-          Me considero una persona autodidacta y curiosa, desde pequeño me han apasionado los ordenadores
-          y la tecnología, lo que me llevó a estudiar esta carrera. Disfruto aprendiendo
-          nuevas herramientas y lenguajes.
-          <span className="block mt-2">Soy un fiel partidario de que la práctica lleva al saber.</span>
+      <p className="text-xs xs:text-sm sm:text-base text-gray-400 max-w-xl mx-auto leading-relaxed xs:leading-6 sm:leading-7 md:leading-8 tracking-wide">
+        Me considero una persona autodidacta y curiosa, desde pequeño me han apasionado los ordenadores
+        y la tecnología, lo que me llevó a estudiar esta carrera. Disfruto aprendiendo
+        nuevas herramientas y lenguajes.
+        <span className="block mt-2">Soy un fiel partidario de que la práctica lleva al saber.</span>
       </p>
 
-      {/* Botones con mejor espaciado */}
-      <div className="flex flex-col xs:flex-row flex-wrap gap-3 xs:gap-4 justify-center pt-4">
+      <div className="flex flex-col xs:flex-row flex-wrap gap-3 xs:gap-4 justify-center pt-2">
         <Button 
           variant="primary" 
           size="lg"
@@ -99,11 +40,10 @@ function Info() {
           </svg>
         </Button>
         
-        {/* Enlace directo como <a> */}
         <a 
           href="/CV.pdf" 
           download="CV_Alejandro_Medina.pdf"
-          className="inline-flex items-center justify-center gap-2 px-8 py-4 text-lg bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-sm font-semibold transition-all duration-300 rounded-lg"
+          className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/15 bg-white/10 px-8 py-4 text-lg font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20 hover:border-white/40"
         >
           <span>Descargar CV</span>
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -112,18 +52,13 @@ function Info() {
         </a>
       </div>
 
-      {/* Texto indicador de scroll */}
-      <div className="pt-1">
-        <p className="text-xs xs:text-sm sm:text-base text-gray-500 mb-0.5">
-          Continúa deslizando
-        </p>
-      </div>
-
-      {/* Indicador de scroll */}
-      <div className="animate-bounce pt-0">
-        <svg className="w-6 h-6 mx-auto text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-        </svg>
+      <div className="mt-6 flex flex-col items-center gap-3 text-gray-500">
+        <p className="text-xs xs:text-sm sm:text-base">Continúa deslizando</p>
+        <div className="flex h-12 w-8 items-center justify-center rounded-full border border-white/20">
+          <svg className="w-4 h-4 text-gray-400 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </div>
       </div>
     </div>
   );
