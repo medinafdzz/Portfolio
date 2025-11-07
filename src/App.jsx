@@ -14,8 +14,11 @@ function App() {
       {/* Contenido principal */}
       <main>
         {/* Hero Section */}
-        <section id="inicio" className="min-h-screen flex items-center justify-center py-20 md:py-16 lg:py-0 lg:snap-start">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl overflow-y-auto scrollbar-hide py-20">
+        <section
+          id="inicio"
+          className="min-h-screen flex items-start justify-center pt-24 pb-12 sm:pt-28 sm:pb-16 md:items-center md:py-16 lg:py-0 lg:snap-start"
+        >
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl overflow-y-auto scrollbar-hide md:py-20">
             <Info />
           </div>
         </section>

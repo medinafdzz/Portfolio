@@ -40,7 +40,7 @@ function Header() {
           : 'backdrop-blur-sm border-white/10'
       }`}
     >
-      <nav className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl font-['Poppins']">
+      <nav className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl font-poppins">
         <div className="flex justify-between items-center h-20">
           {/* Logo con el nombre*/}
           <a href="#inicio" className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400 hover:scale-110 transition-transform tracking-tight">
@@ -65,7 +65,7 @@ function Header() {
           {/* Boton de contacto */}
           <button
             onClick={handleContactClick}
-            className="hidden md:flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+            className="hidden md:flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-lg font-bold transition-all duration-300 hover:scale-105 shadow-lg"
           >
             <span>Contactar</span>
           </button>
@@ -89,7 +89,7 @@ function Header() {
                 <li key={item.name} className="py-3">
                   <a
                     href={item.href}
-                    className="text-gray-300 hover:text-white transition-colors duration-300 block w-full text-lg"
+                    className="text-gray-300 hover:text-white transition-colors duration-300 block w-full text-lg font-medium"
                     onClick={closeMobileMenu}
                   >
                     {item.name}
@@ -102,7 +102,7 @@ function Header() {
                     handleContactClick(e);
                     closeMobileMenu();
                   }}
-                  className="flex w-full items-center justify-center gap-2 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-medium"
+                  className="flex w-full items-center justify-center gap-2 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-bold"
                 >
                   <span>Contactar</span>
                 </button>
