@@ -71,7 +71,7 @@ function Skills() {
             <div className="space-y-4">
               <div className="flex flex-col items-center text-center w-full">
                 <h3 className="text-5xl md:text-6xl font-black tracking-tight text-white">Tech Stack</h3>
-                <div className="mt-2 h-1 w-32 md:w-40 rounded-full bg-gradient-to-r from-purple-500 to-pink-500"></div>
+                <div className="mt-2 h-1 w-32 md:w-40 rounded-full gradient-primary"></div>
               </div>
             </div>
 
