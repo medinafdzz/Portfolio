@@ -40,7 +40,7 @@ function Header() {
           : 'backdrop-blur-sm border-white/10'
       }`}
     >
-      <nav className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl font-poppins">
+  <nav className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl font-inter">
         <div className="flex justify-between items-center h-20">
           {/* Logo con el nombre*/}
           <a href="#inicio" className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400 hover:scale-110 transition-transform tracking-tight">
@@ -53,7 +53,7 @@ function Header() {
               <li key={item.name}>
                 <a
                   href={item.href}
-                  className="text-gray-300 hover:text-white transition-colors duration-300 relative group font-medium"
+                  className="text-gray-300 hover:text-white transition-colors duration-300 relative group font-bold"
                 >
                   {item.name}
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 group-hover:w-full transition-all duration-300"></span>
@@ -89,7 +89,7 @@ function Header() {
                 <li key={item.name} className="py-3">
                   <a
                     href={item.href}
-                    className="text-gray-300 hover:text-white transition-colors duration-300 block w-full text-lg font-medium"
+                    className="text-gray-300 hover:text-white transition-colors duration-300 block w-full text-lg font-bold"
                     onClick={closeMobileMenu}
                   >
                     {item.name}
