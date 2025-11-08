@@ -81,6 +81,7 @@ function Projects() {
 
               <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                 <Button
+                  type="button"
                   variant="secondary"
                   size="md"
                   className="sm:w-auto w-full"
@@ -94,6 +95,7 @@ function Projects() {
 
                 {activeProject.demo && (
                   <Button
+                    type="button"
                     variant="primary"
                     size="md"
                     className="sm:w-auto w-full"
