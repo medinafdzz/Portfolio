@@ -3,25 +3,9 @@ import perfilImg from '../assets/perfil.png';
 
 function About() {
   const education = [
-    {
-      icon: "🎓",
-      title: "Bachiller científico",
-      center: "Instituto Santa Bárbara (Langreo)",
-      years: "2019 - 2021"
-    },
-        {
-      icon: "🌍",
-      title: "Ingegneria Informatica ",
-      center: "Università degli Studi di Salerno",
-      years: "2024 - 2025",
-      note: "Año Erasmus"
-    },
-    {
-      icon: "💻",
-      title: "Ingeniería Informática en Tecnologías de la Información",
-      center: "EPI Gijón",
-      years: "2021 - 2025"
-    },
+    { icon: '🎓', title: 'Bachiller científico', center: 'Instituto Santa Bárbara (Langreo)', years: '2019 - 2021' },
+    { icon: '🌍', title: 'Ingegneria Informatica ', center: 'Università degli Studi di Salerno', years: '2024 - 2025', note: 'Año Erasmus' },
+    { icon: '💻', title: 'Ingeniería Informática en Tecnologías de la Información', center: 'EPI Gijón', years: '2021 - 2025' },
   ];
 
   return (
@@ -31,9 +15,9 @@ function About() {
       </SectionTitle>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-center">
-        {/* Mejorar contenedor de la imagen para móviles */}
+        {/* Contenedor de imagen (responsive) */}
         <div className="relative group flex justify-center mb-6 md:mb-0 px-6 sm:px-10">
-          {/* Glow effect de fondo */}
+          {/* Brillo de fondo */}
           <div className="absolute inset-6 sm:inset-8 bg-gradient-to-r from-purple-600/30 to-pink-600/30 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           
           {/* Contenedor de la imagen */}
@@ -65,7 +49,7 @@ function About() {
           </div>
         </div>
         
-        {/* Contenido con mejor espaciado */}
+          {/* Texto y línea temporal */}
         <div className="space-y-3 md:space-y-5 px-1 xs:px-4">
           <div className="space-y-3">
             <p className="text-center md:text-left text-gray-400 text-sm xs:text-base md:text-lg leading-relaxed xs:leading-6 md:leading-7 tracking-wide">
@@ -78,23 +62,17 @@ function About() {
             </p>
           </div>
 
-          {/* Lista de centros de estudio */}
+          {/* Línea temporal de estudios */}
           <div className="relative flex flex-col items-start pt-3 pl-7">
             {/* Línea vertical a la izquierda */}
             <div className="absolute left-0 top-8 bottom-8 w-1 bg-gradient-to-b from-purple-500 via-pink-500 to-blue-400 opacity-40 z-0"></div>
-            {education.map((edu, index) => (
-              <div
-                key={index}
-                className="relative z-10 w-full mb-6 last:mb-0"
-                style={{ marginLeft: '0.5rem' }} // separa la tarjeta de la línea
-              >
+            {education.map((edu) => (
+              <div key={edu.title} className="relative z-10 w-full mb-6 last:mb-0 ml-2">
                 <div className="bg-white/5 border border-white/10 rounded-xl p-3.5 flex-1 hover:bg-purple-500/10 hover:border-purple-500/30 transition-all duration-300">
                   <h3 className="font-semibold text-white mb-1 text-base">{edu.title}</h3>
                   <p className="text-sm text-gray-400 mb-1">{edu.center}</p>
                   <p className="text-xs text-gray-400">{edu.years}</p>
-                  {edu.note && (
-                    <p className="text-xs text-pink-400 mt-1">{edu.note}</p>
-                  )}
+                  {edu.note && <p className="text-xs text-pink-400 mt-1">{edu.note}</p>}
                 </div>
               </div>
             ))}
