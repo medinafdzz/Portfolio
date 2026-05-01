@@ -3,9 +3,9 @@ import perfilImg from '../assets/perfil.png';
 
 function About() {
   const education = [
-    { icon: '🎓', title: 'Bachiller científico', center: 'Instituto Santa Bárbara (Langreo)', years: '2019 - 2021' },
-    { icon: '🌍', title: 'Ingegneria Informatica ', center: 'Università degli Studi di Salerno', years: '2024 - 2025', note: 'Año Erasmus' },
-    { icon: '💻', title: 'Ingeniería Informática en Tecnologías de la Información', center: 'EPI Gijón', years: '2021 - 2025' },
+    { title: 'Bachiller científico', center: 'Instituto Santa Bárbara (Langreo)', years: '2019 - 2021' },
+    { title: 'Ingegneria Informatica ', center: 'Università degli Studi di Salerno', years: '2024 - 2025', note: 'Año Erasmus' },
+    { title: 'Ingeniería Informática en Tecnologías de la Información', center: 'EPI Gijón', years: '2021 - 2025' },
   ];
 
   return (
@@ -54,11 +54,9 @@ function About() {
           <div className="space-y-3">
             <p className="text-center md:text-left text-gray-400 text-sm xs:text-base md:text-lg leading-relaxed xs:leading-6 md:leading-7 tracking-wide">
               <span className="font-bold block">
-                Soy un Estudiante de Ingeniería en Informática en Tecnologías de la Información, me gustaría especializarme en ciberseguridad y ciberinteligencia.
+                Ingeniero en Informática en Tecnologías de la Información <br />
+                Esta ha sido mi trayectoria:
               </span>
-
-              <span className="block mt-3">
-                He trabajado con distintos lenguajes y tecnologías que han fortalecido mi Tech Stack, además de desarrollar habilidades en gestión de proyectos y trabajo en equipo que me permiten adaptarme con rapidez a nuevos entornos. </span>
             </p>
           </div>
 

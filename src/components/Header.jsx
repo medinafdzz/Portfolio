@@ -6,7 +6,20 @@ function Header() {
 
   // Actualiza estado según desplazamiento
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const scrollContainer = document.getElementById('app-scroll-container');
+
+    const handleScroll = () => {
+      const currentScroll = scrollContainer ? scrollContainer.scrollTop : window.scrollY;
+      setScrolled(currentScroll > 50);
+    };
+
+    handleScroll();
+
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', handleScroll);
+      return () => scrollContainer.removeEventListener('scroll', handleScroll);
+    }
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
