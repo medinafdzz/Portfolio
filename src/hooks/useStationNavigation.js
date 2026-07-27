@@ -124,6 +124,7 @@ function useStationNavigation({ stationIds, activeStation, onStationChange }) {
     window.addEventListener('resize', scheduleMeasurement);
     window.addEventListener('orientationchange', scheduleMeasurement);
     window.addEventListener('load', scheduleMeasurement);
+    window.addEventListener('portfolio:contentchange', scheduleMeasurement);
 
     if (document.fonts?.ready) {
       document.fonts.ready.then(scheduleMeasurement);
@@ -141,6 +142,7 @@ function useStationNavigation({ stationIds, activeStation, onStationChange }) {
       window.removeEventListener('resize', scheduleMeasurement);
       window.removeEventListener('orientationchange', scheduleMeasurement);
       window.removeEventListener('load', scheduleMeasurement);
+      window.removeEventListener('portfolio:contentchange', scheduleMeasurement);
       resizeObserver?.disconnect();
       if (measureFrame) window.cancelAnimationFrame(measureFrame);
       root.classList.remove(FREE_SCROLL_CLASS);

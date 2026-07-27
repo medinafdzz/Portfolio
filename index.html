@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/icon.svg" />
     <link rel="canonical" href="https://medinafdzz.is-a.dev/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#eef1ec" />
     <meta name="color-scheme" content="light" />
     <meta
@@ -20,6 +20,22 @@
       content="Portfolio de Alejandro Medina, ingeniero de software especializado en backend, sistemas, seguridad y calidad de software."
     />
     <title>Alejandro Medina | Ingeniería de Software</title>
+    <script>
+      (() => {
+        const validLanguages = ['es', 'en'];
+        let storedLanguage = null;
+
+        try {
+          storedLanguage = localStorage.getItem('portfolio-language');
+        } catch {
+          // The application falls back to session-only preferences.
+        }
+
+        const language = validLanguages.includes(storedLanguage) ? storedLanguage : 'es';
+
+        document.documentElement.lang = language;
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
