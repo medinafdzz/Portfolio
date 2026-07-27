@@ -1,19 +1,12 @@
-function SectionTitle({ children, subtitle }) {
+function SectionTitle({ kicker, children, subtitle }) {
   return (
-    <div className="text-center mb-12">
-      <h2 className="type-section mb-4 text-white">
-        {children}
-      </h2>
-      {subtitle && (
-        <p className="type-body mx-auto max-w-[62ch] text-gray-300">
-          {subtitle}
-        </p>
-      )}
-      <div className="mt-6 mx-auto flex w-24 items-center gap-2" aria-hidden="true">
-        <span className="h-1 flex-1 rounded-full bg-pink-500"></span>
-        <span className="h-1 w-5 rounded-full bg-purple-400"></span>
+    <header className="station-heading">
+      <div>
+        {kicker && <p className="station-heading__kicker">{kicker}</p>}
+        <h2>{children}</h2>
+        {subtitle && <p className="station-heading__subtitle">{subtitle}</p>}
       </div>
-    </div>
+    </header>
   );
 }
 

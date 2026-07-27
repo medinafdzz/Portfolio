@@ -1,59 +1,125 @@
+/*
+THESIS: El portfolio es una ruta de evidencias, no una colección de tarjetas.
+OWN-WORLD: Papel mineral, tinta grafito, azul estructural y naranja de señal forman una cartografía profesional sin sombras ni gradientes.
+STORY: Una lectura rápida identifica Indra, backend, Erasmus y proyectos; el recorrido completo demuestra cómo se conectan.
+FIRST VIEWPORT: El nombre ocupa el campo superior y desemboca en cuatro cruces verificables, con CV y contacto siempre claros.
+FORM: Espina de evidencias; la ruta vertical alterna contenido a ambos lados y avanza con el scroll.
+*/
+
+import { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Info from './components/Info';
 import About from './components/About';
-import Projects from './components/Projects';
 import Skills from './components/Skills';
+import Projects from './components/Projects';
 import Footer from './components/Footer';
+import StationMarker from './components/StationMarker';
+import useStationNavigation from './hooks/useStationNavigation';
+
+const routeStations = ['inicio', 'about', 'skills', 'projects', 'contact'];
 
 function App() {
+  const initialStation = routeStations.includes(window.location.hash.slice(1))
+    ? window.location.hash.slice(1)
+    : 'inicio';
+  const [activeStation, setActiveStation] = useState(initialStation);
+  const scrollToStation = useStationNavigation({
+    stationIds: routeStations,
+    activeStation,
+    onStationChange: setActiveStation,
+  });
+
+  useEffect(() => {
+    let frameId = 0;
+
+    const updateProgress = () => {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollable > 0 ? Math.min(100, Math.max(0, (window.scrollY / scrollable) * 100)) : 0;
+      const readingMarker = window.scrollY + window.innerHeight * 0.35;
+      const stations = routeStations
+        .map((id) => document.getElementById(id))
+        .filter(Boolean);
+      const currentStation = stations.reduce(
+        (current, station) => (station.offsetTop <= readingMarker ? station.id : current),
+        stations[0]?.id ?? 'inicio',
+      );
+
+      document.documentElement.style.setProperty('--route-progress', `${progress / 100}`);
+      setActiveStation((previousStation) => (
+        previousStation === currentStation ? previousStation : currentStation
+      ));
+
+      document.querySelectorAll('.atlas-section').forEach((section) => {
+        const sectionStart = section.offsetTop;
+        const sectionProgress = Math.min(
+          100,
+          Math.max(0, ((readingMarker - sectionStart) / section.offsetHeight) * 100),
+        );
+        section.style.setProperty('--section-progress', `${sectionProgress}%`);
+      });
+
+      frameId = 0;
+    };
+
+    const handleScroll = () => {
+      if (!frameId) frameId = window.requestAnimationFrame(updateProgress);
+    };
+
+    updateProgress();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+      if (frameId) window.cancelAnimationFrame(frameId);
+      document.documentElement.style.removeProperty('--route-progress');
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100">
-      <a
-        href="#main-content"
-        className="fixed left-4 top-3 z-[60] -translate-y-24 rounded-lg bg-white px-4 py-3 font-semibold text-gray-950 shadow-lg transition-transform focus:translate-y-0 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
-      >
+    <div className="site-shell">
+      <a className="skip-link" href="#main-content">
         Saltar al contenido
       </a>
 
-      {/* Header fijo */}
-      <Header />
-      
-      {/* Contenido principal */}
-      <main id="main-content" tabIndex="-1" className="focus:outline-none">
-        {/* Hero Section */}
+      <Header activeStation={activeStation} onNavigate={scrollToStation} />
+
+      <main id="main-content" tabIndex="-1">
+        <Info />
+
         <section
-          id="inicio"
-          className="flex min-h-screen items-start justify-center pb-12 pt-24 sm:pb-16 sm:pt-28 md:items-center md:py-16"
+          id="about"
+          className="atlas-section atlas-section--about"
+          data-active={activeStation === 'about'}
         >
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl md:py-20">
-            <Info />
-          </div>
-        </section>
-        
-        {/* About Section */}
-        <section id="about" className="portfolio-section">
-          <div className="portfolio-container">
-            <About />
-          </div>
-        </section>
-        
-        {/* Skills Section */}
-        <section id="skills" className="portfolio-section">
-          <div className="portfolio-container">
-            <Skills />
-          </div>
-        </section>
-        
-        {/* Projects Section */}
-        <section id="projects" className="portfolio-section">
-          <div className="portfolio-container">
-            <Projects />
-          </div>
+          <StationMarker station="01—02" />
+          <span className="atlas-section__progress" aria-hidden="true" />
+          <About />
         </section>
 
-        {/* Footer final */}
-        <Footer />
+        <section
+          id="skills"
+          className="atlas-section atlas-section--skills"
+          data-active={activeStation === 'skills'}
+        >
+          <StationMarker station="03" />
+          <span className="atlas-section__progress" aria-hidden="true" />
+          <Skills />
+        </section>
+
+        <section
+          id="projects"
+          className="atlas-section atlas-section--projects"
+          data-active={activeStation === 'projects'}
+        >
+          <StationMarker station="04" />
+          <span className="atlas-section__progress" aria-hidden="true" />
+          <Projects />
+        </section>
       </main>
+
+      <Footer active={activeStation === 'contact'} />
     </div>
   );
 }
