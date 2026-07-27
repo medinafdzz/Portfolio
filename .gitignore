@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local development assistants and generated design context
+/.codex/
+/.impeccable/
+/PRODUCT.md
+/DESIGN.md
