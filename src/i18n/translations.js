@@ -61,7 +61,7 @@ export const translations = {
         title: 'Junior Software Engineer',
         center: 'Indra Sistemas',
         years: 'Enero - julio de 2026',
-        description: 'Desarrollo de herramientas para sistemas ATM.',
+        description: 'Desarrollo de herramientas para sistemas ATM (Air Traffic Management).',
         tools: ['Java', 'C', 'Python', 'shell', 'Jenkins', 'SonarQube', 'Bitbucket', 'MCPs', 'LLMs'],
       },
       education: [
@@ -184,7 +184,7 @@ export const translations = {
         title: 'Junior Software Engineer',
         center: 'Indra Sistemas',
         years: 'January - July 2026',
-        description: 'Development of tools for ATM systems.',
+        description: 'Development of tools for ATM systems (Air Traffic Management).',
         tools: ['Java', 'C', 'Python', 'shell', 'Jenkins', 'SonarQube', 'Bitbucket', 'MCPs', 'LLMs'],
       },
       education: [
