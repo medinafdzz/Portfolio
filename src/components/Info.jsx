@@ -1,45 +1,41 @@
-import Button from './Button';
-
 function Info() {
   return (
-    <div className="text-center space-y-8 max-w-4xl mx-auto px-4">
-      <div className="flex items-center justify-center gap-3">
-        <span className="h-1 w-14 rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-blue-400"></span>
-        <span className="h-1 w-4 rounded-full bg-white/30"></span>
-      </div>
-
-      <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight md:leading-[1.15]">
-        <span className="block text-white">¡Hola!</span>
-        <span className="mt-2 block pb-2 leading-tight text-gradient animate-gradient">Soy Alejandro Medina</span>
+    <div className="mx-auto max-w-4xl space-y-8 px-4 text-center break-words">
+      <h1>
+        <span className="type-feature block text-white">¡Hola!</span>
+        <span className="type-display mt-3 block pb-2 text-pink-300">Soy Alejandro Medina</span>
       </h1>
 
-      <div className="mx-auto mt-4 h-px w-24 bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
+      <p className="text-lg font-medium leading-snug tracking-[-0.01em] text-gray-200 sm:text-xl md:text-2xl">
+        Ingeniería de software · Backend y sistemas
+      </p>
 
-      <p className="text-base xs:text-lg sm:text-xl md:text-2xl text-gray-300">Ingeniero Informático en Tecnologías de la Información</p>
-
-      <p className="text-xs xs:text-sm sm:text-base text-gray-400 max-w-xl mx-auto leading-relaxed xs:leading-6 sm:leading-7 md:leading-8 tracking-wide">
-        Me considero una persona autodidacta y curiosa, desde pequeño me han apasionado los ordenadores y la tecnología, lo que me llevó a estudiar esta carrera. Disfruto aprendiendo nuevas herramientas y lenguajes.
-        <span className="block mt-2">Soy un fiel partidario de que la práctica lleva al saber.</span>
+      <p className="type-body mx-auto max-w-[65ch] text-gray-300">
+        Desarrollo software con especial interés en backend, sistemas y automatización.
+        Trabajo con Java, C, Python y shell, cuidando especialmente la seguridad y la
+        calidad del código.
+        <span className="block mt-2">
+          En 2026 trabajé como becario de Ingeniería de Software en Indra Sistemas,
+          desarrollando herramientas para sistemas ATM.
+        </span>
       </p>
 
       <div className="flex flex-col xs:flex-row flex-wrap gap-3 xs:gap-4 justify-center pt-2">
-        <Button
-          variant="primary"
-          size="lg"
-          onClick={() => window.open('https://github.com/medinafdzz?tab=repositories', '_blank')}
-          type="button"
-          aria-label="Ver proyectos en GitHub en una nueva pestaña"
+        <a
+          href="#projects"
+          aria-label="Ir a proyectos destacados"
+          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-black/20 transition-colors duration-300 hover:from-purple-700 hover:to-pink-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-300 focus-visible:ring-offset-4 focus-visible:ring-offset-gray-950"
         >
           <span>Ver Proyectos</span>
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
-        </Button>
+        </a>
 
         <a
           href="/CV.pdf"
           download="CV_Alejandro_Medina.pdf"
-          className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/15 bg-white/10 px-8 py-4 text-lg font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/20 hover:border-white/40"
+          className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/20 bg-white/10 px-8 py-4 text-base font-semibold text-white transition-colors duration-300 hover:border-white/40 hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-300 focus-visible:ring-offset-4 focus-visible:ring-offset-gray-950"
           aria-label="Descargar CV en PDF"
         >
           <span>Descargar CV</span>
@@ -49,14 +45,6 @@ function Info() {
         </a>
       </div>
 
-      <div className="mt-6 flex flex-col items-center gap-3 text-gray-500">
-        <p className="text-xs xs:text-sm sm:text-base">Continúa deslizando</p>
-        <div className="flex h-12 w-8 items-center justify-center rounded-full border border-white/20">
-          <svg className="w-4 h-4 text-gray-400 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
-        </div>
-      </div>
     </div>
   );
 }
