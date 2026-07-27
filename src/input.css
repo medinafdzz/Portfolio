@@ -2289,8 +2289,17 @@ footer[id] {
 
 @media (max-width: 520px) {
   .atlas-display {
-    gap: 0 0.12em;
-    font-size: clamp(2.55rem, 12.7vw, 3.3rem);
+    display: block;
+    font-size: clamp(2.35rem, 11.5vw, 3.1rem);
+    white-space: nowrap;
+  }
+
+  .atlas-display span {
+    display: inline;
+  }
+
+  .atlas-display span + span::before {
+    content: ' ';
   }
 
   .atlas-actions {
@@ -2309,6 +2318,11 @@ footer[id] {
 
   .atlas-footer__actions .atlas-button {
     min-height: 2.75rem;
+  }
+
+  .atlas-footer {
+    min-height: 100vh;
+    min-height: 100dvh;
   }
 }
 
@@ -2333,6 +2347,13 @@ html.is-free-scroll .atlas-footer {
   height: auto;
   min-height: 100vh;
   min-height: 100svh;
+}
+
+@media (max-width: 520px) {
+  html.is-free-scroll .atlas-footer {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
