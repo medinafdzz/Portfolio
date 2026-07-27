@@ -1,15 +1,18 @@
 function SectionTitle({ children, subtitle }) {
   return (
     <div className="text-center mb-12">
-      <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gradient animate-gradient">
+      <h2 className="type-section mb-4 text-white">
         {children}
       </h2>
       {subtitle && (
-        <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+        <p className="type-body mx-auto max-w-[62ch] text-gray-300">
           {subtitle}
         </p>
       )}
-      <div className="mt-6 mx-auto w-24 h-1 gradient-primary rounded-full"></div>
+      <div className="mt-6 mx-auto flex w-24 items-center gap-2" aria-hidden="true">
+        <span className="h-1 flex-1 rounded-full bg-pink-500"></span>
+        <span className="h-1 w-5 rounded-full bg-purple-400"></span>
+      </div>
     </div>
   );
 }

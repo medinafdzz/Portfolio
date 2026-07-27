@@ -3,93 +3,144 @@
 @tailwind utilities;
 
 @layer base {
-  * {
+  :root {
+    --font-interface: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --type-display: clamp(2.25rem, 7vw, 4.75rem);
+    --type-section: clamp(2.125rem, 5vw, 3rem);
+    --type-feature: clamp(1.75rem, 3vw, 2.25rem);
+    --type-title: 1.125rem;
+    --type-body: 1rem;
+    --type-compact: 0.875rem;
+  }
+
+  html {
     @apply scroll-smooth;
+    color-scheme: dark;
   }
-  
+
   body {
-    @apply text-gray-100 antialiased;
-  }
-
-  /* Fuente para el encabezado */
-  .font-inter {
-    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif;
-  }
-
-  /* Mejora del scroll en iOS */
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
+    @apply bg-gray-950 text-gray-100 antialiased;
+    font-family: var(--font-interface);
+    font-feature-settings: 'kern' 1, 'liga' 1;
   }
 }
 
-/* ---- Disposición y comportamiento de snap ---- */
-/* Oculta separadores para evitar doble scroll */
-main > div.h-px { display: none !important; }
+@layer components {
+  .type-display {
+    font-size: var(--type-display);
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+  }
 
-/* Footer: estilo compacto y sin snap */
-footer { 
-  scroll-snap-align: none;
-  min-height: auto !important;
-  padding: 1.5rem 0 !important;
+  .type-section {
+    font-size: var(--type-section);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+  }
+
+  .type-feature {
+    font-size: var(--type-feature);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+  }
+
+  .type-title {
+    font-size: var(--type-title);
+    font-weight: 650;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .type-body {
+    font-size: var(--type-body);
+    font-weight: 400;
+    line-height: 1.75;
+    letter-spacing: 0.01em;
+  }
+
+  .type-compact {
+    font-size: var(--type-compact);
+    font-weight: 450;
+    line-height: 1.6;
+    letter-spacing: 0.012em;
+  }
+
+  .type-label {
+    font-size: var(--type-compact);
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .type-numeric {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .deferred-section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 100vh;
+  }
+
+  .portfolio-section {
+    @apply deferred-section flex min-h-screen items-center justify-center py-20 md:py-16;
+  }
+
+  .portfolio-container {
+    @apply container mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8;
+  }
 }
-
-/* Ajustes internos del Footer para aspecto compacto */
-footer > div { padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
-footer p { margin-bottom: 0.35rem !important; font-size: 0.8rem !important; line-height: 1.3; }
-footer p:last-of-type { margin-bottom: 0.75rem !important; }
-footer .flex { gap: 1.25rem !important; }
-footer svg { width: 1.25rem !important; height: 1.25rem !important; }
-
 
 @layer utilities {
-  .animation-delay-2000 {
-    animation-delay: 2s;
-  }
-  
-  .animation-delay-4000 {
-    animation-delay: 4s;
-  }
-  
-  .animate-gradient {
-    background-size: 200% 200%;
-    animation: gradient 3s ease infinite;
-  }
-  
-  @keyframes gradient {
-    0%, 100% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-  }
-  
-  .line-clamp-3 {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  /* Utilidades reutilizables */
   .gradient-primary {
     @apply bg-gradient-to-r from-purple-500 to-pink-500;
   }
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400;
+}
+
+@supports (text-wrap: balance) {
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
   }
 }
 
-/* Desactivar snap en móviles, solo en pantallas grandes */
-@media (max-width: 1024px) {
-  .lg\:snap-y, .lg\:snap-mandatory {
-    scroll-snap-type: none;
+@supports (text-wrap: pretty) {
+  p {
+    text-wrap: pretty;
   }
-  section {
-    scroll-snap-align: none !important;
+}
+
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+main {
+  overflow-wrap: anywhere;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .group:hover .group-hover\:scale-105,
+  .hover\:scale-105:hover,
+  .hover\:scale-\[1\.02\]:hover {
+    transform: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  a,
+  button {
+    border-color: ButtonText;
   }
 }
