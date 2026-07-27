@@ -1,34 +1,30 @@
 import perfilSmall from '../assets/perfil-256.webp';
 import perfilLarge from '../assets/perfil-480.webp';
-
-const contactHref = 'mailto:amedinaf.it@gmail.com?subject=Consulta&body=Hola%2C%20me%20gustar%C3%ADa%20contactar%20contigo.';
+import usePreferences from '../hooks/usePreferences';
 
 function Info() {
+  const { copy } = usePreferences();
+  const contactHref = `mailto:amedinaf.it@gmail.com?subject=${encodeURIComponent(copy.hero.emailSubject)}&body=${encodeURIComponent(copy.hero.emailBody)}`;
+
   return (
     <section id="inicio" className="atlas-hero" aria-labelledby="hero-title">
       <div className="atlas-hero__frame">
         <div className="atlas-hero__identity">
-          <p className="atlas-kicker">¡Bienvenido a mi portfolio web!</p>
+          <p className="atlas-kicker">{copy.hero.kicker}</p>
           <h1 id="hero-title" className="atlas-display" aria-label="Alejandro Medina">
             <span aria-hidden="true">Alejandro</span>
             <span aria-hidden="true">Medina</span>
           </h1>
-          <p className="atlas-hero__role">Ingeniería de software · Backend y sistemas</p>
-          <p className="atlas-copy atlas-hero__intro">
-            Me define la curiosidad por entender cómo funcionan las cosas y la constancia
-            para seguir aprendiendo cuando aún no tengo todas las respuestas. Esa inquietud
-            me llevó a estudiar Ingeniería Informática, vivir un Erasmus en Salerno y
-            afrontar cada cambio con una mentalidad abierta.
-          </p>
-          <p className="atlas-copy atlas-hero__intro">
-            Hoy quiero convertir todo ese aprendizaje en una carrera con propósito: crecer
-            como ingeniero, aportar valor a un equipo y construir software del que podamos
-            sentirnos orgullosos.
-          </p>
+          <p className="atlas-hero__role">{copy.hero.role}</p>
+          {copy.hero.intro.map((paragraph) => (
+            <p key={paragraph} className="atlas-copy atlas-hero__intro">
+              {paragraph}
+            </p>
+          ))}
 
-          <nav className="atlas-actions" aria-label="Acciones principales">
+          <nav className="atlas-actions" aria-label={copy.hero.actionsLabel}>
             <a className="atlas-button atlas-button--primary" href="#projects">
-              Ver proyectos
+              {copy.hero.projects}
               <span aria-hidden="true">↘</span>
             </a>
             <a
@@ -36,17 +32,17 @@ function Info() {
               href="/CV.pdf"
               download="CV_Alejandro_Medina.pdf"
             >
-              Descargar CV
+              {copy.hero.downloadCv}
               <span aria-hidden="true">↓</span>
             </a>
             <a className="atlas-text-link" href={contactHref}>
-              Contactar
+              {copy.hero.contact}
               <span aria-hidden="true">→</span>
             </a>
           </nav>
         </div>
 
-        <aside id="route-summary" className="atlas-hero__map" aria-label="Base profesional">
+        <aside id="route-summary" className="atlas-hero__map" aria-label={copy.hero.summaryLabel}>
           <div className="atlas-hero__portrait">
             <picture>
               <source media="(max-width: 639px)" srcSet={perfilSmall} />
@@ -54,7 +50,7 @@ function Info() {
                 src={perfilLarge}
                 srcSet={`${perfilSmall} 256w, ${perfilLarge} 480w`}
                 sizes="(min-width: 900px) 190px, 136px"
-                alt="Retrato de Alejandro Medina"
+                alt={copy.hero.portraitAlt}
                 width="480"
                 height="480"
                 decoding="async"
@@ -64,24 +60,19 @@ function Info() {
           </div>
 
           <div className="atlas-hero__professional-base">
-            <span>Ubicación</span>
-            <strong>Gijón, Asturias</strong>
-            <p>Idiomas: español e inglés</p>
+            <span>{copy.hero.locationLabel}</span>
+            <strong>{copy.hero.location}</strong>
+            <p>{copy.hero.languages}</p>
             <div className="atlas-hero__manifesto">
-              <span>Objetivos</span>
-              <p>
-                Mi objetivo es especializarme en backend y sistemas, con foco en seguridad,
-                automatización y calidad de software. Busco proyectos técnicamente
-                exigentes donde pueda asumir responsabilidades progresivas y contribuir a
-                soluciones fiables, claras y sostenibles.
-              </p>
+              <span>{copy.hero.objectivesLabel}</span>
+              <p>{copy.hero.objectives}</p>
             </div>
           </div>
         </aside>
       </div>
 
       <a className="atlas-hero__continue" href="#about">
-        Comenzar recorrido
+        {copy.hero.continue}
         <span aria-hidden="true">↓</span>
       </a>
     </section>

@@ -15,10 +15,12 @@ import Projects from './components/Projects';
 import Footer from './components/Footer';
 import StationMarker from './components/StationMarker';
 import useStationNavigation from './hooks/useStationNavigation';
+import usePreferences from './hooks/usePreferences';
 
 const routeStations = ['inicio', 'about', 'skills', 'projects', 'contact'];
 
 function App() {
+  const { copy } = usePreferences();
   const initialStation = routeStations.includes(window.location.hash.slice(1))
     ? window.location.hash.slice(1)
     : 'inicio';
@@ -33,8 +35,6 @@ function App() {
     let frameId = 0;
 
     const updateProgress = () => {
-      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = scrollable > 0 ? Math.min(100, Math.max(0, (window.scrollY / scrollable) * 100)) : 0;
       const readingMarker = window.scrollY + window.innerHeight * 0.35;
       const stations = routeStations
         .map((id) => document.getElementById(id))
@@ -44,7 +44,6 @@ function App() {
         stations[0]?.id ?? 'inicio',
       );
 
-      document.documentElement.style.setProperty('--route-progress', `${progress / 100}`);
       setActiveStation((previousStation) => (
         previousStation === currentStation ? previousStation : currentStation
       ));
@@ -73,14 +72,13 @@ function App() {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
       if (frameId) window.cancelAnimationFrame(frameId);
-      document.documentElement.style.removeProperty('--route-progress');
     };
   }, []);
 
   return (
     <div className="site-shell">
       <a className="skip-link" href="#main-content">
-        Saltar al contenido
+        {copy.skipLink}
       </a>
 
       <Header activeStation={activeStation} onNavigate={scrollToStation} />
@@ -93,7 +91,7 @@ function App() {
           className="atlas-section atlas-section--about"
           data-active={activeStation === 'about'}
         >
-          <StationMarker station="01—02" />
+          <StationMarker station="01" />
           <span className="atlas-section__progress" aria-hidden="true" />
           <About />
         </section>
@@ -103,7 +101,7 @@ function App() {
           className="atlas-section atlas-section--skills"
           data-active={activeStation === 'skills'}
         >
-          <StationMarker station="03" />
+          <StationMarker station="02" />
           <span className="atlas-section__progress" aria-hidden="true" />
           <Skills />
         </section>
@@ -113,7 +111,7 @@ function App() {
           className="atlas-section atlas-section--projects"
           data-active={activeStation === 'projects'}
         >
-          <StationMarker station="04" />
+          <StationMarker station="03" />
           <span className="atlas-section__progress" aria-hidden="true" />
           <Projects />
         </section>

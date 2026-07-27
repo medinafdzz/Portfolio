@@ -1,16 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
-
-const navItems = [
-  { station: '00', name: 'Inicio', href: '#inicio', id: 'inicio' },
-  { station: '01—02', name: 'Trayectoria', href: '#about', id: 'about' },
-  { station: '03', name: 'Habilidades', href: '#skills', id: 'skills' },
-  { station: '04', name: 'Proyectos', href: '#projects', id: 'projects' },
-  { station: '05', name: 'Contacto', href: '#contact', id: 'contact' },
-];
+import PreferencesControls from './PreferencesControls';
+import usePreferences from '../hooks/usePreferences';
 
 function Header({ activeStation, onNavigate }) {
+  const { copy } = usePreferences();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const menuButtonRef = useRef(null);
+  const navItems = [
+    { station: '00', name: copy.header.stations.inicio, href: '#inicio', id: 'inicio' },
+    { station: '01', name: copy.header.stations.about, href: '#about', id: 'about' },
+    { station: '02', name: copy.header.stations.skills, href: '#skills', id: 'skills' },
+    { station: '03', name: copy.header.stations.projects, href: '#projects', id: 'projects' },
+    { station: '04', name: copy.header.stations.contact, href: '#contact', id: 'contact' },
+  ];
+  const activeStationIndex = Math.max(
+    0,
+    navItems.findIndex((item) => item.id === activeStation),
+  );
+  const routeProgress = activeStationIndex / (navItems.length - 1);
 
   useEffect(() => {
     if (!mobileMenuOpen) return undefined;
@@ -48,7 +55,7 @@ function Header({ activeStation, onNavigate }) {
         className="route-brand"
         href="#inicio"
         onClick={(event) => navigateTo(event, 'inicio')}
-        aria-label="Alejandro Medina, ir al inicio"
+        aria-label={copy.header.brandLabel}
       >
         <span className="route-brand__name" aria-hidden="true">
           <span>Alejandro</span>
@@ -62,40 +69,47 @@ function Header({ activeStation, onNavigate }) {
         type="button"
         aria-expanded={mobileMenuOpen}
         aria-controls="route-navigation"
-        aria-label={mobileMenuOpen ? 'Cerrar navegación' : 'Abrir navegación'}
+        aria-label={mobileMenuOpen ? copy.header.menuClose : copy.header.menuOpen}
         onClick={() => setMobileMenuOpen((open) => !open)}
       >
-        <span aria-hidden="true">{mobileMenuOpen ? 'Cerrar' : 'Ruta'}</span>
+        <span aria-hidden="true">
+          {mobileMenuOpen ? copy.header.menuCloseVisible : copy.header.menuOpenVisible}
+        </span>
       </button>
 
       <nav
         id="route-navigation"
         className={`route-navigation ${mobileMenuOpen ? 'is-open' : ''}`}
-        aria-label="Navegación principal"
+        aria-label={copy.header.navigationLabel}
+        style={{ '--route-progress': routeProgress }}
       >
-        <div className="route-navigation__track" aria-hidden="true">
-          <span className="route-navigation__progress" />
+        <div className="route-navigation__rail">
+          <div className="route-navigation__track" aria-hidden="true">
+            <span className="route-navigation__progress" />
+          </div>
+
+          <ol className="route-navigation__list">
+            {navItems.map((item) => {
+              const active = activeStation === item.id;
+              return (
+                <li key={item.id}>
+                  <a
+                    href={item.href}
+                    className={active ? 'is-active' : undefined}
+                    aria-current={active ? 'location' : undefined}
+                    onClick={(event) => navigateTo(event, item.id)}
+                  >
+                    <span className="route-navigation__node" aria-hidden="true" />
+                    <span className="route-navigation__station">{item.station}</span>
+                    <span className="route-navigation__label">{item.name}</span>
+                  </a>
+                </li>
+              );
+            })}
+          </ol>
         </div>
 
-        <ol className="route-navigation__list">
-          {navItems.map((item) => {
-            const active = activeStation === item.id;
-            return (
-              <li key={item.id}>
-                <a
-                  href={item.href}
-                  className={active ? 'is-active' : undefined}
-                  aria-current={active ? 'location' : undefined}
-                  onClick={(event) => navigateTo(event, item.id)}
-                >
-                  <span className="route-navigation__node" aria-hidden="true" />
-                  <span className="route-navigation__station">{item.station}</span>
-                  <span className="route-navigation__label">{item.name}</span>
-                </a>
-              </li>
-            );
-          })}
-        </ol>
+        <PreferencesControls />
       </nav>
     </header>
   );
