@@ -1304,8 +1304,18 @@ footer[id] {
   }
 
   .route-brand__name {
+    display: block;
     font-size: 1rem;
-    line-height: 0.85;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .route-brand__name span {
+    display: inline;
+  }
+
+  .route-brand__name span + span::before {
+    content: ' ';
   }
 
   .route-menu-button {
@@ -2289,17 +2299,8 @@ footer[id] {
 
 @media (max-width: 520px) {
   .atlas-display {
-    display: block;
-    font-size: clamp(2.35rem, 11.5vw, 3.1rem);
-    white-space: nowrap;
-  }
-
-  .atlas-display span {
-    display: inline;
-  }
-
-  .atlas-display span + span::before {
-    content: ' ';
+    gap: 0 0.12em;
+    font-size: clamp(2.55rem, 12.7vw, 3.3rem);
   }
 
   .atlas-actions {
