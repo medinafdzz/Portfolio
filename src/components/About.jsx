@@ -1,10 +1,24 @@
 import SectionTitle from './SectionTitle';
-import perfilImg from '../assets/perfil.png'; 
+import perfilSmall from '../assets/perfil-256.webp';
+import perfilLarge from '../assets/perfil-480.webp';
 
 function About() {
+  const experience = {
+    title: 'Becario de Ingeniería de Software',
+    center: 'Indra Sistemas',
+    years: 'Enero - julio de 2026',
+    description: 'Desarrollo de herramientas para sistemas ATM.',
+    tools: 'Java · C · Python · shell · Jenkins · SonarQube · Bitbucket · MCPs · LLMs',
+  };
+
   const education = [
     { title: 'Bachiller científico', center: 'Instituto Santa Bárbara (Langreo)', years: '2019 - 2021' },
-    { title: 'Ingegneria Informatica ', center: 'Università degli Studi di Salerno', years: '2024 - 2025', note: 'Año Erasmus' },
+    {
+      title: 'Ingegneria Informatica',
+      center: 'Università degli Studi di Salerno',
+      years: '2024 - 2025',
+      note: 'Erasmus · Embedded Systems · Software Dependability · Seguridad IoT · Serverless Computing',
+    },
     { title: 'Ingeniería Informática en Tecnologías de la Información', center: 'EPI Gijón', years: '2021 - 2025' },
   ];
 
@@ -14,66 +28,51 @@ function About() {
         Sobre mí
       </SectionTitle>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-center">
-        {/* Contenedor de imagen (responsive) */}
-        <div className="relative group flex justify-center mb-6 md:mb-0 px-6 sm:px-10">
-          {/* Brillo de fondo */}
-          <div className="absolute inset-6 sm:inset-8 bg-gradient-to-r from-purple-600/30 to-pink-600/30 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          
-          {/* Contenedor de la imagen */}
-          <div className="relative">
-            {/* Anillo animado exterior */}
-            <div className="absolute -inset-1 sm:-inset-2 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 rounded-full opacity-60 sm:opacity-75 blur-sm transform transition-transform duration-500 group-hover:opacity-100 group-hover:scale-105 animate-pulse"></div>
-            
-            {/* Círculo con imagen */}
-            <div className="relative w-32 h-32 xs:w-40 xs:h-40 sm:w-52 sm:h-52 md:w-60 md:h-60 rounded-full overflow-hidden border-2 border-purple-400/50 shadow-2xl shadow-purple-500/20 group-hover:scale-105 transition-all duration-500">
+      <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-12">
+        <div className="group flex justify-center px-6 sm:px-10">
+          <div>
+            <div className="relative h-32 w-32 overflow-hidden rounded-full border-2 border-purple-400/50 shadow-2xl shadow-black/30 transition-transform duration-500 group-hover:scale-105 xs:h-40 xs:w-40 sm:h-52 sm:w-52 md:h-60 md:w-60">
               <img 
-                src={perfilImg} 
-                alt="Alejandro Medina - Foto de perfil" 
+                src={perfilLarge}
+                srcSet={`${perfilSmall} 256w, ${perfilLarge} 480w`}
+                sizes="(min-width: 768px) 240px, (min-width: 640px) 208px, (min-width: 475px) 160px, 128px"
+                alt="Retrato de Alejandro Medina"
+                width="480"
+                height="480"
                 className="w-full h-full object-cover object-center scale-110"
+                loading="lazy"
+                decoding="async"
+                fetchPriority="low"
               />
-              {/* Overlay sutil para mejorar contraste */}
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-purple-900/20"></div>
             </div>
-
-            {/* Decoración: puntos alrededor*/}
-            <div className="absolute -top-6 -right-6 w-4 h-4 bg-pink-500 rounded-full animate-ping"></div>
-            <div className="absolute -bottom-6 -left-6 w-3 h-3 bg-purple-500 rounded-full animate-ping"></div>
-            <div className="absolute top-4 -right-8 w-3 h-3 bg-blue-400 rounded-full animate-ping"></div>
-            <div className="absolute -top-8 left-16 w-2 h-2 bg-pink-400 rounded-full animate-ping"></div>
-            <div className="absolute bottom-2 -left-8 w-4 h-4 bg-purple-400 rounded-full animate-ping"></div>
-            <div className="absolute -bottom-7 right-20 w-3 h-3 bg-blue-500 rounded-full animate-ping"></div>
-            <div className="absolute top-24 -left-7 w-2 h-2 bg-pink-500 rounded-full animate-ping"></div>
-            <div className="absolute -top-7 right-24 w-3 h-3 bg-purple-500 rounded-full animate-ping"></div>
-            <div className="absolute bottom-20 -right-7 w-2 h-2 bg-blue-400 rounded-full animate-ping"></div>
           </div>
         </div>
         
-          {/* Texto y línea temporal */}
-        <div className="space-y-3 md:space-y-5 px-1 xs:px-4">
-          <div className="space-y-3">
-            <p className="text-center md:text-left text-gray-400 text-sm xs:text-base md:text-lg leading-relaxed xs:leading-6 md:leading-7 tracking-wide">
-              <span className="font-bold block">
-                Ingeniero en Informática en Tecnologías de la Información <br />
-                Esta ha sido mi trayectoria:
-              </span>
+        <div className="min-w-0 space-y-8 px-1 break-words xs:px-4">
+          <article className="border-y border-white/10 py-5">
+            <p className="type-label text-pink-300">
+              Experiencia
             </p>
-          </div>
+            <h3 className="type-title mt-2 text-white">{experience.title}</h3>
+            <p className="type-compact type-numeric mt-1 text-gray-300">
+              {experience.center} · {experience.years}
+            </p>
+            <p className="type-compact mt-2 text-gray-300">{experience.description}</p>
+            <p className="type-compact mt-2 text-purple-200">{experience.tools}</p>
+          </article>
 
-          {/* Línea temporal de estudios */}
-          <div className="relative flex flex-col items-start pt-3 pl-7">
-            {/* Línea vertical a la izquierda */}
-            <div className="absolute left-0 top-8 bottom-8 w-1 bg-gradient-to-b from-purple-500 via-pink-500 to-blue-400 opacity-40 z-0"></div>
-            {education.map((edu) => (
-              <div key={edu.title} className="relative z-10 w-full mb-6 last:mb-0 ml-2">
-                <div className="bg-white/5 border border-white/10 rounded-xl p-3.5 flex-1 hover:bg-purple-500/10 hover:border-purple-500/30 transition-all duration-300">
-                  <h3 className="font-semibold text-white mb-1 text-base">{edu.title}</h3>
-                  <p className="text-sm text-gray-400 mb-1">{edu.center}</p>
-                  <p className="text-xs text-gray-400">{edu.years}</p>
-                  {edu.note && <p className="text-xs text-pink-400 mt-1">{edu.note}</p>}
-                </div>
-              </div>
-            ))}
+          <div>
+            <p className="type-label mb-3 text-gray-300">Formación</p>
+            <div className="divide-y divide-white/10 border-y border-white/10">
+              {education.map((edu) => (
+                <article key={edu.title} className="py-4">
+                  <h3 className="type-title mb-1 text-white">{edu.title}</h3>
+                  <p className="type-compact mb-1 text-gray-300">{edu.center}</p>
+                  <p className="type-compact type-numeric text-gray-300">{edu.years}</p>
+                  {edu.note && <p className="type-compact mt-1 text-pink-300">{edu.note}</p>}
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       </div>
