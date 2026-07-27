@@ -89,7 +89,7 @@ export const translations = {
       subtitle: 'Tecnologías que he aprendido con el paso del tiempo.',
       origin: 'Tech Stack',
       categories: [
-        { title: 'Backend y sistemas', skills: ['Java', 'C', 'Python', 'Shell', 'Maven'] },
+        { title: 'Backend', skills: ['Java', 'C', 'C++', 'Python'] },
         { title: 'Calidad y seguridad', skills: ['SonarQube', 'JaCoCo', 'PiTest', 'FindSecBugs', 'Software Dependability'] },
         { title: 'CI/CD y colaboración', skills: ['Jenkins', 'GitHub Actions', 'Bitbucket', 'Git', 'Docker'] },
         { title: 'Bases de datos', skills: ['PostgreSQL', 'MySQL', 'MariaDB', 'Modelado relacional'] },
@@ -212,7 +212,7 @@ export const translations = {
       subtitle: 'Technologies I have learned throughout my journey.',
       origin: 'Tech Stack',
       categories: [
-        { title: 'Backend and systems', skills: ['Java', 'C', 'Python', 'Shell', 'Maven'] },
+        { title: 'Backend', skills: ['Java', 'C', 'C++', 'Python'] },
         { title: 'Quality and security', skills: ['SonarQube', 'JaCoCo', 'PiTest', 'FindSecBugs', 'Software Dependability'] },
         { title: 'CI/CD and collaboration', skills: ['Jenkins', 'GitHub Actions', 'Bitbucket', 'Git', 'Docker'] },
         { title: 'Databases', skills: ['PostgreSQL', 'MySQL', 'MariaDB', 'Relational modelling'] },
