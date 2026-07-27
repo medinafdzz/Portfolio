@@ -1,79 +1,79 @@
 import SectionTitle from './SectionTitle';
-import perfilSmall from '../assets/perfil-256.webp';
-import perfilLarge from '../assets/perfil-480.webp';
+
+const experience = {
+  title: 'Junior Software Engineer',
+  center: 'Indra Sistemas',
+  years: 'Enero - julio de 2026',
+  description: 'Desarrollo de herramientas para sistemas ATM.',
+  tools: ['Java', 'C', 'Python', 'shell', 'Jenkins', 'SonarQube', 'Bitbucket', 'MCPs', 'LLMs'],
+};
+
+const education = [
+  {
+    title: 'Ingegneria Informatica (Erasmus)',
+    center: 'Università degli Studi di Salerno',
+    years: '2024 - 2025',
+    note: 'Embedded Systems · Software Dependability · Seguridad IoT · Serverless Computing',
+  },
+  {
+    title: 'Ingeniería Informática en Tecnologías de la Información',
+    center: 'Escuela Politécnica de Ingeniería de Gijón',
+    years: '2021 - 2026',
+  },
+  {
+    title: 'Máster en Inteligencia Artificial',
+    center: 'Universidad Alfonso X el Sabio',
+    years: '2026 - Actualidad',
+  },
+];
 
 function About() {
-  const experience = {
-    title: 'Becario de Ingeniería de Software',
-    center: 'Indra Sistemas',
-    years: 'Enero - julio de 2026',
-    description: 'Desarrollo de herramientas para sistemas ATM.',
-    tools: 'Java · C · Python · shell · Jenkins · SonarQube · Bitbucket · MCPs · LLMs',
-  };
-
-  const education = [
-    { title: 'Bachiller científico', center: 'Instituto Santa Bárbara (Langreo)', years: '2019 - 2021' },
-    {
-      title: 'Ingegneria Informatica',
-      center: 'Università degli Studi di Salerno',
-      years: '2024 - 2025',
-      note: 'Erasmus · Embedded Systems · Software Dependability · Seguridad IoT · Serverless Computing',
-    },
-    { title: 'Ingeniería Informática en Tecnologías de la Información', center: 'EPI Gijón', years: '2021 - 2025' },
-  ];
-
   return (
-    <div className="mt-6 md:mt-10">
-      <SectionTitle subtitle="Conoce más sobre mi trayectoria y experiencia">
-        Sobre mí
+    <div className="atlas-section__inner">
+      <SectionTitle
+        kicker="Sobre mí"
+        subtitle="Trayectoria: educación y evolución profesional."
+      >
+        Experiencia y formación
       </SectionTitle>
 
-      <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-12">
-        <div className="group flex justify-center px-6 sm:px-10">
-          <div>
-            <div className="relative h-32 w-32 overflow-hidden rounded-full border-2 border-purple-400/50 shadow-2xl shadow-black/30 transition-transform duration-500 group-hover:scale-105 xs:h-40 xs:w-40 sm:h-52 sm:w-52 md:h-60 md:w-60">
-              <img 
-                src={perfilLarge}
-                srcSet={`${perfilSmall} 256w, ${perfilLarge} 480w`}
-                sizes="(min-width: 768px) 240px, (min-width: 640px) 208px, (min-width: 475px) 160px, 128px"
-                alt="Retrato de Alejandro Medina"
-                width="480"
-                height="480"
-                className="w-full h-full object-cover object-center scale-110"
-                loading="lazy"
-                decoding="async"
-                fetchPriority="low"
-              />
-            </div>
+      <div className="crossing-layout">
+        <article className="evidence-block evidence-block--experience">
+          <div className="evidence-block__label">
+            <span>01</span>
+            <p>Experiencia</p>
           </div>
-        </div>
-        
-        <div className="min-w-0 space-y-8 px-1 break-words xs:px-4">
-          <article className="border-y border-white/10 py-5">
-            <p className="type-label text-pink-300">
-              Experiencia
-            </p>
-            <h3 className="type-title mt-2 text-white">{experience.title}</h3>
-            <p className="type-compact type-numeric mt-1 text-gray-300">
-              {experience.center} · {experience.years}
-            </p>
-            <p className="type-compact mt-2 text-gray-300">{experience.description}</p>
-            <p className="type-compact mt-2 text-purple-200">{experience.tools}</p>
-          </article>
+          <div className="evidence-block__body">
+            <p className="evidence-block__date">{experience.years}</p>
+            <h3>{experience.title}</h3>
+            <p className="evidence-block__place">{experience.center}</p>
+            <p className="atlas-copy">{experience.description}</p>
+            <ul className="inline-technology-list" aria-label="Tecnologías utilizadas">
+              {experience.tools.map((tool) => <li key={tool}>{tool}</li>)}
+            </ul>
+          </div>
+        </article>
 
-          <div>
-            <p className="type-label mb-3 text-gray-300">Formación</p>
-            <div className="divide-y divide-white/10 border-y border-white/10">
-              {education.map((edu) => (
-                <article key={edu.title} className="py-4">
-                  <h3 className="type-title mb-1 text-white">{edu.title}</h3>
-                  <p className="type-compact mb-1 text-gray-300">{edu.center}</p>
-                  <p className="type-compact type-numeric text-gray-300">{edu.years}</p>
-                  {edu.note && <p className="type-compact mt-1 text-pink-300">{edu.note}</p>}
-                </article>
-              ))}
-            </div>
+        <div className="crossing-layout__junction" aria-hidden="true">
+          <span />
+        </div>
+
+        <div className="education-route">
+          <div className="evidence-block__label">
+            <span>02</span>
+            <p>Formación</p>
           </div>
+          <ol>
+            {education.map((item) => (
+              <li key={item.title}>
+                <span className="education-route__node" aria-hidden="true" />
+                <p className="evidence-block__date">{item.years}</p>
+                <h3>{item.title}</h3>
+                <p className="evidence-block__place">{item.center}</p>
+                {item.note && <p className="education-route__note">{item.note}</p>}
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </div>

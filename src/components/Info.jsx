@@ -1,51 +1,90 @@
+import perfilSmall from '../assets/perfil-256.webp';
+import perfilLarge from '../assets/perfil-480.webp';
+
+const contactHref = 'mailto:amedinaf.it@gmail.com?subject=Consulta&body=Hola%2C%20me%20gustar%C3%ADa%20contactar%20contigo.';
+
 function Info() {
   return (
-    <div className="mx-auto max-w-4xl space-y-8 px-4 text-center break-words">
-      <h1>
-        <span className="type-feature block text-white">¡Hola!</span>
-        <span className="type-display mt-3 block pb-2 text-pink-300">Soy Alejandro Medina</span>
-      </h1>
+    <section id="inicio" className="atlas-hero" aria-labelledby="hero-title">
+      <div className="atlas-hero__frame">
+        <div className="atlas-hero__identity">
+          <p className="atlas-kicker">¡Bienvenido a mi portfolio web!</p>
+          <h1 id="hero-title" className="atlas-display" aria-label="Alejandro Medina">
+            <span aria-hidden="true">Alejandro</span>
+            <span aria-hidden="true">Medina</span>
+          </h1>
+          <p className="atlas-hero__role">Ingeniería de software · Backend y sistemas</p>
+          <p className="atlas-copy atlas-hero__intro">
+            Me define la curiosidad por entender cómo funcionan las cosas y la constancia
+            para seguir aprendiendo cuando aún no tengo todas las respuestas. Esa inquietud
+            me llevó a estudiar Ingeniería Informática, vivir un Erasmus en Salerno y
+            afrontar cada cambio con una mentalidad abierta.
+          </p>
+          <p className="atlas-copy atlas-hero__intro">
+            Hoy quiero convertir todo ese aprendizaje en una carrera con propósito: crecer
+            como ingeniero, aportar valor a un equipo y construir software del que podamos
+            sentirnos orgullosos.
+          </p>
 
-      <p className="text-lg font-medium leading-snug tracking-[-0.01em] text-gray-200 sm:text-xl md:text-2xl">
-        Ingeniería de software · Backend y sistemas
-      </p>
+          <nav className="atlas-actions" aria-label="Acciones principales">
+            <a className="atlas-button atlas-button--primary" href="#projects">
+              Ver proyectos
+              <span aria-hidden="true">↘</span>
+            </a>
+            <a
+              className="atlas-button atlas-button--secondary"
+              href="/CV.pdf"
+              download="CV_Alejandro_Medina.pdf"
+            >
+              Descargar CV
+              <span aria-hidden="true">↓</span>
+            </a>
+            <a className="atlas-text-link" href={contactHref}>
+              Contactar
+              <span aria-hidden="true">→</span>
+            </a>
+          </nav>
+        </div>
 
-      <p className="type-body mx-auto max-w-[65ch] text-gray-300">
-        Desarrollo software con especial interés en backend, sistemas y automatización.
-        Trabajo con Java, C, Python y shell, cuidando especialmente la seguridad y la
-        calidad del código.
-        <span className="block mt-2">
-          En 2026 trabajé como becario de Ingeniería de Software en Indra Sistemas,
-          desarrollando herramientas para sistemas ATM.
-        </span>
-      </p>
+        <aside id="route-summary" className="atlas-hero__map" aria-label="Base profesional">
+          <div className="atlas-hero__portrait">
+            <picture>
+              <source media="(max-width: 639px)" srcSet={perfilSmall} />
+              <img
+                src={perfilLarge}
+                srcSet={`${perfilSmall} 256w, ${perfilLarge} 480w`}
+                sizes="(min-width: 900px) 190px, 136px"
+                alt="Retrato de Alejandro Medina"
+                width="480"
+                height="480"
+                decoding="async"
+                fetchPriority="high"
+              />
+            </picture>
+          </div>
 
-      <div className="flex flex-col xs:flex-row flex-wrap gap-3 xs:gap-4 justify-center pt-2">
-        <a
-          href="#projects"
-          aria-label="Ir a proyectos destacados"
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-black/20 transition-colors duration-300 hover:from-purple-700 hover:to-pink-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-300 focus-visible:ring-offset-4 focus-visible:ring-offset-gray-950"
-        >
-          <span>Ver Proyectos</span>
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-          </svg>
-        </a>
-
-        <a
-          href="/CV.pdf"
-          download="CV_Alejandro_Medina.pdf"
-          className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/20 bg-white/10 px-8 py-4 text-base font-semibold text-white transition-colors duration-300 hover:border-white/40 hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-300 focus-visible:ring-offset-4 focus-visible:ring-offset-gray-950"
-          aria-label="Descargar CV en PDF"
-        >
-          <span>Descargar CV</span>
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
-        </a>
+          <div className="atlas-hero__professional-base">
+            <span>Ubicación</span>
+            <strong>Gijón, Asturias</strong>
+            <p>Idiomas: español e inglés</p>
+            <div className="atlas-hero__manifesto">
+              <span>Objetivos</span>
+              <p>
+                Mi objetivo es especializarme en backend y sistemas, con foco en seguridad,
+                automatización y calidad de software. Busco proyectos técnicamente
+                exigentes donde pueda asumir responsabilidades progresivas y contribuir a
+                soluciones fiables, claras y sostenibles.
+              </p>
+            </div>
+          </div>
+        </aside>
       </div>
 
-    </div>
+      <a className="atlas-hero__continue" href="#about">
+        Comenzar recorrido
+        <span aria-hidden="true">↓</span>
+      </a>
+    </section>
   );
 }
 
