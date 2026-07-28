@@ -60,9 +60,11 @@ function Info() {
           </div>
 
           <div className="atlas-hero__professional-base">
-            <span>{copy.hero.locationLabel}</span>
-            <strong>{copy.hero.location}</strong>
-            <p>{copy.hero.languages}</p>
+            <div className="atlas-hero__location">
+              <span>{copy.hero.locationLabel}</span>
+              <strong>{copy.hero.location}</strong>
+              <p>{copy.hero.languages}</p>
+            </div>
             <div className="atlas-hero__manifesto">
               <span>{copy.hero.objectivesLabel}</span>
               <p>{copy.hero.objectives}</p>

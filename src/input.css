@@ -542,6 +542,10 @@ footer[id] {
   text-align: left;
 }
 
+.atlas-hero__location {
+  display: contents;
+}
+
 .atlas-hero__professional-base span {
   color: var(--orange);
   font-size: 0.7rem;
@@ -2055,6 +2059,7 @@ footer[id] {
   .atlas-hero__portrait {
     display: block;
     grid-area: portrait;
+    grid-row: 1;
     align-self: start;
   }
 
@@ -2063,16 +2068,20 @@ footer[id] {
   }
 
   .atlas-hero__professional-base {
-    display: block;
-    margin: 0;
-    grid-area: base;
-    padding: 0;
-    text-align: left;
+    display: contents;
   }
 
-  .atlas-hero__professional-base > span,
-  .atlas-hero__professional-base > strong,
-  .atlas-hero__professional-base > p {
+  .atlas-hero__location {
+    display: grid;
+    grid-column: 2;
+    grid-row: 1;
+    align-content: center;
+    gap: 0.2rem;
+  }
+
+  .atlas-hero__location > span,
+  .atlas-hero__location > strong,
+  .atlas-hero__location > p {
     display: block;
   }
 
@@ -2082,9 +2091,10 @@ footer[id] {
   }
 
   .atlas-hero__manifesto {
-    width: calc(100% + 8.5rem);
+    width: 100%;
     margin-top: 1.5rem;
-    margin-left: -8.5rem;
+    grid-column: 1 / -1;
+    grid-row: 2;
     padding-top: 1.5rem;
   }
 
