@@ -1975,10 +1975,15 @@ footer[id] {
   }
 
   .atlas-hero {
-    min-height: 100vh;
+    height: auto;
     min-height: 100svh;
-    padding: 4.5rem 1rem 0.65rem;
+    padding: 6.25rem 1.25rem 4rem;
     align-items: start;
+  }
+
+  .atlas-hero__frame {
+    width: min(100%, 44rem);
+    margin-inline: auto;
   }
 
   .atlas-hero__frame::after {
@@ -1986,60 +1991,61 @@ footer[id] {
   }
 
   .atlas-kicker {
-    margin-bottom: 0.3rem;
-    font-size: 0.68rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.75rem;
+    line-height: 1.4;
   }
 
   .atlas-display {
     flex-wrap: nowrap;
-    font-size: clamp(3rem, 9vw, 4.6rem);
+    font-size: clamp(3rem, 12vw, 5rem);
     line-height: 0.9;
   }
 
   .atlas-hero__role {
-    margin-top: 0.45rem;
-    font-size: 1rem;
+    margin-top: 0.75rem;
+    font-size: clamp(1.2rem, 5vw, 1.55rem);
+    line-height: 1.1;
   }
 
   .atlas-copy {
-    font-size: 0.88rem;
-    line-height: 1.4;
+    font-size: 1rem;
+    line-height: 1.6;
   }
 
   .atlas-hero__intro {
-    margin-top: 0.4rem;
+    max-width: 39rem;
+    margin-top: 1rem;
   }
 
   .atlas-actions {
     display: grid;
-    margin-top: 0.65rem;
+    margin-top: 2rem;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.45rem;
+    gap: 0.75rem;
   }
 
   .atlas-actions .atlas-button {
     width: 100%;
-    min-height: 2.75rem;
-    gap: 0.5rem;
-    padding: 0.55rem 0.65rem;
-    font-size: 0.78rem;
+    min-height: 3rem;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
   }
 
   .atlas-actions .atlas-text-link {
-    width: fit-content;
-    min-height: 2.75rem;
-    grid-column: 1 / -1;
+    display: none;
   }
 
   .atlas-hero__map {
     display: grid;
     min-height: 0;
-    margin-top: 0.65rem;
+    margin-top: 3rem;
     grid-template-areas: 'portrait base';
-    grid-template-columns: 4.75rem minmax(0, 1fr);
-    gap: 0.45rem 0.8rem;
+    grid-template-columns: 7rem minmax(0, 1fr);
+    gap: 1.5rem;
     border-top: 1px solid var(--line);
-    padding: 0.55rem 0 0;
+    padding: 1.5rem 0 0;
   }
 
   .atlas-hero__map::before {
@@ -2049,45 +2055,51 @@ footer[id] {
   .atlas-hero__portrait {
     display: block;
     grid-area: portrait;
+    align-self: start;
   }
 
   .atlas-hero__portrait img {
-    width: 4.5rem;
+    width: 7rem;
   }
 
   .atlas-hero__professional-base {
-    display: grid;
+    display: block;
     margin: 0;
     grid-area: base;
-    align-content: center;
-    justify-items: start;
-    padding: 0.45rem 0;
+    padding: 0;
     text-align: left;
   }
 
+  .atlas-hero__professional-base > span,
+  .atlas-hero__professional-base > strong,
+  .atlas-hero__professional-base > p {
+    display: block;
+  }
+
   .atlas-hero__professional-base strong {
-    font-size: 1.6rem;
+    margin-top: 0.25rem;
+    font-size: clamp(1.9rem, 8vw, 2.5rem);
   }
 
   .atlas-hero__manifesto {
-    margin-top: 0.65rem;
-    padding-top: 0.6rem;
+    width: calc(100% + 8.5rem);
+    margin-top: 1.5rem;
+    margin-left: -8.5rem;
+    padding-top: 1.5rem;
   }
 
   .atlas-hero__manifesto p {
-    margin-top: 0.25rem;
-    font-size: 0.76rem;
-    line-height: 1.35;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.6;
   }
 
   .atlas-section {
     --spine-x: 1.25rem;
-    --station-node-y: 4.8rem;
-    height: 100vh;
-    height: 100svh;
-    min-height: 100vh;
+    --station-node-y: 6.25rem;
+    height: auto;
     min-height: 100svh;
-    padding: 4.55rem 1rem 0.65rem 2.75rem;
+    padding: 6rem 1.25rem 4.5rem 3.25rem;
   }
 
   .atlas-section::after,
@@ -2103,103 +2115,110 @@ footer[id] {
   .atlas-section .station-marker {
     top: var(--station-node-y);
     right: auto;
-    left: calc(var(--spine-x) + 1.05rem);
+    left: calc(var(--spine-x) + 1.2rem);
+  }
+
+  .atlas-section__inner {
+    width: min(100%, 44rem);
+    margin-inline: auto;
   }
 
   .station-heading {
-    margin-bottom: 0.7rem;
-    padding-top: 0.9rem;
+    margin-bottom: 2.5rem;
+    padding-top: 1.25rem;
   }
 
   .station-heading__kicker {
-    margin-bottom: 0.2rem;
-    font-size: 0.66rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1.4;
   }
 
   .station-heading h2 {
-    font-size: clamp(2rem, 7vw, 3.2rem);
-    line-height: 0.92;
+    font-size: clamp(3rem, 13vw, 4.5rem);
+    line-height: 0.9;
   }
 
   .station-heading__subtitle {
-    margin-top: 0.3rem;
-    font-size: 0.78rem;
-    line-height: 1.3;
+    max-width: 34rem;
+    margin-top: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
   }
 
   .evidence-block__label {
-    min-height: 2rem;
+    min-height: 2.75rem;
   }
 
   .evidence-block__label span,
   .evidence-block__label p {
-    font-size: 1rem;
+    font-size: 1.15rem;
   }
 
   .evidence-block__body {
-    padding-top: 0.45rem;
+    padding-top: 1rem;
   }
 
   .evidence-block h3,
   .education-route h3 {
-    margin-top: 0.18rem;
-    font-size: 1.22rem;
-    line-height: 1;
+    margin-top: 0.35rem;
+    font-size: 1.5rem;
+    line-height: 1.05;
   }
 
   .evidence-block__date {
-    font-size: 0.68rem;
+    font-size: 0.875rem;
   }
 
   .evidence-block__place {
-    margin-block: 0.25rem 0.35rem;
-    font-size: 0.8rem;
+    margin-block: 0.5rem 0.75rem;
+    font-size: 0.95rem;
   }
 
   .inline-technology-list {
-    margin-top: 0.45rem;
+    margin-top: 1rem;
   }
 
   .inline-technology-list li {
-    padding: 0.28rem 0.4rem;
-    font-size: 0.68rem;
+    padding: 0.4rem 0.55rem;
+    font-size: 0.875rem;
   }
 
   .education-route {
-    margin-top: 0.65rem;
+    margin-top: 3rem;
   }
 
   .education-route ol {
-    padding-top: 0.15rem;
+    padding-top: 0.5rem;
   }
 
   .education-route ol::before {
-    top: 0.55rem;
-    bottom: 0.6rem;
+    top: 0.9rem;
+    bottom: 1rem;
   }
 
   .education-route li {
-    padding: 0.28rem 0 0.35rem 1.35rem;
+    padding: 0.75rem 0 1rem 1.75rem;
   }
 
   .education-route__node {
-    top: 0.5rem;
-    width: 0.7rem;
-    height: 0.7rem;
+    top: 1rem;
+    width: 0.8rem;
+    height: 0.8rem;
   }
 
   .education-route__note {
-    margin-top: 0.2rem;
-    font-size: 0.72rem;
-    line-height: 1.25;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.45;
   }
 
   .dependency-map__origin {
     display: flex;
-    margin-bottom: 0.55rem;
+    margin-bottom: 1.5rem;
     align-items: center;
-    gap: 0.65rem;
-    padding-top: 0.45rem;
+    gap: 0.75rem;
+    padding-top: 0.75rem;
   }
 
   .dependency-map__origin span {
@@ -2211,33 +2230,33 @@ footer[id] {
 
   .dependency-map__origin p {
     max-width: none;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
   }
 
   .skill-route {
-    min-height: 0;
-    grid-template-columns: 1.4rem 1.8rem minmax(0, 1fr);
+    min-height: 4.75rem;
+    grid-template-columns: 1.75rem 2rem minmax(0, 1fr);
   }
 
   .skill-route__index {
-    font-size: 0.7rem;
+    font-size: 0.875rem;
   }
 
   .skill-route__content {
-    padding: 0.38rem 0 0.42rem 0.65rem;
+    padding: 0.9rem 0 1rem 0.75rem;
   }
 
   .skill-route h3 {
-    font-size: 1rem;
+    font-size: 1.25rem;
   }
 
   .skill-route ul {
-    margin-top: 0.12rem;
+    margin-top: 0.4rem;
   }
 
   .skill-route li {
-    font-size: 0.68rem;
-    line-height: 1.3;
+    font-size: 0.95rem;
+    line-height: 1.5;
   }
 
   .skill-route li:not(:last-child)::after {
@@ -2251,9 +2270,9 @@ footer[id] {
 
   .project-selector__compact {
     display: grid;
-    gap: 0.25rem;
+    gap: 0.5rem;
     color: var(--blue);
-    font-size: 0.68rem;
+    font-size: 0.875rem;
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -2261,68 +2280,66 @@ footer[id] {
 
   .project-selector__compact select {
     width: 100%;
-    min-height: 2.75rem;
+    min-height: 3rem;
     border: 1px solid var(--blue);
     border-radius: 2px;
     background: var(--paper-raised);
     padding: 0 2.25rem 0 0.7rem;
     color: var(--blue-deep);
-    font: 800 0.9rem var(--body-font);
+    font: 800 1rem var(--body-font);
   }
 
   .project-detail {
     min-height: 0;
-    margin-top: 0.55rem;
-    padding: 0.5rem 0 0;
+    margin-top: 2rem;
+    padding: 1.25rem 0 0;
   }
 
   .project-detail__station {
-    font-size: 0.65rem;
+    font-size: 0.875rem;
   }
 
   .project-detail h3 {
-    margin-top: 0.45rem;
-    font-size: clamp(1.9rem, 7vw, 2.8rem);
+    margin-top: 0.75rem;
+    font-size: clamp(2.75rem, 12vw, 4rem);
   }
 
   .project-detail .atlas-copy {
-    margin-top: 0.45rem;
-    font-size: 0.78rem;
-    line-height: 1.32;
+    margin-top: 1rem;
+    font-size: 1rem;
+    line-height: 1.6;
   }
 
   .project-detail__technologies {
-    margin-top: 0.5rem;
+    margin-top: 1rem;
   }
 
   .project-detail__technologies li {
-    padding: 0.32rem 0.45rem;
-    font-size: 0.68rem;
+    padding: 0.4rem 0.55rem;
+    font-size: 0.875rem;
   }
 
   .project-detail__actions {
-    margin-top: 0.55rem;
-    gap: 0.4rem;
+    margin-top: 1.5rem;
+    gap: 0.75rem;
   }
 
   .project-detail__actions .atlas-button {
-    min-height: 2.75rem;
-    padding: 0.5rem 0.65rem;
-    font-size: 0.78rem;
+    min-height: 3rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
   }
 
   .project-detail > .atlas-text-link {
-    min-height: 2.75rem;
-    margin-top: 0.35rem;
-    font-size: 0.78rem;
+    min-height: 3rem;
+    margin-top: 0.75rem;
+    font-size: 0.875rem;
   }
 
   .atlas-footer {
     --spine-x: 1.25rem;
-    --station-node-y: 4.5rem;
-    height: 100vh;
-    height: 100svh;
-    min-height: 100vh;
+    --station-node-y: 6.25rem;
+    height: auto;
     min-height: 100svh;
     align-items: center;
   }
@@ -2340,42 +2357,45 @@ footer[id] {
   .atlas-footer .station-marker {
     top: var(--station-node-y);
     right: auto;
-    left: calc(var(--spine-x) + 1.05rem);
+    left: calc(var(--spine-x) + 1.2rem);
   }
 
   .atlas-footer__inner {
-    padding: 4.5rem 1rem 0.75rem 2.75rem;
+    width: min(100%, 44rem);
+    margin-inline: auto;
+    padding: 7rem 1.25rem 3rem 3.25rem;
   }
 
   .atlas-footer h2 {
-    margin-top: 0.5rem;
-    font-size: clamp(2.75rem, 12vw, 4.5rem);
+    margin-top: 0.75rem;
+    font-size: clamp(3.25rem, 15vw, 5rem);
   }
 
   .atlas-footer .atlas-copy {
-    margin-top: 0.65rem;
+    margin-top: 1rem;
   }
 
   .atlas-footer__actions {
-    margin-top: 0.9rem;
+    margin-top: 1.75rem;
   }
 
   .atlas-footer__links {
-    margin-top: 0.75rem;
+    margin-top: 1.25rem;
   }
 
   .atlas-footer__legal {
-    margin-top: 1rem;
+    margin-top: 2rem;
   }
 }
 
 @media (max-width: 520px) {
   .atlas-display {
     gap: 0 0.12em;
-    font-size: clamp(2.55rem, 12.7vw, 3.3rem);
+    font-size: clamp(2.55rem, 12.5vw, 3.45rem);
   }
 
   .atlas-actions {
+    grid-template-columns: 1fr;
     align-items: stretch;
     flex-direction: initial;
   }
@@ -2386,16 +2406,23 @@ footer[id] {
   }
 
   .atlas-footer__actions {
-    gap: 0.45rem;
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
   .atlas-footer__actions .atlas-button {
-    min-height: 2.75rem;
+    width: 100%;
+    min-height: 3rem;
+  }
+}
+
+@media (max-width: 340px) {
+  .project-detail h3 {
+    font-size: clamp(2.3rem, 11.5vw, 2.75rem);
   }
 
-  .atlas-footer {
-    min-height: 100vh;
-    min-height: 100dvh;
+  .atlas-footer h2 {
+    font-size: clamp(2.35rem, 12vw, 3.5rem);
   }
 }
 
