@@ -52,7 +52,7 @@ function Info() {
                 sizes="(min-width: 900px) 190px, 136px"
                 alt={copy.hero.portraitAlt}
                 width="480"
-                height="480"
+                height="600"
                 decoding="async"
                 fetchPriority="high"
               />
