@@ -6,6 +6,7 @@ import {
 } from 'react';
 
 const POINTER_QUERY = '(pointer: fine)';
+const MOBILE_QUERY = '(max-width: 899px)';
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
 const WHEEL_THRESHOLD = 48;
 const SCROLL_LOCK_MS = 680;
@@ -85,6 +86,18 @@ function useStationNavigation({ stationIds, activeStation, onStationChange }) {
 
       const stations = getStationElements(stationIds);
       const wasFreeScrolling = root.classList.contains(FREE_SCROLL_CLASS);
+
+      // Mobile is intentionally an editorial, naturally scrolling document.
+      // The desktop station contract remains unchanged.
+      if (window.matchMedia(MOBILE_QUERY).matches) {
+        root.classList.add(FREE_SCROLL_CLASS);
+        root.classList.remove('is-station-jumping');
+        stationModeRef.current = false;
+        scrollLockUntilRef.current = 0;
+        wheelAccumulatorRef.current = 0;
+        measureFrame = 0;
+        return;
+      }
 
       // Measure against the strict 100svh station contract. Restoring the
       // class before the next paint keeps this check invisible to visitors.
@@ -168,10 +181,12 @@ function useStationNavigation({ stationIds, activeStation, onStationChange }) {
     if (!hashStation) return undefined;
 
     let cancelled = false;
+    let sequenceStarted = false;
     let firstFrame = 0;
     let secondFrame = 0;
+    const alignmentTimers = [];
 
-    const alignInitialStation = () => {
+    const alignInitialStation = (finalize = false) => {
       if (cancelled) return;
 
       firstFrame = window.requestAnimationFrame(() => {
@@ -184,22 +199,39 @@ function useStationNavigation({ stationIds, activeStation, onStationChange }) {
             'auto',
           );
           onStationChange(hashStation);
-          initializingRef.current = false;
+          if (finalize) initializingRef.current = false;
         });
       });
     };
 
-    if (document.fonts?.ready) {
-      document.fonts.ready.then(alignInitialStation);
-    } else {
+    const startAlignmentSequence = () => {
+      if (cancelled || sequenceStarted) return;
+      sequenceStarted = true;
       alignInitialStation();
+      alignmentTimers.push(window.setTimeout(() => alignInitialStation(), 120));
+
+      if (window.matchMedia(MOBILE_QUERY).matches) {
+        alignmentTimers.push(
+          window.setTimeout(() => alignInitialStation(), 360),
+          window.setTimeout(() => alignInitialStation(true), 900),
+        );
+      } else {
+        alignmentTimers.push(window.setTimeout(() => alignInitialStation(true), 360));
+      }
+    };
+
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(startAlignmentSequence);
+    } else {
+      startAlignmentSequence();
     }
 
-    window.addEventListener('load', alignInitialStation, { once: true });
+    window.addEventListener('load', startAlignmentSequence, { once: true });
 
     return () => {
       cancelled = true;
-      window.removeEventListener('load', alignInitialStation);
+      window.removeEventListener('load', startAlignmentSequence);
+      alignmentTimers.forEach((timer) => window.clearTimeout(timer));
       if (firstFrame) window.cancelAnimationFrame(firstFrame);
       if (secondFrame) window.cancelAnimationFrame(secondFrame);
     };
