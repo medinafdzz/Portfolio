@@ -109,6 +109,7 @@ export const translations = {
       viewDemo: 'Ver demo',
       allRepositories: 'Todos los repositorios',
       descriptions: {
+        codeGuardian: 'Sistema de revisión de código que coordina Jenkins, SonarQube y Gemini mediante MCP para transformar incidencias de análisis estático en propuestas de corrección revisables y publicarlas en Bitbucket. Incluye validación, métricas y revisión local mediante CLI y extensión de VS Code.',
         remoteWordle: 'Juego competitivo de Wordle con arquitectura cliente-servidor en Java que sincroniza partidas en tiempo real, gestiona múltiples conexiones y registra cada intento en logs para análisis. Incluye diccionario propio, control de alias y reinicios coordinados desde el servidor.',
         qrGenerator: 'Aplicación web responsiva que genera códigos QR tanto desde URLs como a partir de imágenes subidas y alojadas en Imgur. Está construida solo con HTML, CSS y JavaScript, e integra animaciones ligeras y mensajes de estado para una experiencia clara.',
         cleaningRobot: 'Robot de limpieza autónomo compatible con Raspberry Pi que modela motores, sensores infrarrojos y sistema de baterías para reaccionar a obstáculos y zonas sucias. El Route Management System coordina la ruta en una cuadrícula y permite simular escenarios con pruebas automatizadas.',
@@ -232,6 +233,7 @@ export const translations = {
       viewDemo: 'View demo',
       allRepositories: 'All repositories',
       descriptions: {
+        codeGuardian: 'Code review system that coordinates Jenkins, SonarQube and Gemini through MCP to transform static-analysis findings into reviewable correction proposals and publish them on Bitbucket. It includes validation, metrics and local review through a CLI and VS Code extension.',
         remoteWordle: 'Competitive Wordle game built with a Java client-server architecture. It synchronises matches in real time, manages multiple connections and logs every attempt for analysis. It includes its own dictionary, alias control and server-coordinated restarts.',
         qrGenerator: 'Responsive web application that generates QR codes from URLs or from uploaded images hosted on Imgur. Built solely with HTML, CSS and JavaScript, it includes lightweight animations and status messages for a clear experience.',
         cleaningRobot: 'Autonomous cleaning robot compatible with Raspberry Pi that models motors, infrared sensors and a battery system to respond to obstacles and dirty areas. Its Route Management System coordinates movement across a grid and supports simulated scenarios with automated tests.',

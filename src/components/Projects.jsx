@@ -4,6 +4,12 @@ import usePreferences from '../hooks/usePreferences';
 
 const projects = [
   {
+    key: 'codeGuardian',
+    title: 'CodeGuardian',
+    tags: ['Python', 'Jenkins', 'SonarQube', 'MCP'],
+    github: 'https://github.com/medinafdzz/CodeGuardian',
+  },
+  {
     key: 'remoteWordle',
     title: 'RemoteWordle',
     tags: ['Java', 'Client-Server', 'Game'],
@@ -27,12 +33,6 @@ const projects = [
     title: 'Password Manager',
     tags: ['Python', 'Security', 'GUI'],
     github: 'https://github.com/medinafdzz/Password-manager',
-  },
-  {
-    key: 'calculator',
-    title: 'Calculator',
-    tags: ['HTML', 'CSS', 'JavaScript'],
-    github: 'https://github.com/medinafdzz/Calculator',
   },
   {
     key: 'commonsDbUtils',
