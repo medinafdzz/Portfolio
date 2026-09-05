@@ -499,7 +499,7 @@ footer[id] {
   position: relative;
   z-index: 1;
   display: grid;
-  width: min(100%, 40rem);
+  width: 100%;
   grid-column: 3;
   grid-row: 1;
   grid-template-columns: minmax(0, 1fr);
@@ -513,18 +513,22 @@ footer[id] {
 .atlas-hero__professional-base {
   display: grid;
   width: 100%;
+  min-height: 100%;
   margin: 0;
   align-content: center;
-  justify-items: start;
+  justify-items: center;
   border-top: 2px solid var(--orange);
   border-bottom: 1px solid var(--line);
-  padding: 1rem 0 1.1rem;
-  gap: 0.2rem;
-  text-align: left;
+  box-sizing: border-box;
+  padding: clamp(2rem, 6vh, 4rem) clamp(1rem, 4vw, 3rem);
+  gap: 0.35rem;
+  text-align: center;
 }
 
 .atlas-hero__location {
-  display: contents;
+  display: grid;
+  justify-items: center;
+  gap: 0.35rem;
 }
 
 .atlas-hero__professional-base span {
@@ -538,7 +542,7 @@ footer[id] {
 .atlas-hero__professional-base strong {
   color: var(--blue-deep);
   font-family: var(--display-font);
-  font-size: clamp(2rem, 3vw, 2.8rem);
+  font-size: clamp(2.8rem, 4.5vw, 4.5rem);
   font-weight: 800;
   letter-spacing: -0.025em;
   line-height: 1;
@@ -548,11 +552,12 @@ footer[id] {
 .atlas-hero__professional-base p {
   margin-top: 0.35rem;
   color: var(--ink-muted);
-  font-size: 0.88rem;
+  font-size: 1rem;
 }
 
 .atlas-hero__manifesto {
   width: 100%;
+  max-width: 48rem;
   margin-top: 1.15rem;
   border-top: 1px solid var(--line);
   padding-top: 1rem;
@@ -561,8 +566,8 @@ footer[id] {
 .atlas-hero__manifesto p {
   width: 100%;
   margin-top: 0.4rem;
-  font-size: 0.95rem;
-  line-height: 1.55;
+  font-size: 1.08rem;
+  line-height: 1.65;
 }
 
 .atlas-hero__continue {
@@ -2023,10 +2028,14 @@ footer[id] {
 
   .atlas-hero__professional-base {
     display: grid;
+    min-height: 0;
+    padding: 2rem 0 2.25rem;
+    text-align: center;
   }
 
   .atlas-hero__location {
     display: grid;
+    justify-items: center;
     align-content: center;
     gap: 0.2rem;
   }
@@ -2039,10 +2048,11 @@ footer[id] {
 
   .atlas-hero__professional-base strong {
     margin-top: 0.25rem;
-    font-size: clamp(1.9rem, 8vw, 2.5rem);
+    font-size: clamp(2.4rem, 12vw, 3.6rem);
   }
 
   .atlas-hero__manifesto {
+    max-width: none;
     width: 100%;
     margin-top: 1.5rem;
     padding-top: 1.5rem;
@@ -2050,7 +2060,7 @@ footer[id] {
 
   .atlas-hero__manifesto p {
     margin-top: 0.5rem;
-    font-size: 1rem;
+    font-size: 1.05rem;
     line-height: 1.6;
   }
 
