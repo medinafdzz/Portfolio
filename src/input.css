@@ -516,18 +516,18 @@ footer[id] {
   min-height: 100%;
   margin: 0;
   align-content: center;
-  justify-items: center;
+  justify-items: start;
   border-top: 2px solid var(--orange);
   border-bottom: 1px solid var(--line);
   box-sizing: border-box;
   padding: clamp(2rem, 6vh, 4rem) clamp(1rem, 4vw, 3rem);
   gap: 0.35rem;
-  text-align: center;
+  text-align: left;
 }
 
 .atlas-hero__location {
   display: grid;
-  justify-items: center;
+  justify-items: start;
   gap: 0.35rem;
 }
 
@@ -2030,12 +2030,12 @@ footer[id] {
     display: grid;
     min-height: 0;
     padding: 2rem 0 2.25rem;
-    text-align: center;
+    text-align: left;
   }
 
   .atlas-hero__location {
     display: grid;
-    justify-items: center;
+    justify-items: start;
     align-content: center;
     gap: 0.2rem;
   }
