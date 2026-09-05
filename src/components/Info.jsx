@@ -1,5 +1,3 @@
-import perfilSmall from '../assets/perfil-256.webp';
-import perfilLarge from '../assets/perfil-480.webp';
 import usePreferences from '../hooks/usePreferences';
 
 function Info() {
@@ -43,22 +41,6 @@ function Info() {
         </div>
 
         <aside id="route-summary" className="atlas-hero__map" aria-label={copy.hero.summaryLabel}>
-          <div className="atlas-hero__portrait">
-            <picture>
-              <source media="(max-width: 639px)" srcSet={perfilSmall} />
-              <img
-                src={perfilLarge}
-                srcSet={`${perfilSmall} 256w, ${perfilLarge} 480w`}
-                sizes="(min-width: 900px) 190px, 136px"
-                alt={copy.hero.portraitAlt}
-                width="480"
-                height="600"
-                decoding="async"
-                fetchPriority="high"
-              />
-            </picture>
-          </div>
-
           <div className="atlas-hero__professional-base">
             <div className="atlas-hero__location">
               <span>{copy.hero.locationLabel}</span>

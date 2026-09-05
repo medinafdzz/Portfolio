@@ -502,31 +502,12 @@ footer[id] {
   width: min(100%, 40rem);
   grid-column: 3;
   grid-row: 1;
-  grid-template-columns: 12rem minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   align-self: stretch;
   justify-self: center;
   align-items: stretch;
-  gap: 2rem;
   min-height: 0;
   padding: 0;
-}
-
-.atlas-hero__map::before {
-  display: none;
-}
-
-.atlas-hero__portrait {
-  display: block;
-  align-self: center;
-}
-
-.atlas-hero__portrait img {
-  width: 12rem;
-  aspect-ratio: 4 / 5;
-  border: 1px solid var(--blue);
-  object-fit: cover;
-  object-position: center;
-  filter: grayscale(1) contrast(1.04);
 }
 
 .atlas-hero__professional-base {
@@ -1322,15 +1303,9 @@ footer[id] {
   }
 
   .atlas-hero__map {
-    grid-template-columns: 9rem minmax(0, 1fr);
     min-height: 0;
     padding-block: 0;
   }
-
-  .atlas-hero__portrait img {
-    width: 9rem;
-  }
-
 }
 
 @media (max-width: 899px) {
@@ -1621,10 +1596,6 @@ footer[id] {
 
   .atlas-text-link {
     width: fit-content;
-  }
-
-  .atlas-hero__portrait img {
-    width: 6.5rem;
   }
 
   .station-heading h2 {
@@ -2045,36 +2016,17 @@ footer[id] {
     display: grid;
     min-height: 0;
     margin-top: 3rem;
-    grid-template-areas: 'portrait base';
-    grid-template-columns: 7rem minmax(0, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1fr);
     border-top: 1px solid var(--line);
     padding: 1.5rem 0 0;
   }
 
-  .atlas-hero__map::before {
-    display: none;
-  }
-
-  .atlas-hero__portrait {
-    display: block;
-    grid-area: portrait;
-    grid-row: 1;
-    align-self: start;
-  }
-
-  .atlas-hero__portrait img {
-    width: 7rem;
-  }
-
   .atlas-hero__professional-base {
-    display: contents;
+    display: grid;
   }
 
   .atlas-hero__location {
     display: grid;
-    grid-column: 2;
-    grid-row: 1;
     align-content: center;
     gap: 0.2rem;
   }
@@ -2093,8 +2045,6 @@ footer[id] {
   .atlas-hero__manifesto {
     width: 100%;
     margin-top: 1.5rem;
-    grid-column: 1 / -1;
-    grid-row: 2;
     padding-top: 1.5rem;
   }
 
