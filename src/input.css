@@ -810,6 +810,42 @@ footer[id] {
   font-weight: 800;
 }
 
+.experience-route {
+  position: relative;
+  padding-top: 1rem;
+}
+
+.experience-route::before {
+  position: absolute;
+  top: 1.6rem;
+  bottom: 1.5rem;
+  left: 0.45rem;
+  width: 2px;
+  background: var(--line);
+  content: '';
+}
+
+.experience-route li {
+  position: relative;
+  padding: 1.1rem 0 1.4rem 2rem;
+}
+
+.experience-route li + li {
+  border-top: 1px solid var(--line-soft);
+}
+
+.experience-route__node {
+  position: absolute;
+  top: 1.45rem;
+  left: 0;
+  width: 0.95rem;
+  height: 0.95rem;
+  border: 3px solid var(--paper);
+  background: var(--orange);
+  box-shadow: 0 0 0 2px var(--orange);
+  border-radius: 50%;
+}
+
 .inline-technology-list {
   display: flex;
   margin-top: 1.75rem;

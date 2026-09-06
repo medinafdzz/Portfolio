@@ -21,9 +21,16 @@ function About() {
             <p>{copy.about.experienceLabel}</p>
           </div>
           <div className="evidence-block__body">
-            <p className="evidence-block__date">{experience.years}</p>
-            <h3>{experience.title}</h3>
-            <p className="evidence-block__place">{experience.center}</p>
+            <ol className="experience-route">
+              {experience.roles.map((role) => (
+                <li key={role.years}>
+                  <span className="experience-route__node" aria-hidden="true" />
+                  <p className="evidence-block__date">{role.years}</p>
+                  <h3>{role.title}</h3>
+                  <p className="evidence-block__place">{role.center}</p>
+                </li>
+              ))}
+            </ol>
             <p className="atlas-copy">{experience.description}</p>
             <ul className="inline-technology-list" aria-label={copy.about.technologiesLabel}>
               {experience.tools.map((tool) => <li key={tool}>{tool}</li>)}

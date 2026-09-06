@@ -57,9 +57,18 @@ export const translations = {
       educationLabel: 'Formación',
       technologiesLabel: 'Tecnologías utilizadas',
       experience: {
-        title: 'Junior Software Engineer',
-        center: 'Indra Sistemas',
-        years: 'Enero - julio de 2026',
+        roles: [
+          {
+            title: 'Junior Software Engineer',
+            center: 'Indra Sistemas',
+            years: 'Agosto de 2026 - Actualidad',
+          },
+          {
+            title: 'Junior Software Engineer Intern',
+            center: 'Indra Sistemas',
+            years: 'Enero - julio de 2026',
+          },
+        ],
         description: 'Desarrollo de herramientas para sistemas ATM (Air Traffic Management).',
         tools: ['Java', 'C', 'Python', 'shell', 'Jenkins', 'SonarQube', 'Bitbucket', 'MCPs', 'LLMs'],
       },
@@ -68,7 +77,6 @@ export const translations = {
           title: 'Ingegneria Informatica (Erasmus)',
           center: 'Università degli Studi di Salerno',
           years: '2024 - 2025',
-          note: 'Embedded Systems · Software Dependability · Seguridad IoT · Serverless Computing',
         },
         {
           title: 'Ingeniería Informática en Tecnologías de la Información',
@@ -180,9 +188,18 @@ export const translations = {
       educationLabel: 'Education',
       technologiesLabel: 'Technologies used',
       experience: {
-        title: 'Junior Software Engineer',
-        center: 'Indra Sistemas',
-        years: 'January - July 2026',
+        roles: [
+          {
+            title: 'Junior Software Engineer',
+            center: 'Indra Sistemas',
+            years: 'August 2026 - present',
+          },
+          {
+            title: 'Junior Software Engineer Intern',
+            center: 'Indra Sistemas',
+            years: 'January - July 2026',
+          },
+        ],
         description: 'Development of tools for ATM systems (Air Traffic Management).',
         tools: ['Java', 'C', 'Python', 'shell', 'Jenkins', 'SonarQube', 'Bitbucket', 'MCPs', 'LLMs'],
       },
@@ -191,7 +208,6 @@ export const translations = {
           title: 'Ingegneria Informatica (Erasmus)',
           center: 'Università degli Studi di Salerno',
           years: '2024 - 2025',
-          note: 'Embedded Systems · Software Dependability · IoT Security · Serverless Computing',
         },
         {
           title: 'Ingeniería Informática en Tecnologías de la Información',
