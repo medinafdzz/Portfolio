@@ -1161,7 +1161,7 @@ footer[id] {
 
 .project-secondary h3 {
   color: var(--blue-deep);
-  font-family: var(--display-font);
+  font-family: var(--body-font);
   font-size: clamp(1.8rem, 4vw, 3rem);
   letter-spacing: -0.03em;
 }
@@ -1197,14 +1197,14 @@ footer[id] {
 
 .project-secondary__list a strong {
   padding: 0 1rem;
-  font-family: var(--display-font);
+  font-family: var(--body-font);
   font-size: 1.25rem;
   letter-spacing: -0.01em;
 }
 
 .project-secondary__index {
   color: var(--orange);
-  font-family: var(--display-font);
+  font-family: var(--body-font);
   font-weight: 800;
   text-align: center;
 }
