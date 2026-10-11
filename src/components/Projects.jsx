@@ -6,19 +6,19 @@ const featuredProjects = [
   {
     key: 'codeGuardian',
     title: 'CodeGuardian',
-    tags: ['Python', 'Code review', 'Validation', 'CI/CD'],
+    tags: ['Python', 'Pydantic', 'Jenkins'],
     github: 'https://github.com/medinafdzz/CodeGuardian',
   },
   {
     key: 'commonsDbUtils',
     title: 'Commons DbUtils',
-    tags: ['Java', 'Quality engineering', 'Benchmarking'],
+    tags: ['Java', 'JaCoCo', 'PiTest'],
     github: 'https://github.com/medinafdzz/commons-dbutils',
   },
   {
     key: 'remoteWordle',
     title: 'RemoteWordle',
-    tags: ['Java', 'Client-server', 'Game'],
+    tags: ['Java'],
     github: 'https://github.com/medinafdzz/RemoteWordle',
   },
 ];

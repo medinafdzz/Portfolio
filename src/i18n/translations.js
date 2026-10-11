@@ -6,8 +6,8 @@ export const languageOptions = [
 export const translations = {
   es: {
     meta: {
-      title: 'Alejandro Medina | Software Engineer aplicado a IA',
-      description: 'Portfolio de Alejandro Medina, ingeniero de software que construye herramientas fiables con IA aplicada, backend, sistemas y calidad.',
+      title: 'Alejandro Medina | Software Engineer orientado a IA y LLM',
+      description: 'Portfolio de Alejandro Medina, ingeniero de software con experiencia en backend, sistemas, calidad y una transición hacia IA aplicada y aplicaciones con LLM.',
       locale: 'es_ES',
     },
     skipLink: 'Saltar al contenido',
@@ -29,11 +29,11 @@ export const translations = {
       languageLabel: 'Idioma',
     },
     hero: {
-      kicker: 'Software engineer · IA aplicada',
-      role: 'Herramientas fiables con IA · Backend · Sistemas',
+      kicker: 'Software engineer · IA aplicada y LLM',
+      role: 'Backend · Sistemas · Calidad de software',
       intro: [
         'Construyo software con una base de backend, sistemas ATM, automatización y calidad. Me interesa convertir problemas complejos en herramientas claras, verificables y fáciles de mantener.',
-        'Actualmente curso un Máster Universitario en Inteligencia Artificial y estoy orientando mi experiencia hacia aplicaciones basadas en modelos de lenguaje, developer tooling y flujos con revisión humana.',
+        'Actualmente curso un Máster Universitario en Inteligencia Artificial y estoy orientando mi experiencia hacia aplicaciones con IA, modelos de lenguaje y herramientas para desarrolladores.',
       ],
       actionsLabel: 'Acciones principales',
       projects: 'Ver proyectos',
@@ -44,7 +44,7 @@ export const translations = {
       location: 'Gijón, España',
       languages: 'Idiomas: español e inglés',
       objectivesLabel: 'Objetivos',
-      objectives: 'Mi foco actual es la ingeniería de software aplicada a IA: diseñar flujos con salidas estructuradas, validación, trazabilidad y revisión humana. Busco proyectos exigentes donde la fiabilidad y la calidad formen parte del producto.',
+      objectives: 'Mi dirección actual combina ingeniería de software y fundamentos de IA: aplicaciones con modelos de lenguaje, evaluación, integración de software y aprendizaje continuo. Busco proyectos exigentes donde la fiabilidad y la calidad formen parte del producto.',
       continue: 'Comenzar recorrido',
       emailSubject: 'Consulta',
       emailBody: 'Hola, me gustaría contactar contigo.',
@@ -70,7 +70,7 @@ export const translations = {
           },
         ],
         description: 'Desarrollo de herramientas para sistemas ATM (Air Traffic Management), con foco en automatización, calidad y procesos de entrega fiables.',
-        tools: ['Java', 'C', 'Python', 'Shell', 'CI/CD', 'Análisis estático'],
+        tools: ['Java', 'C', 'Python', 'Shell', 'Jenkins', 'SonarQube'],
       },
       education: [
         {
@@ -93,17 +93,15 @@ export const translations = {
     skills: {
       kicker: 'Mapa de capacidades',
       title: 'Habilidades técnicas',
-      subtitle: 'Lo que construyo hoy y las áreas que estoy desarrollando.',
+      subtitle: 'Herramientas que uso y tecnologías de IA que estoy aprendiendo.',
       origin: 'Tech Stack',
       categories: [
         { title: 'Backend', skills: ['Java', 'C', 'C++', 'Python'] },
-        { title: 'IA aplicada', skills: ['LLM applications', 'Structured outputs', 'Human review', 'Validation'] },
-        { title: 'Calidad y seguridad', skills: ['SonarQube', 'JaCoCo', 'PiTest', 'FindSecBugs', 'Software Dependability'] },
-        { title: 'CI/CD y colaboración', skills: ['Jenkins', 'GitHub Actions', 'Bitbucket', 'Git', 'Docker'] },
-        { title: 'Bases de datos', skills: ['PostgreSQL', 'MySQL', 'MariaDB', 'Modelado relacional'] },
-        { title: 'Sistemas', skills: ['ATM systems', 'Embedded Systems', 'Seguridad IoT', 'Serverless'] },
+        { title: 'Herramientas de calidad', skills: ['SonarQube', 'JaCoCo', 'PiTest', 'FindSecBugs'] },
+        { title: 'Entrega y colaboración', skills: ['Jenkins', 'GitHub Actions', 'Bitbucket', 'Git', 'Docker'] },
+        { title: 'Bases de datos', skills: ['PostgreSQL', 'MySQL', 'MariaDB'] },
         { title: 'Frontend', skills: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Tailwind CSS'] },
-        { title: 'Actualmente aprendiendo', skills: ['Evaluación de sistemas de IA', 'MLOps fundamentals', 'Cloud patterns'] },
+        { title: 'AI/LLM learning roadmap', skills: ['PyTorch', 'Hugging Face Transformers', 'LangChain', 'LlamaIndex', 'MLflow'] },
       ],
     },
     projects: {
@@ -120,7 +118,7 @@ export const translations = {
       secondaryTitle: 'Otros proyectos',
       secondaryDescription: 'Proyectos académicos y experimentos secundarios disponibles para consultar.',
       descriptions: {
-        codeGuardian: 'Prototipo académico de revisión de código asistida por IA. Convierte incidencias de análisis estático en propuestas de corrección estructuradas y revisables, con validación, trazabilidad y una decisión final humana. La documentación explica sus dependencias y límites.',
+        codeGuardian: 'Prototipo académico de revisión de código asistida por IA. Conecta análisis estático con propuestas de corrección estructuradas y revisables; se presenta como una muestra de aprendizaje dentro de un portfolio más amplio y documenta sus dependencias y límites.',
         remoteWordle: 'Juego competitivo de Wordle con arquitectura cliente-servidor en Java que sincroniza partidas en tiempo real, gestiona múltiples conexiones y registra cada intento en logs para análisis. Incluye diccionario propio, control de alias y reinicios coordinados desde el servidor.',
         qrGenerator: 'Aplicación web responsiva que genera códigos QR tanto desde URLs como a partir de imágenes subidas y alojadas en Imgur. Está construida solo con HTML, CSS y JavaScript, e integra animaciones ligeras y mensajes de estado para una experiencia clara.',
         cleaningRobot: 'Robot de limpieza autónomo compatible con Raspberry Pi que modela motores, sensores infrarrojos y sistema de baterías para reaccionar a obstáculos y zonas sucias. El Route Management System coordina la ruta en una cuadrícula y permite simular escenarios con pruebas automatizadas.',
@@ -141,8 +139,8 @@ export const translations = {
   },
   en: {
     meta: {
-      title: 'Alejandro Medina | Software Engineer applied to AI',
-      description: 'Portfolio of Alejandro Medina, a software engineer building reliable AI-enabled tools across backend, systems and software quality.',
+      title: 'Alejandro Medina | Software Engineer moving into AI and LLMs',
+      description: 'Portfolio of Alejandro Medina, a software engineer with a background in backend, systems and software quality, moving toward applied AI and LLM applications.',
       locale: 'en_GB',
     },
     skipLink: 'Skip to content',
@@ -164,11 +162,11 @@ export const translations = {
       languageLabel: 'Language',
     },
     hero: {
-      kicker: 'Software engineer · Applied AI',
-      role: 'Reliable AI-enabled tools · Backend · Systems',
+      kicker: 'Software engineer · Applied AI and LLMs',
+      role: 'Backend · Systems · Software quality',
       intro: [
         'I build software on a foundation of backend engineering, ATM systems, automation and quality. I enjoy turning complex problems into tools that are clear, verifiable and maintainable.',
-        'I am currently studying a Master’s Degree in Artificial Intelligence and moving my experience toward language-model applications, developer tooling and workflows with human review.',
+        'I am currently studying a Master’s Degree in Artificial Intelligence and moving my experience toward AI applications, language models and developer tooling.',
       ],
       actionsLabel: 'Primary actions',
       projects: 'View projects',
@@ -179,7 +177,7 @@ export const translations = {
       location: 'Gijón, Spain',
       languages: 'Languages: Spanish and English',
       objectivesLabel: 'Objectives',
-      objectives: 'My current focus is software engineering applied to AI: designing workflows with structured outputs, validation, traceability and human review. I am looking for demanding projects where reliability and quality are part of the product.',
+      objectives: 'My current direction combines software engineering with AI foundations: language-model applications, evaluation, software integration and continuous learning. I am looking for demanding projects where reliability and quality are part of the product.',
       continue: 'Start the journey',
       emailSubject: 'Enquiry',
       emailBody: 'Hello, I would like to get in touch with you.',
@@ -205,7 +203,7 @@ export const translations = {
           },
         ],
         description: 'Development of tools for ATM systems (Air Traffic Management), with a focus on automation, quality and reliable delivery processes.',
-        tools: ['Java', 'C', 'Python', 'Shell', 'CI/CD', 'Static analysis'],
+        tools: ['Java', 'C', 'Python', 'Shell', 'Jenkins', 'SonarQube'],
       },
       education: [
         {
@@ -228,17 +226,15 @@ export const translations = {
     skills: {
       kicker: 'Capability map',
       title: 'Technical skills',
-      subtitle: 'What I build today and the areas I am developing.',
+      subtitle: 'Tools I use and AI technologies I am learning.',
       origin: 'Tech Stack',
       categories: [
         { title: 'Backend', skills: ['Java', 'C', 'C++', 'Python'] },
-        { title: 'Applied AI', skills: ['LLM applications', 'Structured outputs', 'Human review', 'Validation'] },
-        { title: 'Quality and security', skills: ['SonarQube', 'JaCoCo', 'PiTest', 'FindSecBugs', 'Software Dependability'] },
-        { title: 'CI/CD and collaboration', skills: ['Jenkins', 'GitHub Actions', 'Bitbucket', 'Git', 'Docker'] },
-        { title: 'Databases', skills: ['PostgreSQL', 'MySQL', 'MariaDB', 'Relational modelling'] },
-        { title: 'Systems', skills: ['ATM systems', 'Embedded Systems', 'IoT Security', 'Serverless'] },
+        { title: 'Quality tools', skills: ['SonarQube', 'JaCoCo', 'PiTest', 'FindSecBugs'] },
+        { title: 'Delivery and collaboration', skills: ['Jenkins', 'GitHub Actions', 'Bitbucket', 'Git', 'Docker'] },
+        { title: 'Databases', skills: ['PostgreSQL', 'MySQL', 'MariaDB'] },
         { title: 'Frontend', skills: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Tailwind CSS'] },
-        { title: 'Currently learning', skills: ['AI systems evaluation', 'MLOps fundamentals', 'Cloud patterns'] },
+        { title: 'AI/LLM learning roadmap', skills: ['PyTorch', 'Hugging Face Transformers', 'LangChain', 'LlamaIndex', 'MLflow'] },
       ],
     },
     projects: {
@@ -255,7 +251,7 @@ export const translations = {
       secondaryTitle: 'Other projects',
       secondaryDescription: 'Academic projects and secondary experiments available to explore.',
       descriptions: {
-        codeGuardian: 'Academic prototype for AI-assisted code review. It turns static-analysis findings into structured, reviewable correction proposals with validation, traceability and a final human decision. Its documentation explains dependencies and known limits.',
+        codeGuardian: 'Academic prototype for AI-assisted code review. It connects static analysis with structured, reviewable correction proposals and is presented as one learning project within a broader software portfolio. Its documentation explains dependencies and known limits.',
         remoteWordle: 'Competitive Wordle game built with a Java client-server architecture. It synchronises matches in real time, manages multiple connections and logs every attempt for analysis. It includes its own dictionary, alias control and server-coordinated restarts.',
         qrGenerator: 'Responsive web application that generates QR codes from URLs or from uploaded images hosted on Imgur. Built solely with HTML, CSS and JavaScript, it includes lightweight animations and status messages for a clear experience.',
         cleaningRobot: 'Autonomous cleaning robot compatible with Raspberry Pi that models motors, infrared sensors and a battery system to respond to obstacles and dirty areas. Its Route Management System coordinates movement across a grid and supports simulated scenarios with automated tests.',

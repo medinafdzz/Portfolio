@@ -1,15 +1,15 @@
 # Portfolio web de Alejandro Medina
 
-Portfolio bilingüe para presentar el trabajo de Alejandro Medina como software engineer orientado a IA aplicada, developer tooling, backend, sistemas ATM y calidad de software.
+Portfolio bilingüe para presentar el perfil de Alejandro Medina como software engineer con experiencia en backend, sistemas ATM, calidad y CI/CD, orientado hacia IA aplicada y aplicaciones con LLM.
 
-La web prioriza evidencia verificable: experiencia profesional, formación actual, proyectos con código público y límites claros. CodeGuardian aparece como prototipo académico de revisión de código asistida por IA; no se presenta como experiencia de IA en producción.
+La web prioriza evidencia verificable: experiencia profesional, formación actual, herramientas de software, proyectos con código público y límites claros. CodeGuardian aparece como un prototipo académico dentro de una selección equilibrada; no se presenta como experiencia de IA en producción.
 
 ## Contenido
 
 - Hero bilingüe con posicionamiento, formación actual y contacto.
 - Trayectoria profesional y académica.
-- Capacidades separadas entre backend, IA aplicada, calidad, entrega, sistemas y aprendizaje actual.
-- Proyectos destacados con CodeGuardian en primer lugar.
+- Capacidades separadas entre herramientas de software verificadas y una hoja de aprendizaje de IA/LLM.
+- Proyectos destacados de IA, sistemas, calidad y software general.
 - Proyectos secundarios enlazados sin presentarlos como experiencia profesional.
 - Navegación por teclado, skip link, estados ARIA y soporte para movimiento reducido.
 
@@ -18,6 +18,8 @@ La web prioriza evidencia verificable: experiencia profesional, formación actua
 - React y Vite.
 - CSS propio con diseño responsive.
 - ESLint para mantener el código consistente.
+
+La web distingue el stack demostrado de las herramientas de IA/LLM que forman parte del itinerario de aprendizaje. PyTorch, Hugging Face Transformers, LangChain, LlamaIndex y MLflow no se presentan como experiencia consolidada.
 
 ## Estructura
 

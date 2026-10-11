@@ -28,7 +28,7 @@
     "tailwindcss": "^3.4.18",
     "vite": "^7.3.6"
   },
-  "description": "Portfolio profesional de Alejandro Medina, ingeniero de software orientado a IA aplicada, developer tooling y sistemas fiables.",
+  "description": "Portfolio profesional de Alejandro Medina, ingeniero de software con experiencia en backend, sistemas y calidad, orientado a IA aplicada y aplicaciones con LLM.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/medinafdzz/Portfolio.git"
@@ -37,6 +37,7 @@
     "portfolio",
     "software-engineering",
     "applied-ai",
+    "llm-applications",
     "developer-tools",
     "ci-cd"
   ],
