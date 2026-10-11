@@ -1153,6 +1153,46 @@ footer[id] {
   margin-top: 1.25rem;
 }
 
+.project-secondary {
+  display: grid;
+  margin-top: 3rem;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 2rem;
+  border-top: 1px solid var(--line);
+  padding-top: 1.5rem;
+}
+
+.project-secondary h3 {
+  color: var(--blue-deep);
+  font-family: var(--display-font);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  letter-spacing: -0.03em;
+}
+
+.project-secondary__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  align-content: start;
+}
+
+.project-secondary__list a {
+  display: flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border: 1px solid var(--line);
+  padding: 0.75rem 0.9rem;
+  color: var(--blue-deep);
+  font-weight: 800;
+}
+
+.project-secondary__list a:hover {
+  border-color: var(--orange);
+  background: var(--paper-raised);
+}
+
 .atlas-footer {
   position: relative;
   --station-node-y: clamp(2rem, 7.2vh, 4.35rem);
@@ -2050,7 +2090,11 @@ footer[id] {
   }
 
   .atlas-actions .atlas-text-link {
-    display: none;
+    display: inline-flex;
+    grid-column: 1 / -1;
+    justify-self: start;
+    min-height: 3rem;
+    padding-inline: 0.25rem;
   }
 
   .atlas-hero__map {
@@ -2340,6 +2384,16 @@ footer[id] {
     min-height: 3rem;
     margin-top: 0.75rem;
     font-size: 0.875rem;
+  }
+
+  .project-secondary {
+    display: block;
+    margin-top: 2rem;
+  }
+
+  .project-secondary__list {
+    margin-top: 1rem;
+    grid-template-columns: 1fr;
   }
 
   .atlas-footer {

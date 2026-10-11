@@ -1,93 +1,69 @@
-Portfolio Web – Alejandro Medina
-================================
+# Portfolio web de Alejandro Medina
 
-¡Hola! Soy Alejandro Medina, estudiante de Ingeniería Informática en mi último año de carrera. Este repositorio aloja mi portfolio web, un espacio pensado para presentarme frente a equipos de tecnología que buscan perfiles junior con muchas ganas de aprender y aportar desde el primer día.
+Portfolio bilingüe para presentar el trabajo de Alejandro Medina como software engineer orientado a IA aplicada, developer tooling, backend, sistemas ATM y calidad de software.
 
-Visión general
---------------
-- **Objetivo:** mostrar mis proyectos, habilidades y valores profesionales con un enfoque claro y directo.
-- **Estilo:** diseño minimalista con énfasis en la legibilidad, animaciones suaves y microinteracciones cuidadas.
-- **Resultado:** una página rápida, accesible y fácil de mantener, lista para iterar a medida que avance en mi carrera.
+La web prioriza evidencia verificable: experiencia profesional, formación actual, proyectos con código público y límites claros. CodeGuardian aparece como prototipo académico de revisión de código asistida por IA; no se presenta como experiencia de IA en producción.
 
-Destacados del proyecto
-------------------------
-- **Arquitectura limpia:** componentes React modulares con estilos gestionados por Tailwind CSS, lo que facilita ampliar secciones sin romper el layout.
-- **Accesibilidad como prioridad:** navegación por teclado, etiquetas aria y elementos decorativos marcados correctamente para garantizar una buena experiencia para todos.
-- **Identidad visual consistente:** gradientes reutilizables y tokens de estilo centralizados para mantener coherencia sin duplicar código.
-- **Contenido adaptable:** datos de proyectos y habilidades estructurados para que sea sencillo añadir nuevas experiencias profesionales.
+## Contenido
 
-Stack tecnológico
-------------------
-- [React](https://react.dev/) + [Vite](https://vitejs.dev/) para un desarrollo rápido y renderizado eficiente.
-- [Tailwind CSS](https://tailwindcss.com/) con utilidades personalizadas para controlar tipografía, gradientes y espaciados.
-- ESLint y configuraciones de Vite para mantener el código limpio y alineado con buenas prácticas modernas.
+- Hero bilingüe con posicionamiento, formación actual y contacto.
+- Trayectoria profesional y académica.
+- Capacidades separadas entre backend, IA aplicada, calidad, entrega, sistemas y aprendizaje actual.
+- Proyectos destacados con CodeGuardian en primer lugar.
+- Proyectos secundarios enlazados sin presentarlos como experiencia profesional.
+- Navegación por teclado, skip link, estados ARIA y soporte para movimiento reducido.
 
-Estructura principal
----------------------
-```
+## Stack
+
+- React y Vite.
+- CSS propio con diseño responsive.
+- ESLint para mantener el código consistente.
+
+## Estructura
+
+~~~text
 src/
 ├── components/
-│   ├── Header.jsx         // navegación y menú responsive
-│   ├── Info.jsx           // sección hero con CTA
-│   ├── About.jsx          // recorrido académico y valores personales
-│   ├── Projects.jsx       // proyectos destacados con tabs
-│   ├── Skills.jsx         // habilidades técnicas con métricas
-│   ├── ProjectCard.jsx    // tarjeta reutilizable para proyectos
-│   ├── SectionTitle.jsx   // cabeceras con utilidades de gradiente
-│   ├── Footer.jsx         // enlaces a redes y contacto
-│   └── Button.jsx         // botón reutilizable con variantes
-├── App.jsx                // layout general de la aplicación
-├── main.jsx               // punto de entrada
-└── input.css              // utilidades de Tailwind y estilos globales
-```
+│   ├── About.jsx
+│   ├── Footer.jsx
+│   ├── Header.jsx
+│   ├── Info.jsx
+│   ├── PreferencesControls.jsx
+│   ├── Projects.jsx
+│   ├── SectionTitle.jsx
+│   ├── Skills.jsx
+│   └── StationMarker.jsx
+├── context/
+├── hooks/
+├── i18n/
+├── App.jsx
+├── input.css
+└── main.jsx
+~~~
 
-Experiencia de usuario
------------------------
-- **Responsive total:** desde mobile hasta desktop grande, usando breakpoints personalizados.
-- **Transiciones suaves:** animaciones discretas que acompañan el contenido sin distraer.
-- **Contenido en español:** mensajes claros y cercanos, buscando explicar cada parte de mi código.
+## Desarrollo local
 
-Accesibilidad y rendimiento
----------------------------
-- Uso de `aria-label`, `aria-expanded` y `aria-controls` en elementos interactivos.
-- Íconos decorativos marcados con `aria-hidden="true"` para evitar ruido en lectores de pantalla.
-- Botones con `type="button"` para prevenir comportamientos inesperados en formularios.
-- Código depurado para reducir peso y mejorar los tiempos de carga en entornos reales.
+~~~powershell
+npm install
+npm run dev
+~~~
 
-Cómo ejecutar el proyecto
--------------------------
-1. Clona el repositorio:
-	```powershell
-	git clone https://github.com/medinafdzz/Portfolio.git
-	cd Portfolio
-	```
-2. Instala dependencias:
-	```powershell
-	npm install
-	```
-3. Inicia el entorno de desarrollo:
-	```powershell
-	npm run dev
-	```
-4. Abre `http://localhost:5173` en tu navegador preferido.
+La aplicación se abre en http://localhost:5173.
 
-Despliegue
-----------
-- Configurado para Vercel mediante el archivo `vercel.json` y la build automatizada con Vite.
-- Deploy actual accesible en: *https://medinafdzz.is-a.dev/*.
+## Verificación
 
-Próximos pasos
---------------
-1. Añadir más proyectos reales a medida que avance en prácticas y trabajos universitarios.
-2. Incorporar un blog corto con reflexiones sobre aprendizaje y retos técnicos.
-3. Integrar métricas de visitas y formularios de contacto directamente en el portfolio.
+~~~powershell
+npm.cmd run lint
+npm.cmd run build
+git diff --check
+~~~
 
-Contacto
---------
-Si te interesa mi perfil, puedes escribirme por:
-- **Email:** amedinaf.it@gmail.com
-- **LinkedIn:** [linkedin.com/in/medinafdzz](https://linkedin.com/in/medinafdzz)
-- **GitHub:** [github.com/medinafdzz](https://github.com/medinafdzz)
+## Despliegue
 
-Gracias por dedicar unos minutos a este portfolio! 
+El repositorio contiene vercel.json, CNAME y la configuración necesaria para publicar la build. La URL pública es [medinafdzz.is-a.dev](https://medinafdzz.is-a.dev/).
 
+## Contacto
+
+- Email: [amedinaf.it@gmail.com](mailto:amedinaf.it@gmail.com)
+- LinkedIn: [linkedin.com/in/medinafdzz](https://linkedin.com/in/medinafdzz)
+- GitHub: [github.com/medinafdzz](https://github.com/medinafdzz)

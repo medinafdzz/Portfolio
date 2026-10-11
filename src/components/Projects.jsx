@@ -2,50 +2,46 @@ import { useState } from 'react';
 import SectionTitle from './SectionTitle';
 import usePreferences from '../hooks/usePreferences';
 
-const projects = [
+const featuredProjects = [
   {
     key: 'codeGuardian',
     title: 'CodeGuardian',
-    tags: ['Python', 'Jenkins', 'SonarQube', 'MCP'],
+    tags: ['Python', 'Code review', 'Validation', 'CI/CD'],
     github: 'https://github.com/medinafdzz/CodeGuardian',
-  },
-  {
-    key: 'remoteWordle',
-    title: 'RemoteWordle',
-    tags: ['Java', 'Client-Server', 'Game'],
-    github: 'https://github.com/medinafdzz/RemoteWordle',
-  },
-  {
-    key: 'qrGenerator',
-    title: 'QR Generator',
-    tags: ['HTML', 'CSS', 'JavaScript'],
-    github: 'https://github.com/medinafdzz/QR-generator',
-    demo: 'https://medinafdzz.github.io/QR-generator',
-  },
-  {
-    key: 'cleaningRobot',
-    title: 'Cleaning Robot',
-    tags: ['Python', 'Raspberry Pi', 'Robotics'],
-    github: 'https://github.com/medinafdzz/cleaningrobotpy',
-  },
-  {
-    key: 'passwordManager',
-    title: 'Password Manager',
-    tags: ['Python', 'Security', 'GUI'],
-    github: 'https://github.com/medinafdzz/Password-manager',
   },
   {
     key: 'commonsDbUtils',
     title: 'Commons DbUtils',
-    tags: ['Java', 'Apache', 'Database'],
+    tags: ['Java', 'Quality engineering', 'Benchmarking'],
     github: 'https://github.com/medinafdzz/commons-dbutils',
+  },
+  {
+    key: 'remoteWordle',
+    title: 'RemoteWordle',
+    tags: ['Java', 'Client-server', 'Game'],
+    github: 'https://github.com/medinafdzz/RemoteWordle',
+  },
+];
+
+const secondaryProjects = [
+  {
+    title: 'QR Generator',
+    github: 'https://github.com/medinafdzz/QR-generator',
+  },
+  {
+    title: 'Cleaning Robot',
+    github: 'https://github.com/medinafdzz/cleaningrobotpy',
+  },
+  {
+    title: 'Password Manager',
+    github: 'https://github.com/medinafdzz/Password-manager',
   },
 ];
 
 function Projects() {
   const { copy } = usePreferences();
   const [activeProjectIndex, setActiveProjectIndex] = useState(0);
-  const activeProject = projects[activeProjectIndex];
+  const activeProject = featuredProjects[activeProjectIndex];
 
   return (
     <div className="atlas-section__inner">
@@ -66,7 +62,7 @@ function Projects() {
               value={activeProjectIndex}
               onChange={(event) => setActiveProjectIndex(Number(event.target.value))}
             >
-              {projects.map((project, index) => (
+              {featuredProjects.map((project, index) => (
                 <option key={project.title} value={index}>
                   {String(index + 1).padStart(2, '0')} · {project.title}
                 </option>
@@ -74,7 +70,7 @@ function Projects() {
             </select>
           </label>
           <ol>
-            {projects.map((project, index) => {
+            {featuredProjects.map((project, index) => {
               const active = activeProjectIndex === index;
               return (
                 <li key={project.title}>
@@ -103,7 +99,7 @@ function Projects() {
         >
           <div className="project-detail__station">
             <span>{copy.projects.destination}</span>
-            <strong>{String(activeProjectIndex + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}</strong>
+            <strong>{String(activeProjectIndex + 1).padStart(2, '0')} / {String(featuredProjects.length).padStart(2, '0')}</strong>
           </div>
           <h3>{activeProject.title}</h3>
           <p className="atlas-copy">
@@ -145,6 +141,23 @@ function Projects() {
           </a>
         </article>
       </div>
+
+      <aside className="project-secondary" aria-labelledby="secondary-projects-title">
+        <div>
+          <h3 id="secondary-projects-title">{copy.projects.secondaryTitle}</h3>
+          <p className="atlas-copy">{copy.projects.secondaryDescription}</p>
+        </div>
+        <ul className="project-secondary__list">
+          {secondaryProjects.map((project) => (
+            <li key={project.title}>
+              <a href={project.github} target="_blank" rel="noopener noreferrer">
+                <span>{project.title}</span>
+                <span aria-hidden="true">↗</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </aside>
     </div>
   );
 }
