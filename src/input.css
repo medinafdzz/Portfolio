@@ -1154,10 +1154,8 @@ footer[id] {
 }
 
 .project-secondary {
-  display: grid;
+  display: block;
   margin-top: 3rem;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-  gap: 2rem;
   border-top: 1px solid var(--line);
   padding-top: 1.5rem;
 }
@@ -1171,6 +1169,7 @@ footer[id] {
 
 .project-secondary__list {
   display: grid;
+  margin-top: 1.25rem;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.75rem;
   align-content: start;
