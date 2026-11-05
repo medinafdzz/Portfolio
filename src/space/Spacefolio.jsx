@@ -76,7 +76,7 @@ export default function Spacefolio() {
   return <div className="spacefolio" data-phase={phase} data-motion={reducedMotion ? 'reduced' : 'full'}>
     <a className="skip-link" href={fallback ? '#section-navigation' : '#main-content'}>{copy.skipLink}</a>
     <header className="flight-header">
-      <a href="#" className="brand" onClick={event => { event.preventDefault(); if (!blocked) select('about'); }}><span className="brand-mark" aria-hidden="true"><span/></span><span>Alejandro Medina<small>SOFTWARE ENGINEER</small></span></a>
+      <a href="#" className="brand" onClick={event => { event.preventDefault(); if (!blocked) select('about'); }}><span className="brand-mark" aria-hidden="true"><span/></span><span>Alejandro Medina Fernandez<small>SOFTWARE AI ENGINEER</small></span></a>
       <div className="flight-identity"><span className="status-dot"/>SPACEFOLIO<span className="identity-divider"/>{language === 'es' ? 'UNIVERSO PERSONAL' : 'PERSONAL UNIVERSE'}</div>
       <div className="header-actions"><a className="header-profile" href="https://github.com/medinafdzz" target="_blank" rel="noopener noreferrer">GitHub</a><a className="header-profile" href="https://linkedin.com/in/medinafdzz" target="_blank" rel="noopener noreferrer">LinkedIn</a><a className="cv-link" href="/CV.pdf" download="CV_Alejandro_Medina.pdf">CV<Icon name="download"/></a><div className="language-switch" role="group" aria-label={copy.header.languageLabel}>{['es', 'en'].map(value => <button key={value} onClick={() => setLanguage(value)} aria-pressed={language === value} aria-label={value === 'es' ? 'ES — Español' : 'EN — English'}>{value.toUpperCase()}</button>)}</div></div>
     </header>

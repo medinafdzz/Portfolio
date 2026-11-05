@@ -27,7 +27,7 @@ export const spaceCopy = {
     explore: 'Every object tells a part of my story.',
     hint: 'Select an object or use the navigation below.',
     entering: 'Taking the controls…', close: 'Back to the cabin',
-    loading: 'Preparing the cabin…', ready: 'On board SPACEFOLIO',
+    loading: 'Preparing the cabin…', ready: 'On space',
     fallback: 'The exploration continues here.',
     fallbackBody: 'The complete portfolio in a lightweight, accessible view. Select a section to begin.',
     light: 'Lightweight view', spatial: '3D view', replay: 'Replay welcome',
