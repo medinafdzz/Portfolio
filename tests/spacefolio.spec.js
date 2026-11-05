@@ -94,6 +94,13 @@ for(const [name,width,height] of [['desktop-large',1920,1080],['tablet-portrait'
     await page.setViewportSize({width,height});
     await page.goto('/');
     await expect(page.locator('.start-button')).toBeEnabled({timeout:60000});
+    await expect(page.locator('.flight-footer')).toContainText('Software AI Engineer');
+    const lightText = await page.locator('.spacefolio').evaluate(root => [...root.querySelectorAll('header *, main *, footer *')].filter(el =>
+      el.getBoundingClientRect().width > 1 && el.getBoundingClientRect().height > 1 &&
+      [...el.childNodes].some(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim()) &&
+      Number(getComputedStyle(el).fontWeight) < 700,
+    ).map(el => ({text:el.textContent, weight:getComputedStyle(el).fontWeight})));
+    expect(lightText).toEqual([]);
     await page.screenshot({path:`artifacts/${name}-intro.png`});
     await page.locator('.start-button').click();
     await expect(page.locator('.spacefolio')).toHaveAttribute('data-phase','EXPLORE',{timeout:20000});

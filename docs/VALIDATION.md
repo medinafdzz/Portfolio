@@ -3,6 +3,25 @@
 Repository: `C:\Users\suso1\VS code\Portfolio`.
 Branch: `feature/spacefolio`. No push or production deployment was performed.
 
+## Home typography revision
+
+The requested home-page text is approximately 25% larger and uses Satoshi 700,
+including Canvas display labels, navigation controls and metadata. Intro cards
+were widened to preserve the ear anchor. The mobile brand can wrap the full name.
+Both footer translations now use the supplied label `Software AI Engineer`.
+Professional section content and panel typography are preserved.
+
+This revision passed lint, six unit tests, production build and production smoke
+with zero console errors. Seven focused browser scenarios cover actual Satoshi
+glyph rendering, all five responsive sizes and WebGL fallback; responsive tests
+also assert bold home text and the new footer. Both mobile cases were repeated
+after the final wrapping adjustment. A separate text-range check passed 14
+fallback states (ES/EN at widths 360, 390, 430, 768, 1024, 1440 and 1920), and the
+desktop/tablet/mobile captures were visually inspected. Local evidence:
+`artifacts/home-type-layout.json`, `home-bold-fallback-*.png` and the current
+intro/production captures. The complete baseline suite below predates this
+focused typography revision.
+
 ## Latest placement and CPU revision
 
 The later user-requested revision attaches the speech bubble to the robot's ear,

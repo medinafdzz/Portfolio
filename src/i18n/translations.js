@@ -30,7 +30,7 @@ export const translations = {
     },
     hero: {
       kicker: 'Software engineer · IA aplicada y LLM',
-      role: 'Backend · Sistemas · Calidad de software',
+      role: 'Software AI Engineer',
       intro: [
         'Construyo software con una base de backend, sistemas ATM, automatización y calidad. Me interesa convertir problemas complejos en herramientas claras, verificables y fáciles de mantener.',
         'Actualmente curso un Máster Universitario en Inteligencia Artificial y estoy orientando mi experiencia hacia aplicaciones con IA, modelos de lenguaje y herramientas para desarrolladores.',
@@ -163,7 +163,7 @@ export const translations = {
     },
     hero: {
       kicker: 'Software engineer · Applied AI and LLMs',
-      role: 'Backend · Systems · Software quality',
+      role: 'Software AI Engineer',
       intro: [
         'I build software on a foundation of backend engineering, ATM systems, automation and quality. I enjoy turning complex problems into tools that are clear, verifiable and maintainable.',
         'I am currently studying a Master’s Degree in Artificial Intelligence and moving my experience toward AI applications, language models and developer tooling.',

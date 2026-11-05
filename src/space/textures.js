@@ -18,7 +18,7 @@ export function createDisplay(type) {
     ctx.strokeStyle = '#1c3c4b'; ctx.lineWidth = 1;
     for (let x = 24; x < w; x += 48) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
     for (let y = 30; y < h; y += 48) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
-    ctx.fillStyle = '#8dc2dc'; ctx.font = '20px Satoshi'; ctx.fillText(type === 'roadmap' ? 'CAREER / FLIGHT LOG' : type === 'gear' ? 'SYSTEMS / TECH STACK' : 'SPACEFOLIO / EXPLORER', 30, 42);
+    ctx.fillStyle = '#8dc2dc'; ctx.font = '700 25px Satoshi'; ctx.fillText(type === 'roadmap' ? 'CAREER / FLIGHT LOG' : type === 'gear' ? 'SYSTEMS / TECH STACK' : 'SPACEFOLIO / EXPLORER', 30, 42);
     ctx.fillStyle = '#ffb969'; ctx.fillRect(30, 63, 45, 3);
     if (type === 'roadmap') {
       const nodes = [[65, 410], [160, 320], [270, 330], [380, 195], [500, 210], [650, 100]];
@@ -31,7 +31,7 @@ export function createDisplay(type) {
       for (let i = 0; i < 12; i++) { ctx.fillStyle = i % 3 ? '#66adce' : '#dcb37d'; ctx.fillRect(30, 100 + i * 27, 80 + (i * 137 % 310), 5); }
       for (let i = 0; i < 9; i++) { ctx.fillStyle = '#4582a5'; ctx.fillRect(490 + i * 24, 400 - (i * 43 % 270), 13, 50 + (i * 43 % 270)); }
     }
-    ctx.fillStyle = '#78a4b3'; ctx.font = '15px Satoshi'; ctx.fillText('AM — EXPLORATION SYSTEMS', 30, h - 22);
+    ctx.fillStyle = '#78a4b3'; ctx.font = '700 19px Satoshi'; ctx.fillText('AM — EXPLORATION SYSTEMS', 30, h - 22);
   });
 }
 
@@ -43,8 +43,8 @@ function createOrbitalRadar() {
     for (let x=24;x<w;x+=48) {ctx.beginPath();ctx.moveTo(x,58);ctx.lineTo(x,h-42);ctx.stroke();}
     for (let y=68;y<h-36;y+=48) {ctx.beginPath();ctx.moveTo(20,y);ctx.lineTo(w-20,y);ctx.stroke();}
     ctx.strokeStyle = '#3e879a'; ctx.lineWidth = 2; ctx.strokeRect(16,16,w-32,h-32);
-    ctx.fillStyle = cyan; ctx.font = '24px Satoshi'; ctx.fillText('ORBITAL NAVIGATION',36,49);
-    ctx.fillStyle = amber; ctx.font = '18px Satoshi'; ctx.fillText('EARTH / MOON',1220,48);
+    ctx.fillStyle = cyan; ctx.font = '700 30px Satoshi'; ctx.fillText('ORBITAL NAVIGATION',36,49);
+    ctx.fillStyle = amber; ctx.font = '700 22px Satoshi'; ctx.fillText('EARTH / MOON',1220,48);
     const cx=740, cy=305;
     for (const radius of [135,178,224]) {ctx.strokeStyle='#327383';ctx.lineWidth=2;ctx.beginPath();ctx.arc(cx,cy,radius,0,Math.PI*2);ctx.stroke();}
     for (let i=0;i<48;i++) {
@@ -69,16 +69,16 @@ function createOrbitalRadar() {
     ctx.strokeStyle=cyan;ctx.lineWidth=2;
     ctx.beginPath();ctx.moveTo(mx+30,my-6);ctx.lineTo(1040,126);ctx.lineTo(1198,126);ctx.stroke();
     ctx.beginPath();ctx.moveTo(cx-70,cy+70);ctx.lineTo(485,455);ctx.lineTo(334,455);ctx.stroke();
-    ctx.font='22px Satoshi';ctx.fillStyle='#d6e7ec';ctx.fillText('MOON',1048,113);ctx.fillText('EARTH',338,443);
+    ctx.font='700 28px Satoshi';ctx.fillStyle='#d6e7ec';ctx.fillText('MOON',1048,113);ctx.fillText('EARTH',338,443);
     for (const [x,y,title] of [[36,91,'LOCAL VIEW'],[1165,200,'ORBITAL FRAME']]) {
-      ctx.strokeStyle='#357184';ctx.strokeRect(x,y,310,284);ctx.fillStyle=cyan;ctx.font='18px Satoshi';ctx.fillText(title,x+18,y+30);
+      ctx.strokeStyle='#357184';ctx.strokeRect(x,y,310,284);ctx.fillStyle=cyan;ctx.font='700 22px Satoshi';ctx.fillText(title,x+18,y+30);
       const centerX=x+155,centerY=y+149;
       for(const r of [47,74,100]){ctx.beginPath();ctx.arc(centerX,centerY,r,0,Math.PI*2);ctx.stroke();}
       ctx.beginPath();ctx.moveTo(centerX-106,centerY);ctx.lineTo(centerX+106,centerY);ctx.moveTo(centerX,centerY-106);ctx.lineTo(centerX,centerY+106);ctx.stroke();
       ctx.strokeStyle=amber;ctx.beginPath();ctx.arc(centerX,centerY,89,-.8,.6);ctx.stroke();
       ctx.fillStyle=cyan;ctx.beginPath();ctx.arc(centerX+47,centerY-21,5,0,Math.PI*2);ctx.fill();
     }
-    ctx.fillStyle='#8ab6c2';ctx.font='17px Satoshi';ctx.fillText('SCHEMATIC / NOT TO SCALE',36,h-31);
+    ctx.fillStyle='#8ab6c2';ctx.font='700 21px Satoshi';ctx.fillText('SCHEMATIC / NOT TO SCALE',36,h-31);
     ctx.fillStyle=amber;ctx.fillRect(w-150,h-44,108,4);
   });
 }
