@@ -17,8 +17,9 @@ technology tags; the component is reused inside the Projects panel.
 
 `config.js` defines the palette and the positions of the six navigation objects.
 The menu order is experience, projects, about, education, skills, contact.
-The education medal is framed on the left wall above the roadmap. The logbook
-rests on a lectern; the central command screen has its own desk-mounted support.
+The education medal is framed diagonally on the left side wall, beside the
+roadmap. The logbook rests on a raised lectern; the central command display is
+an enclosed wedge panel integrated into the desk, without monitor legs.
 
 - `Cabin.jsx`: window frame, hull, curved extruded desk, chair, plants, planets.
 - `Objects.jsx`: wall roadmap, miniature rocket, hinged logbook on a lectern, framed medal,
@@ -37,6 +38,11 @@ rests on a lectern; the central command screen has its own desk-mounted support.
 Use local assets. Planet map licensing is in `public/textures/ATTRIBUTION.md`.
 Display textures are generated locally with Canvas; professional paragraphs stay
 in HTML. There are no paid services or remote runtime asset requests.
+
+The command panel uses `createDisplay('radar')`: a static orbital schematic with
+a filled Earth, a smaller Moon, orbital ellipses and radar rings. It is explicitly
+labelled not to scale and contains no invented live telemetry. Generating it once
+keeps the render-on-demand CPU budget intact.
 
 ## State and accessibility
 

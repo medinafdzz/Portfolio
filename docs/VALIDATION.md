@@ -10,6 +10,12 @@ frames the medal on the left wall, puts the logbook on a lectern and mounts the
 command screen above the desk. CPU measurements and limits are in PERFORMANCE.md.
 The earlier ceiling-suspended medal arrangement is superseded by this request.
 
+The subsequent annotated-image correction moves the medal farther left onto the
+side wall and rotates its frame, raises the book another 0.30 scene units, and
+replaces the monitor supports with a solid orbital-radar console. The strengthened
+browser assertions require book clearance above world Y=2.3, the new medal
+position/angle, an extruded console body and the high-resolution radar texture.
+
 ## Executed checks
 
 | Check | Result | Evidence |
@@ -17,7 +23,7 @@ The earlier ceiling-suspended medal arrangement is superseded by this request.
 | ESLint | PASSED | `npm.cmd run lint`, no errors |
 | Production build | PASSED | Vite 7.3.7, lazy Three.js scene chunk |
 | Unit tests | PASSED | 6 tests; navigation, frame coalescing, caps, software detection, cancellation |
-| Browser suite | PASSED | 14 Playwright tests, 3.2 minutes, Chromium/SwiftShader |
+| Browser suite | PASSED | 14 Playwright tests, 3.1 minutes, Chromium/SwiftShader |
 | Production smoke | PASSED | Built app at localhost:4173, real Canvas, Enter, Projects and Escape |
 | Git whitespace | PASSED | `git diff --check` |
 | Visual detector | PASSED | No findings in the changed interface |
@@ -51,8 +57,8 @@ Desktop: 1440×900 and 1920×1080. Tablet: 768×1024 and 1024×768.
 Mobile: 390×844 and 430×932. No horizontal overflow was observed in these views.
 
 A repeated-navigation check opens/closes twelve sections and bounds GPU
-geometry growth. The final instrumented sample contained 282 geometries,
-509 draw calls and 301846 triangles. These are scene counters, not a real-device
+geometry growth. The final instrumented sample contained 278 geometries,
+501 draw calls and 296374 triangles. These are scene counters, not a real-device
 frame-rate benchmark. Source review independently verified geometry disposal,
 the robot's one-shot boarding lifecycle and the render scheduler's teardown.
 The two additional browser tests check ear anchoring, book/monitor clearance,

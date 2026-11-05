@@ -15,18 +15,22 @@ function Desk() {
     shape.lineTo(5.75,2.9); shape.quadraticCurveTo(0,3.4,-5.75,2.9); shape.closePath();
     return new THREE.ExtrudeGeometry(shape, { depth: .18, bevelEnabled: true, bevelSegments: 3, steps: 1, bevelSize: .055, bevelThickness: .045, curveSegments: 32 });
   }, []);
-  const screen = useMemo(() => createDisplay('console'), []);
+  const screen = useMemo(() => createDisplay('radar'), []);
+  const consoleBody = useMemo(() => {
+    const profile = new THREE.Shape();
+    profile.moveTo(-.5,0); profile.lineTo(.5,0); profile.lineTo(.5,1.24); profile.lineTo(-.5,.4); profile.closePath();
+    return new THREE.ExtrudeGeometry(profile,{depth:3.05,bevelEnabled:true,bevelSize:.025,bevelThickness:.025,bevelSegments:2,steps:1});
+  }, []);
   useEffect(() => () => geometry.dispose(), [geometry]);
+  useEffect(() => () => consoleBody.dispose(), [consoleBody]);
   useEffect(() => () => screen.dispose(), [screen]);
   return <group>
     <mesh geometry={geometry} rotation={[-Math.PI/2,0,0]} position={[0,1.91,0]} castShadow receiveShadow><meshStandardMaterial color="#9c9fa1" metalness={.36} roughness={.36}/></mesh>
     <Tube points={deskEdge.map(([x,y,z]) => [x,y+.045,z+.025])} radius={.025} color="#ff8c32" glow={1.8}/>
     {[-4.8,-3,3,4.8].map(x => <group key={x} position={[x,1,.3]}><Block size={[1.3,1.55,1.25]} color={colors.dark} radius={.1}/><Block size={[1.05,.65,.06]} position={[0,.25,.66]} color="#41464e"/><Block size={[.67,.045,.05]} position={[0,.52,.71]} color={colors.amber} glow={2}/><Block size={[1.05,.45,.06]} position={[0,-.38,.66]} color="#41464e"/><Block size={[.4,.035,.06]} position={[0,-.19,.71]} color={colors.steel}/></group>)}
     <group name="command-console" position={[0,2.025,-1.96]}>
-      <Block size={[3.05,.1,.85]} color={colors.dark}/>
-      {[-1,1].map(side => <Block key={side} size={[.14,.4,.22]} position={[side*1.02,.225,-.12]} color="#717b83"/>)}
-      <group position={[0,.6,-.1]} rotation={[-.12,0,0]}><Block size={[2.8,.72,.2]} color={colors.dark}/><Screen texture={screen} size={[2.6,.55]} position={[0,0,.11]}/></group>
-      {[-1,0,1].map(i => <Block key={i} size={[.22,.025,.08]} position={[i*.45,.063,.26]} color={i===0?colors.amber:colors.blue} glow={.8}/>)}
+      <mesh name="console-integrated-body" geometry={consoleBody} rotation={[0,Math.PI/2,0]} position={[-1.525,0,0]} castShadow receiveShadow><meshStandardMaterial color="#303d48" metalness={.3} roughness={.5}/></mesh>
+      <group position={[0,.84,.02]} rotation={[-.872,0,0]}><Block size={[2.84,1.14,.045]} color="#131f2c" radius={.035}/><Screen name="orbital-radar" texture={screen} size={[2.73,1.025]} position={[0,0,.027]}/></group>
     </group>
     {[-1,1].map(side => <group key={side} position={[side * 2,2.08,-2.65]}>{Array.from({length:7},(_,i) => <Block key={i} size={[.1,.035,.05]} position={[i*.18,0,0]} color={i%3 ? colors.amber : colors.steel} glow={1.3}/>)}</group>)}
   </group>;

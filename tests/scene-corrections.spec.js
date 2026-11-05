@@ -27,14 +27,20 @@ test('ear-anchored speech, framed medal and desk clearance', async ({ page }) =>
       bookBottom: new Box3().setFromObject(scene.getObjectByName('captains-log')).min.y,
       consoleBottom: new Box3().setFromObject(scene.getObjectByName('command-console')).min.y,
       medal: scene.getObjectByName('object-education').position.toArray(),
+      medalAngle: scene.getObjectByName('framed-medal').rotation.y,
+      consoleBody: scene.getObjectByName('console-integrated-body').geometry.type,
+      radarWidth: scene.getObjectByName('orbital-radar').material.map.image.width,
     };
   });
   expect(layout.gap).toBeGreaterThanOrEqual(0);
   expect(layout.gap).toBeLessThanOrEqual(20);
   expect(layout.tailGap).toBeLessThan(3);
-  expect(layout.bookBottom).toBeGreaterThan(1.96);
+  expect(layout.bookBottom).toBeGreaterThan(2.3);
   expect(layout.consoleBottom).toBeGreaterThan(1.96);
-  expect(layout.medal[0]).toBeLessThan(-4);
+  expect(layout.medal[0]).toBeLessThan(-5.8);
+  expect(layout.medalAngle).toBeGreaterThan(.9);
+  expect(layout.consoleBody).toBe('ExtrudeGeometry');
+  expect(layout.radarWidth).toBe(1536);
   await page.screenshot({path:'artifacts/corrected-intro.png'});
   await page.locator('.start-button').click();
   await expect(page.locator('.spacefolio')).toHaveAttribute('data-phase','EXPLORE');

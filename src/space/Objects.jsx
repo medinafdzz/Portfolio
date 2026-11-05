@@ -38,10 +38,11 @@ function Logbook({ active, reducedMotion, motionScale }) {
   },[active,reducedMotion,requestRender,motionScale]);
   return <group name="logbook-lectern">
     <Block size={[1.06,.09,.84]} color={colors.dark}/>
-    <Block size={[.18,.43,.15]} position={[0,.26,-.21]} rotation={[-.3,0,0]} color="#7d878e"/>
-    <Block size={[.97,1.08,.06]} position={[0,.55,-.12]} rotation={[-.6,-.08,-.06]} color="#525f6a" radius={.03}/>
-    <Block size={[1.02,.08,.16]} position={[0,.1,.32]} color="#b39a77" radius={.025}/>
-    <group name="captains-log" position={[0,.55,0]} rotation={[-.6,-.08,-.06]}><Block size={[.88,1.02,.11]} color="#202e3c" radius={.035}/><Block size={[.77,.91,.09]} position={[0,0,.08]} color="#d5d0b8" radius={.01}/>{Array.from({length:4},(_,i)=><group key={i} ref={node=>{pages.current[i]=node;}} position={[-.385,0,.135+i*.012]} name={`logbook-page-${i}`}><Block size={[.76,.9,.009]} position={[.38,0,0]} color={i%2?'#ece5cb':'#dcd4bc'} radius={.002}/><Block size={[.48,.012,.003]} position={[.38,.2,.008]} color="#8b8b7f" radius={.001}/><Block size={[.39,.012,.003]} position={[.335,.1,.008]} color="#8b8b7f" radius={.001}/></group>)}<group ref={cover} position={[-.44,0,.19]}><Block size={[.88,1.02,.07]} position={[.44,0,0]} color="#273c50" radius={.035}/><Ring radius={.12} tube={.023} position={[.44,.12,.043]} color="#ddad64"/><Block size={[.15,.035,.015]} position={[.44,-.13,.045]} color="#ddad64"/><Block size={[.36,.022,.015]} position={[.44,-.3,.045]} color="#a6adb4"/></group><Block size={[.15,.3,.07]} position={[.45,0,.23]} color="#6c7379" radius={.025}/></group>
+    <Block size={[.18,.73,.15]} position={[0,.4,-.15]} rotation={[.38,0,0]} color="#7d878e"/>
+    <Block size={[.14,.35,.12]} position={[0,.23,.3]} color="#525f6a"/>
+    <Block size={[.97,1.08,.06]} position={[0,.85,-.12]} rotation={[-.6,-.08,-.06]} color="#525f6a" radius={.03}/>
+    <Block size={[1.02,.08,.16]} position={[0,.4,.32]} color="#b39a77" radius={.025}/>
+    <group name="captains-log" position={[0,.85,0]} rotation={[-.6,-.08,-.06]}><Block size={[.88,1.02,.11]} color="#202e3c" radius={.035}/><Block size={[.77,.91,.09]} position={[0,0,.08]} color="#d5d0b8" radius={.01}/>{Array.from({length:4},(_,i)=><group key={i} ref={node=>{pages.current[i]=node;}} position={[-.385,0,.135+i*.012]} name={`logbook-page-${i}`}><Block size={[.76,.9,.009]} position={[.38,0,0]} color={i%2?'#ece5cb':'#dcd4bc'} radius={.002}/><Block size={[.48,.012,.003]} position={[.38,.2,.008]} color="#8b8b7f" radius={.001}/><Block size={[.39,.012,.003]} position={[.335,.1,.008]} color="#8b8b7f" radius={.001}/></group>)}<group ref={cover} position={[-.44,0,.19]}><Block size={[.88,1.02,.07]} position={[.44,0,0]} color="#273c50" radius={.035}/><Ring radius={.12} tube={.023} position={[.44,.12,.043]} color="#ddad64"/><Block size={[.15,.035,.015]} position={[.44,-.13,.045]} color="#ddad64"/><Block size={[.36,.022,.015]} position={[.44,-.3,.045]} color="#a6adb4"/></group><Block size={[.15,.3,.07]} position={[.45,0,.23]} color="#6c7379" radius={.025}/></group>
   </group>;
 }
 
@@ -49,7 +50,7 @@ function Medal({ active, reducedMotion, motionScale }) {
   const requestRender = useSceneRender();
   const medal=useRef();
   useEffect(()=>{const tween=gsap.to(medal.current.rotation,{z:active?-.08:0,duration:reducedMotion?0:.4*motionScale,onUpdate:requestRender,onComplete:()=>requestRender(true)});return()=>tween.kill();},[active,reducedMotion,requestRender,motionScale]);
-  return <group name="framed-medal" rotation={[0,.23,0]}>
+  return <group name="framed-medal" rotation={[0,1.05,0]}>
     <Block size={[.2,.6,.55]} position={[0,0,-.25]} color={colors.dark}/>
     <Block size={[1.08,1.06,.13]} color={active?colors.amber:'#b39a77'} radius={.06}/>
     <Block size={[.94,.92,.05]} position={[0,0,.08]} color="#1c2b37" radius={.025}/>
