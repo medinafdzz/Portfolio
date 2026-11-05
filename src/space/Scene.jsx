@@ -61,12 +61,9 @@ export default function Scene({ onReady, onFailure, dialogRef, ...props }) {
   return <Canvas className="space-canvas" shadows={!small} dpr={software?.8:[1,small?1:1.25]} frameloop={visible?'demand':'never'} camera={{ position:[0,3.8,10.4], fov:40, near:.1, far:100 }} gl={{ antialias:!small, powerPreference:'low-power', alpha:false }} onCreated={({gl})=>{setSoftware(isSoftwareRenderer(gl));gl.toneMapping=THREE.ACESFilmicToneMapping;gl.toneMappingExposure=1.05;gl.shadowMap.type=THREE.PCFShadowMap;gl.shadowMap.autoUpdate=false;gl.shadowMap.needsUpdate=true;}}>
     <RenderBudget>
     <color attach="background" args={['#050e1b']}/>
-    <ambientLight intensity={.6} color="#bdccdd"/>
-    <hemisphereLight args={['#9bbdd7','#69533e',1.2]}/>
+    <ambientLight intensity={.45} color="#bdccdd"/>
+    <hemisphereLight args={['#b9d1df','#69533e',1.4]}/>
     <directionalLight position={[-3,7,5]} color="#ffe4c5" intensity={2} castShadow={!small} shadow-mapSize={software?[512,512]:[1024,1024]} shadow-camera-left={-8} shadow-camera-right={8} shadow-camera-top={8} shadow-camera-bottom={-5} shadow-bias={-.001}/>
-    <pointLight position={[0,5.5,0]} color="#ffb569" intensity={13} distance={11}/>
-    <pointLight position={[-4,2.4,-1]} color="#ffb366" intensity={4} distance={5}/>
-    <pointLight position={[4,2.4,-1]} color="#ffb366" intensity={4} distance={5}/>
     <directionalLight position={[0,4,-12]} color="#72a9e5" intensity={2}/>
     <Cabin/>
     <Objects {...props} motionScale={motionScale}/>

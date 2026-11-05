@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "node --test tests/navigation.test.mjs tests/render-budget.test.mjs",
+    "test": "node --test tests/navigation.test.mjs tests/render-budget.test.mjs tests/model-assets.test.mjs",
     "test:e2e": "playwright test"
   },
   "dependencies": {

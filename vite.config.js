@@ -7,7 +7,7 @@ const cspDev = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self' data:",
-  "connect-src 'self' http: https: ws:",
+  "connect-src 'self' http: https: ws: blob:",
   "object-src 'none'",
   "base-uri 'self'"
 ].join('; ')
@@ -18,7 +18,7 @@ const cspPreview = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self' data:",
-  "connect-src 'self' https:",
+  "connect-src 'self' https: blob:",
   "object-src 'none'",
   "base-uri 'self'",
   "upgrade-insecure-requests"
