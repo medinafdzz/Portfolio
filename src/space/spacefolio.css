@@ -39,11 +39,11 @@ body:has(.spacefolio) { background: #10161d; margin: 0; }
 .space-canvas { position: absolute !important; inset: 0; }
 .scene-caption { position: absolute; left: 3.2%; right: 3.2%; top: 21px; display: flex; align-items: center; gap: 9px; color: #d3d9df; font-size: 10px; letter-spacing: .055em; pointer-events: none; text-shadow: 0 1px 5px #000; }
 .scene-coordinate { margin-left: auto; font-size: 9px; color: #b8c2cc; }
-.intro-card { position: absolute; width: 330px; top: 23%; right: 12%; background: #141e2aef; padding: 25px 27px 20px; border: 1px solid #7f8a94; border-radius: 15px; box-shadow: 0 15px 45px #0005; }
+.intro-card { position: absolute; width: 300px; top: 3%; right: 25.5%; background: #141e2aef; padding: 20px; border: 1px solid #7f8a94; border-radius: 15px; box-shadow: 0 15px 45px #0005; }
 .intro-card::before { content: ''; position: absolute; width: 15px; height: 15px; background: #141e2a; border: 1px solid #7f8a94; border-top: 0; border-right: 0; left: -9px; top: 60%; transform: rotate(45deg); }
 .intro-hello { margin: 0 0 12px; font-size: 12px; color: #c8d2db; }
-.intro-card h2 { font-size: 27px; font-weight: 500; line-height: 1.22; letter-spacing: -.025em; margin: 0 0 12px; text-wrap: balance; }
-.intro-description { font-size: 12px; line-height: 1.6; color: #b6c2cd; margin: 0 0 19px; }
+.intro-card h2 { font-size: 23px; font-weight: 500; line-height: 1.22; letter-spacing: -.025em; margin: 0 0 12px; text-wrap: balance; }
+.intro-description { display: none; }
 .start-button { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; background: #ffb15c; color: #1c2025; border: 0; border-radius: 5px; padding: 12px 14px; font-size: 12px; font-weight: 650; transition: background .2s; }
 .start-button:hover { background: #ffc486; }
 .start-button:disabled { opacity: .6; }
@@ -165,8 +165,9 @@ body:has(.spacefolio) { background: #10161d; margin: 0; }
 .section-panel .atlas-button { min-height: auto; padding: 10px 14px; font-size: 12px; display: inline-flex; gap: 15px; align-items: center; }
 .section-panel .atlas-button--primary { background: #ffb15c; color: #17212b; }
 .section-panel .atlas-text-link { color: #c6d8e8; font-size: 12px; display: inline-flex; gap: 18px; padding: 4px 0; }
-@media(min-width:1800px) { .intro-card { width: 370px; right: 15%; top: 26%; padding: 30px; } .intro-card h2 { font-size: 31px; } .flight-header { height: 96px; flex-basis: 96px; } .navigation-deck { padding-block: 24px; } }
-@media(max-width:1100px) { .flight-identity { display: none; } .header-actions { margin-left: auto; } .nav-station { padding-inline: 14px; gap: 9px; } .nav-station>span { font-size: 11px; } .intro-card { right: 7%; width: 310px; } }
+@media(min-width:1800px) { .intro-card { width: 340px; right: 27%; top: 5%; padding: 24px; } .intro-card h2 { font-size: 26px; } .flight-header { height: 96px; flex-basis: 96px; } .navigation-deck { padding-block: 24px; } }
+@media(max-width:1100px) { .flight-identity { display: none; } .header-actions { margin-left: auto; } .nav-station { padding-inline: 14px; gap: 9px; } .nav-station>span { font-size: 11px; } .intro-card { right: 22%; top: 2%; width: 260px; padding: 16px; } .intro-card h2 { font-size: 20px; } .intro-card .enter-hint { display: none; } }
+@media(min-width:768px) and (orientation:portrait) { .intro-card { right: 5%; top: 12%; } }
 @media(max-width:767px) {
   .spacefolio { min-height: 630px; } .flight-header { height: 72px; flex-basis: 72px; padding-inline: 20px; gap: 12px; }
   .brand { gap: 10px; font-size: 12px; } .brand small { font-size: 8px; letter-spacing: .12em; } .brand-mark { width: 27px; height: 30px; }
