@@ -8,7 +8,28 @@ Tool verified: Blender 5.3.0 Release Candidate, build `c956fd684542`.
 Both CPU and AMD HIP (Radeon RX 9070 XT) baking/export passed a small pipeline
 test. Blender is a build-time tool; the website only loads the resulting GLB.
 
-Build command and model manifest are maintained alongside `build.py`.
+Rebuild from the repository root:
+
+```powershell
+node assets/spacefolio/build.mjs "<absolute path to blender.exe>" --device HIP --samples 128 --preview
+node --test tests/model-assets.test.mjs
+```
+
+`build.mjs` exports the live web coordinates/palette from `config.js`; there is
+no second hand-maintained position table. Use `--device CPU` if HIP is unavailable.
+The generation temporarily uses the GPU/CPU; it does not add work to idle web
+pages. `--preview` writes an authoring render to ignored `artifacts/`.
+
+Outputs: editable `scene.blend`, `cabin-light.png` (2048² diffuse illumination),
+`manifest.json` (tool version, samples, geometry and source configuration), and
+`public/models/spacefolio.glb`. The GLB parts use local coordinates and stable
+names so React retains the animation pivots. The saved Blender source is laid
+out in the actual cabin arrangement for editing. It deliberately omits web-only
+planet maps, screen text and HTML; inspect final web captures for those elements.
+
+Only CabinShell, ConsoleBody and Chair are light-baked. Animated models are
+excluded from the bake and use shared PBR materials. The three static nodes
+share one atlas exported with KHR_materials_unlit to avoid double lighting.
 
 Performance: `node tests/performance.mjs <label> http://127.0.0.1:5173/ <mode>`.
 Modes are `software`, `default`, `hardware`. Reports record the actual renderer,

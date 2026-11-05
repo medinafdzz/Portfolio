@@ -1,0 +1,188 @@
+{
+  "generator": "5.3.0 Release Candidate",
+  "build_hash": "c956fd684542",
+  "device": "HIP",
+  "samples": 128,
+  "atlas": 2048,
+  "source_config": {
+    "colors": {
+      "shell": "#4b515b",
+      "dark": "#22272e",
+      "steel": "#a6adb4",
+      "white": "#e7e9e7",
+      "amber": "#ff9e47",
+      "blue": "#69a9cf",
+      "screen": "#091b2b"
+    },
+    "objectPositions": [
+      [
+        -5,
+        3.15,
+        -1.65
+      ],
+      [
+        -3.4,
+        2.08,
+        -1.5
+      ],
+      [
+        -2.2,
+        2,
+        -1.15
+      ],
+      [
+        -6,
+        4.5,
+        0.25
+      ],
+      [
+        3.03,
+        2.22,
+        -1.1
+      ],
+      [
+        5.3,
+        3.35,
+        -1.6
+      ]
+    ]
+  },
+  "static_nodes": [
+    "CabinShell",
+    "ConsoleBody",
+    "Chair"
+  ],
+  "parts": {
+    "CabinShell": {
+      "vertices": 41636,
+      "triangles": 82092,
+      "materials": 1
+    },
+    "ConsoleBody": {
+      "vertices": 4112,
+      "triangles": 8144,
+      "materials": 1
+    },
+    "Chair": {
+      "vertices": 3696,
+      "triangles": 7336,
+      "materials": 1
+    },
+    "RoadmapFrame": {
+      "vertices": 944,
+      "triangles": 1864,
+      "materials": 3
+    },
+    "RocketBase": {
+      "vertices": 1536,
+      "triangles": 3064,
+      "materials": 3
+    },
+    "RocketBody": {
+      "vertices": 3386,
+      "triangles": 6620,
+      "materials": 5
+    },
+    "Lectern": {
+      "vertices": 1080,
+      "triangles": 2140,
+      "materials": 3
+    },
+    "BookBase": {
+      "vertices": 648,
+      "triangles": 1284,
+      "materials": 3
+    },
+    "BookCover": {
+      "vertices": 1416,
+      "triangles": 2820,
+      "materials": 3
+    },
+    "BookPage": {
+      "vertices": 1296,
+      "triangles": 2568,
+      "materials": 2
+    },
+    "MedalFrame": {
+      "vertices": 432,
+      "triangles": 856,
+      "materials": 2
+    },
+    "MedalFace": {
+      "vertices": 12648,
+      "triangles": 25236,
+      "materials": 2
+    },
+    "TechBase": {
+      "vertices": 1296,
+      "triangles": 2568,
+      "materials": 5
+    },
+    "TechGear": {
+      "vertices": 4128,
+      "triangles": 8208,
+      "materials": 1
+    },
+    "PhoneBase": {
+      "vertices": 24452,
+      "triangles": 48816,
+      "materials": 5
+    },
+    "PhoneReceiver": {
+      "vertices": 1944,
+      "triangles": 3852,
+      "materials": 3
+    },
+    "RobotTorso": {
+      "vertices": 3626,
+      "triangles": 7212,
+      "materials": 5
+    },
+    "RobotHead": {
+      "vertices": 3600,
+      "triangles": 7168,
+      "materials": 5
+    },
+    "RobotUpperArmL": {
+      "vertices": 1354,
+      "triangles": 2696,
+      "materials": 3
+    },
+    "RobotLowerArmL": {
+      "vertices": 2002,
+      "triangles": 3980,
+      "materials": 2
+    },
+    "RobotThighL": {
+      "vertices": 1354,
+      "triangles": 2696,
+      "materials": 3
+    },
+    "RobotShinL": {
+      "vertices": 1032,
+      "triangles": 2048,
+      "materials": 3
+    },
+    "RobotUpperArmR": {
+      "vertices": 1354,
+      "triangles": 2696,
+      "materials": 3
+    },
+    "RobotLowerArmR": {
+      "vertices": 2002,
+      "triangles": 3980,
+      "materials": 2
+    },
+    "RobotThighR": {
+      "vertices": 1354,
+      "triangles": 2696,
+      "materials": 3
+    },
+    "RobotShinR": {
+      "vertices": 1032,
+      "triangles": 2048,
+      "materials": 3
+    }
+  },
+  "glb_bytes": 10354980
+}
