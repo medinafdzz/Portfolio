@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
 
@@ -15,6 +15,7 @@ export function Cylinder({ radius = .2, height = .3, color = colors.shell, top, 
 }
 export function Tube({ points, radius = .02, color = colors.amber, glow = 0, ...props }) {
   const geometry = useMemo(() => new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points.map(point => new THREE.Vector3(...point))), Math.max(16, points.length * 3), radius, 8, false), [points, radius]);
+  useEffect(() => () => geometry.dispose(), [geometry]);
   return <mesh geometry={geometry} {...props}><meshStandardMaterial color={color} metalness={.4} roughness={.4} emissive={color} emissiveIntensity={glow}/></mesh>;
 }
 export function Ring({ radius = .2, tube = .02, color = colors.amber, glow = 0, ...props }) {

@@ -1,0 +1,7 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+button, input, select { font: inherit; }
+button { appearance: none; }
+svg { display: block; }
+.skip-link { position: fixed; left: 16px; top: -100px; z-index: 100; background: #ffb15c; color: #10161d !important; border-radius: 5px; padding: 12px 18px; font-size: 14px; }
+.skip-link:focus { top: 14px; }

@@ -90,23 +90,6 @@ function Projects() {
             })}
           </ol>
 
-          <aside className="project-secondary" aria-labelledby="secondary-projects-title">
-            <div>
-              <h3 id="secondary-projects-title">{copy.projects.secondaryTitle}</h3>
-              <p className="atlas-copy">{copy.projects.secondaryDescription}</p>
-            </div>
-            <ul className="project-secondary__list">
-              {secondaryProjects.map((project, index) => (
-                <li key={project.title}>
-                  <a href={project.github} target="_blank" rel="noopener noreferrer">
-                    <span className="project-secondary__index">{String(index + 1).padStart(2, '0')}</span>
-                    <strong>{project.title}</strong>
-                    <span aria-hidden="true">→</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </aside>
         </div>
 
         <article
@@ -158,6 +141,20 @@ function Projects() {
             <span aria-hidden="true">→</span>
           </a>
         </article>
+        <aside className="project-secondary" aria-labelledby="secondary-projects-title">
+          <h3 id="secondary-projects-title">{copy.projects.secondaryTitle}</h3>
+          <p className="atlas-copy">{copy.projects.secondaryDescription}</p>
+          <ul className="project-secondary__list">
+            {secondaryProjects.map((project, index) => (
+              <li key={project.title}>
+                <a href={project.github} target="_blank" rel="noopener noreferrer">
+                  <span className="project-secondary__index">{String(index + 1).padStart(2, '0')}</span>
+                  <strong>{project.title}</strong><span aria-hidden="true">→</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </aside>
       </div>
 
     </div>

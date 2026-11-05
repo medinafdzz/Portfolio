@@ -28,3 +28,7 @@ dist-ssr
 /.impeccable/
 /PRODUCT.md
 /DESIGN.md
+
+# Local browser verification output (kept on disk for review)
+/artifacts/
+/test-results/

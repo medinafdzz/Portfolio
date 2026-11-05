@@ -9,8 +9,9 @@ import { sectionIds } from './navigation';
 
 function Roadmap({ active }) {
   const texture = useMemo(()=>createDisplay('roadmap'),[]);
+  const trajectory = useMemo(() => [[65,410],[160,320],[270,330],[380,195],[500,210],[650,100]].map(([x,y]) => [(x/768-.5)*1.42,(.5-y/512)*1.43,.18]), []);
   useEffect(()=>()=>texture.dispose(),[texture]);
-  return <group rotation={[0,.23,0]}><Block size={[1.65,1.7,.18]} color={active ? colors.amber : '#9c815f'} radius={.12}/><Block size={[1.55,1.6,.08]} position={[0,0,.11]} color={colors.dark}/><Screen texture={texture} size={[1.42,1.43]} position={[0,0,.157]}/>{[-1,1].map(side=><Cylinder key={side} radius={.022} height={.02} color={colors.steel} position={[side*.72,.72,.17]} rotation={[Math.PI/2,0,0]}/>)}</group>;
+  return <group rotation={[0,.23,0]}><Block size={[.22,.7,.7]} position={[0,0,-.35]} color={colors.dark}/><Block size={[1.65,1.7,.18]} color={active ? colors.amber : '#9c815f'} radius={.12}/><Block size={[1.55,1.6,.08]} position={[0,0,.11]} color={colors.dark}/><Screen texture={texture} size={[1.42,1.43]} position={[0,0,.157]}/><Tube points={trajectory} radius={.009} color={colors.amber} glow={active?2.5:.15}/>{[-1,1].map(side=><Cylinder key={side} radius={.022} height={.02} color={colors.steel} position={[side*.72,.72,.17]} rotation={[Math.PI/2,0,0]}/>)}</group>;
 }
 
 function Rocket({ active, reducedMotion }) {
@@ -21,20 +22,25 @@ function Rocket({ active, reducedMotion }) {
     <Cylinder radius={.1} top={0} height={.2} position={[0,1.44,0]} color={colors.dark}/><Cylinder radius={.15} top={.1} height={.25} position={[0,.3,0]} color="#515a61"/>
     {[-1,1].map(side=><Block key={side} size={[.1,.51,.37]} position={[side*.22,.46,0]} rotation={[0,0,-side*.28]} color="#a2a9ab" radius={.045}/>)}
     <Ring radius={.117} tube={.024} position={[0,.82,.244]} color={colors.steel}/><Orb size={[.09,.09,.04]} position={[0,.82,.25]} color="#194056"/>
-    <Orb size={[.08,active?.2:.08,.08]} position={[0,.17,0]} color={colors.amber}/>
+    <Cylinder radius={.075} height={active?.22:.06} position={[0,.16,0]} color={colors.amber} glow={active?3:.5}/>
   </group></group>;
 }
 
 function Logbook({ active, reducedMotion }) {
   const cover=useRef();
-  useEffect(()=>{const tween=gsap.to(cover.current.rotation,{y:active?-1.05:0,duration:reducedMotion?0:.6});return()=>tween.kill();},[active,reducedMotion]);
-  return <group rotation={[-1.08,-.08,-.06]}><Block size={[.88,1.02,.11]} color="#202e3c" radius={.035}/><Block size={[.77,.91,.13]} position={[0,0,.1]} color="#d5d0b8" radius={.01}/>{Array.from({length:4},(_,i)=><Block key={i} size={[.76,.005,.01]} position={[0,-.35+i*.19,.17]} color="#a29d90" radius={.001}/>)}<group ref={cover} position={[-.44,0,.19]}><Block size={[.88,1.02,.07]} position={[.44,0,0]} color="#273c50" radius={.035}/><Ring radius={.12} tube={.023} position={[.44,.12,.043]} color="#ddad64"/><Block size={[.15,.035,.015]} position={[.44,-.13,.045]} color="#ddad64"/><Block size={[.36,.022,.015]} position={[.44,-.3,.045]} color="#a6adb4"/></group><Block size={[.15,.3,.07]} position={[.45,0,.23]} color="#6c7379" radius={.025}/></group>;
+  const pages=useRef([]);
+  useEffect(()=>{
+    const timeline=gsap.timeline({defaults:{duration:reducedMotion?0:.6,ease:'power2.out'}});
+    timeline.to(cover.current.rotation,{y:active?-1.05:0},0).to(pages.current.map(page=>page.rotation),{y:index=>active?-(.15+index*.12):0},0);
+    return()=>timeline.kill();
+  },[active,reducedMotion]);
+  return <group rotation={[-1.08,-.08,-.06]}><Block size={[.88,1.02,.11]} color="#202e3c" radius={.035}/><Block size={[.77,.91,.09]} position={[0,0,.08]} color="#d5d0b8" radius={.01}/>{Array.from({length:4},(_,i)=><group key={i} ref={node=>{pages.current[i]=node;}} position={[-.385,0,.135+i*.012]} name={`logbook-page-${i}`}><Block size={[.76,.9,.009]} position={[.38,0,0]} color={i%2?'#ece5cb':'#dcd4bc'} radius={.002}/><Block size={[.48,.012,.003]} position={[.38,.2,.008]} color="#8b8b7f" radius={.001}/><Block size={[.39,.012,.003]} position={[.335,.1,.008]} color="#8b8b7f" radius={.001}/></group>)}<group ref={cover} position={[-.44,0,.19]}><Block size={[.88,1.02,.07]} position={[.44,0,0]} color="#273c50" radius={.035}/><Ring radius={.12} tube={.023} position={[.44,.12,.043]} color="#ddad64"/><Block size={[.15,.035,.015]} position={[.44,-.13,.045]} color="#ddad64"/><Block size={[.36,.022,.015]} position={[.44,-.3,.045]} color="#a6adb4"/></group><Block size={[.15,.3,.07]} position={[.45,0,.23]} color="#6c7379" radius={.025}/></group>;
 }
 
 function Medal({ active, reducedMotion }) {
   const medal=useRef();
   useFrame(({clock})=>{if(!reducedMotion){medal.current.rotation.y=Math.sin(clock.elapsedTime*(active?2:.5))*(active?.45:.045);medal.current.rotation.z=Math.sin(clock.elapsedTime*.8)*.035;}});
-  return <group><Block size={[.14,.83,.055]} position={[0,.52,0]} color="#ac783a"/><Ring radius={.065} tube={.018} position={[0,.075,0]} color="#d7a056"/><group ref={medal} position={[0,-.38,0]}><Cylinder radius={.4} height={.085} rotation={[Math.PI/2,0,0]} color="#ba803e"/><Ring radius={.36} tube={.025} position={[0,0,.06]} color="#f2c475" glow={.5}/><Block size={[.32,.055,.22]} rotation={[.3,0,Math.PI/4]} position={[0,.055,.1]} color="#f2cf89" radius={.008}/><Block size={[.22,.14,.05]} position={[0,-.06,.13]} color="#dfb46c"/>{[-1,1].map(side=><group key={side}>{Array.from({length:5},(_,i)=><Orb key={i} size={[.022,.05,.012]} rotation={[0,0,side*(.3+i*.12)]} position={[side*(.22+Math.sin(i*.6)*.025),-.19+i*.075,.07]} color="#f0be70"/>)}</group>)}</group></group>;
+  return <group><Block size={[.14,.83,.055]} position={[0,.52,0]} color="#ac783a"/><Ring radius={.065} tube={.018} position={[0,.075,0]} color="#d7a056"/><group ref={medal} position={[0,-.38,0]}><Cylinder radius={.4} height={.085} rotation={[Math.PI/2,0,0]} color="#ba803e"/><Ring radius={.36} tube={.025} position={[0,0,.06]} color="#f2c475" glow={.5}/><group position={[0,.075,.12]} scale={[1,.45,1]}><Block size={[.29,.29,.035]} rotation={[0,0,Math.PI/4]} color="#f2cf89" radius={.008}/></group><Tube points={[[.17,.06,.12],[.17,-.08,.12]]} radius={.01} color="#f2cf89"/><Block size={[.22,.14,.05]} position={[0,-.06,.13]} color="#dfb46c"/>{[-1,1].map(side=><group key={side}>{Array.from({length:5},(_,i)=><Orb key={i} size={[.022,.05,.012]} rotation={[0,0,side*(.3+i*.12)]} position={[side*(.22+Math.sin(i*.6)*.025),-.19+i*.075,.07]} color="#f0be70"/>)}</group>)}</group></group>;
 }
 
 function TechPanel({ active, reducedMotion }) {
@@ -57,7 +63,7 @@ const objects = [Roadmap,Rocket,Logbook,Medal,TechPanel,WallPhone];
 function InteractiveObject({ index, phase, section, onSelect, labels, reducedMotion }) {
   const [hover,setHover]=useState(false);
   const id=sectionIds[index]; const Model=objects[index];
-  const enabled=['INTRO','EXPLORE'].includes(phase);
+  const enabled=phase==='EXPLORE';
   const active=section===id&&phase!=='CLOSING_SECTION';
   useEffect(()=>()=>{document.body.style.cursor='';},[]);
   useEffect(()=>{if(!enabled)document.body.style.cursor='';},[enabled]);

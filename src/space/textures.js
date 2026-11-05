@@ -33,37 +33,3 @@ export function createDisplay(type) {
     ctx.fillStyle = '#78a4b3'; ctx.font = '15px monospace'; ctx.fillText('AM — EXPLORATION SYSTEMS', 30, h - 22);
   });
 }
-
-export function createEarth() {
-  // Original stylised equirectangular map; no network assets or third-party imagery.
-  return canvasTexture(2048, 1024, (ctx, w, h) => {
-    ctx.fillStyle = '#0b3159'; ctx.fillRect(0, 0, w, h);
-    const continents = [
-      [[-168,72],[-130,70],[-120,60],[-100,52],[-80,52],[-56,46],[-66,30],[-80,26],[-87,14],[-100,20],[-112,30],[-124,49],[-150,60]],
-      [[-80,10],[-60,7],[-48,-2],[-35,-8],[-43,-22],[-53,-32],[-66,-55],[-74,-40],[-78,-13]],
-      [[-17,36],[5,37],[21,33],[33,30],[43,12],[51,10],[40,-8],[33,-28],[18,-35],[10,-20],[-3,4],[-17,15]],
-      [[-10,36],[-8,58],[10,71],[30,70],[45,57],[65,70],[100,77],[140,65],[179,65],[160,50],[142,35],[125,40],[120,20],[103,1],[80,8],[69,25],[48,30],[32,42],[22,38],[10,45],[0,42]],
-      [[112,-12],[135,-10],[154,-25],[146,-39],[120,-35],[113,-24]],
-      [[-52,59],[-42,60],[-20,80],[-45,84],[-62,77]],
-      [[47,-13],[50,-17],[49,-26],[44,-24]],
-      [[128,31],[141,43],[145,40],[138,32]],
-      [[-180,-72],[-120,-69],[-60,-75],[0,-70],[60,-68],[120,-73],[180,-72],[180,-90],[-180,-90]],
-    ];
-    const project = ([lon, lat]) => [(lon + 180) / 360 * w, (90 - lat) / 180 * h];
-    for (const polygon of continents) {
-      ctx.beginPath(); polygon.map(project).forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.closePath();
-      ctx.fillStyle = '#597674'; ctx.fill(); ctx.strokeStyle = '#7f9b90'; ctx.lineWidth = 2; ctx.stroke();
-      ctx.save(); ctx.clip();
-      for (let i = 0; i < 800; i++) { const x = (i * 83.319 % w); const y = (i * 137.51 % h); ctx.fillStyle = i % 4 === 0 ? '#d7b375' : '#779887'; ctx.globalAlpha = .3; ctx.fillRect(x, y, 4 + i % 13, 3 + i % 9); }
-      ctx.globalAlpha = .8; ctx.fillStyle = '#ffd19b';
-      for (let i = 0; i < 1700; i++) { const x = i * 141.72 % w; const y = i * 47.439 % h; ctx.beginPath(); ctx.arc(x, y, i % 3 ? .6 : 1.3, 0, 7); ctx.fill(); }
-      ctx.restore();
-    }
-    for (let i = 0; i < 180; i++) {
-      const x = i * 183.751 % w; const y = 60 + i * 67.378 % (h - 120);
-      ctx.fillStyle = '#c9dfec'; ctx.globalAlpha = .09;
-      ctx.beginPath(); ctx.ellipse(x, y, 25 + i % 60, 3 + i % 9, Math.sin(i) * .4, 0, 7); ctx.fill();
-    }
-    ctx.globalAlpha = 1;
-  });
-}

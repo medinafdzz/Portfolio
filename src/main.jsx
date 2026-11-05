@@ -4,7 +4,7 @@ import '@fontsource/barlow-condensed/700.css'
 import '@fontsource/barlow-condensed/800.css'
 import App from './App.jsx'
 import PreferencesProvider from './context/PreferencesProvider.jsx'
-import './input.css'
+import './space/base.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
