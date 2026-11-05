@@ -1,6 +1,6 @@
 # SPACEFOLIO · Alejandro Medina
 
-Portfolio bilingüe de ingeniería de software e IA aplicada dentro de una cabina espacial 3D real. Un robot articulado da la bienvenida, toma los mandos y acompaña la exploración de seis objetos: roadmap (experiencia), cohete (proyectos), bitácora (sobre mí), medalla colgante (formación), consola con engranaje (tecnologías) y teléfono góndola de pared (contacto).
+Portfolio bilingüe de ingeniería de software e IA aplicada dentro de una cabina espacial 3D real. Un robot articulado da la bienvenida, toma los mandos y acompaña la exploración de seis objetos: roadmap (experiencia), cohete (proyectos), bitácora sobre atril (sobre mí), medalla enmarcada en la pared izquierda (formación), consola con engranaje (tecnologías) y teléfono góndola de pared (contacto).
 
 El contenido profesional original, ES/EN, el CV y los enlaces se conservan. CodeGuardian sigue descrito como prototipo académico y las herramientas de aprendizaje de IA no se presentan como experiencia profesional.
 
@@ -72,7 +72,11 @@ Playwright y axe comprueban los seis tamaños solicitados, secciones ES/EN, obje
 
 ## Rendimiento y límites
 
-Canvas diferido, DPR limitado, presupuesto menor de sombras y antialiasing en móvil, sin postprocesado pesado, cabina memoizada, limpieza de geometrías, renderizado pausado en segundo plano y bajo demanda al reducir movimiento. La escena se separa del paquete HTML; Three.js sigue siendo un recurso grande que se descarga para la vista 3D.
+Canvas diferido, renderizado bajo demanda incluso con movimiento activado y cero fotogramas nuevos en reposo. Las animaciones son finitas; sus actualizaciones se agrupan a un máximo de 24 FPS, las sombras se almacenan y actualizan al finalizar los movimientos, y no se añaden luces dinámicas al pasar el cursor. La cabina está memoizada y las geometrías se liberan.
+
+Al detectar un rasterizador WebGL por CPU (SwiftShader/llvmpipe), se aplica automáticamente un máximo de 8 FPS, DPR 0.8, sombras de 512 píxeles y transiciones más cortas. La mirada que sigue al cursor se reserva para GPU real. Se prioriza el consumo sobre la fluidez en ese modo; el texto HTML permanece nítido. La escena se separa del paquete HTML; Three.js sigue siendo un recurso grande que se descarga para la vista 3D.
+
+Medición y metodología antes/después: [docs/PERFORMANCE.md](docs/PERFORMANCE.md).
 
 La escena es una recreación procedural estilizada de la referencia; no utiliza la imagen como fondo ni pretende ser una reproducción píxel a píxel. Los objetos laterales pueden quedar fuera del encuadre vertical; la navegación HTML y los movimientos controlados de cámara mantienen el acceso.
 

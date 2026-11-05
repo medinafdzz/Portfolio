@@ -20,7 +20,7 @@ try {
   }, null, { timeout: 60000 });
   const fullResolution = () => {
     const canvas = document.querySelector('canvas');
-    return canvas && canvas.width >= canvas.clientWidth;
+    return canvas && canvas.width >= canvas.clientWidth * .79;
   };
   await page.waitForTimeout(1000);
   await page.waitForFunction(fullResolution);

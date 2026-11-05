@@ -77,7 +77,7 @@ test('all six 3D objects respond to actual raycast clicks', async ({page}) => {
   const canvas = await page.locator('canvas').boundingBox();
   const camera = new PerspectiveCamera(40,canvas.width/canvas.height,.1,100);
   camera.position.set(0,4.25,10.6); camera.lookAt(0,2.45,-1.3); camera.updateMatrixWorld();
-  const points = [[-5,3.42,-1.49],[-3.4,2.88,-1.24],[-1.95,2.22,-.95],[0,4.72,-2.1],[3.03,2.82,-1.15],[5.3,3.35,-1.3]];
+  const points = [[-5,3.15,-1.49],[-3.4,2.88,-1.24],[-1.95,2.55,-1.0],[-5,4.7,-1.4],[3.03,2.82,-1.15],[5.3,3.35,-1.3]];
   for(let i=0;i<6;i++){
     const point=new Vector3(...points[i]).project(camera);
     await page.mouse.click(canvas.x+(point.x+1)/2*canvas.width,canvas.y+(1-point.y)/2*canvas.height);

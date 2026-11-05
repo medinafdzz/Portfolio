@@ -16,19 +16,23 @@ technology tags; the component is reused inside the Projects panel.
 ## Scene
 
 `config.js` defines the palette and the positions of the six navigation objects.
-Keep their left-to-right order: experience, projects, about, education, skills,
-contact. The education medal hangs above the pilot, rather than on the desk.
+The menu order is experience, projects, about, education, skills, contact.
+The education medal is framed on the left wall above the roadmap. The logbook
+rests on a lectern; the central command screen has its own desk-mounted support.
 
 - `Cabin.jsx`: window frame, hull, curved extruded desk, chair, plants, planets.
-- `Objects.jsx`: wall roadmap, miniature rocket, hinged logbook, hanging medal,
+- `Objects.jsx`: wall roadmap, miniature rocket, hinged logbook on a lectern, framed medal,
   rotating physical gear console, wall gondola receiver and helical cable.
 - `Robot.jsx`: one hierarchical rig with shoulders, hips, knees and head. GSAP
-  animates its turn, walk and seated pose; continuous animation only handles idle,
-  walking and head movement. Mounting after lightweight view uses the seated pose.
+  animates its turn, walk and seated pose. Greeting and head responses are finite;
+  no idle animation keeps the renderer alive. Mounting after lightweight view uses the seated pose.
 - `geometry.jsx`: bevelled parts and curves; manually created GPU geometries have
   explicit cleanup. `Cabin` is memoised to avoid rebuilding it during navigation.
 - `Scene.jsx`: one lazy Canvas, lighting, constrained camera, visibility pause,
-  context-loss recovery and reduced-motion on-demand rendering.
+  context-loss recovery and on-demand rendering in every motion mode.
+- `RenderBudget.jsx` / `render-budget.js`: coalesce animation redraws, cap frames,
+  stop timers when hidden, and refresh cached shadows at the end of movement.
+- `IntroAnchor.jsx`: projects the robot's real ear position to the speech bubble.
 
 Use local assets. Planet map licensing is in `public/textures/ATTRIBUTION.md`.
 Display textures are generated locally with Canvas; professional paragraphs stay
@@ -43,8 +47,9 @@ section immediately from INTRO. 3D objects are enabled only in EXPLORE.
 The native modal dialog traps focus, supports Escape and restores the opener.
 The alternative navigation, language controls, CV and profile links are HTML.
 Unavailable/lost WebGL and the lightweight toggle keep the full content usable.
-Reduced-motion mode skips cinematics and renders on demand. Hidden tabs pause
-continuous rendering. Portrait uses a separate camera and controlled object focus;
+Reduced-motion mode skips cinematics. All modes render on demand; hidden tabs
+cancel pending redraw timers. Software rasterizers use a conservative budget
+and shorter transitions (see PERFORMANCE.md). Portrait uses a separate camera and controlled object focus;
 the navigation remains available when side objects do not fit in view.
 
 ## Checking changes

@@ -188,3 +188,6 @@ body:has(.spacefolio) { background: #10161d; margin: 0; }
 @media(prefers-reduced-motion:reduce) { .spacefolio *, .spacefolio *::before, .spacefolio *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
 .spacefolio[data-motion=reduced] .section-panel { animation-duration: .01ms; }
 @media(max-height:700px) and (min-width:768px) { .flight-header { height: 64px; flex-basis: 64px; } .navigation-deck { padding-block: 12px; } .deck-message { margin-bottom: 8px; } .intro-card { top: 12%; padding: 18px 22px; } .intro-card h2 { font-size: 24px; } .intro-description { margin-bottom: 12px; } }
+.spacefolio .intro-card { left: 0; top: 0; right: auto; bottom: auto; transform: translate3d(var(--dialog-x,0px),var(--dialog-y,0px),0); visibility: hidden; }
+.spacefolio .intro-card[data-anchored=true] { visibility: visible; }
+.spacefolio .intro-card::before { display: block; top: var(--tail-y,44px); }

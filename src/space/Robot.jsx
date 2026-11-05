@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import gsap from 'gsap';
 import { Block, Cylinder, Orb, Ring } from './geometry';
 import { colors } from './config';
+import { useSceneRender } from './render-context';
 
 function Arm({ side, jointRef, seated }) {
   return <group position={[side*.43,1.55,0]} rotation={[seated?-.9:0,0,0]} ref={jointRef}>
@@ -16,7 +17,9 @@ function Leg({ side, thighRef, kneeRef, seated }) {
   return <group position={[side*.23,.91,0]} rotation={[seated?-1.32:0,0,0]} ref={thighRef}><Orb size={[.19,.19,.19]} color="#303740"/><Block size={[.34,.43,.36]} position={[0,-.23,0]} color={colors.white} radius={.13}/><group ref={kneeRef} rotation={[seated?1.35:0,0,0]} position={[0,-.46,0]}><Cylinder radius={.15} height={.34} rotation={[0,0,Math.PI/2]} color="#a8afb2"/><Block size={[.34,.32,.35]} position={[0,-.2,0]} color={colors.white} radius={.12}/><Block size={[.4,.18,.55]} position={[0,-.41,.09]} color="#c4cbcc" radius={.085}/><Block size={[.4,.055,.53]} position={[0,-.5,.09]} color="#343b43" radius={.025}/></group></group>;
 }
 
-export default function Robot({ phase, reducedMotion, onEntered }) {
+export default function Robot({ phase, reducedMotion, onEntered, motionScale }) {
+  const requestRender = useSceneRender();
+  const gl = useThree(state => state.gl);
   const root = useRef(); const head = useRef(); const left = useRef(); const right = useRef();
   const thighL = useRef(); const thighR = useRef(); const kneeL = useRef(); const kneeR = useRef();
   const [initiallySeated] = useState(() => !['INTRO','ENTERING'].includes(phase));
@@ -26,8 +29,8 @@ export default function Robot({ phase, reducedMotion, onEntered }) {
   useEffect(() => { motion.current = reducedMotion; if (reducedMotion) sequence.current?.progress(1); }, [reducedMotion]);
   useEffect(() => {
     if (intro || initiallySeated) return;
-    const duration = motion.current ? .01 : 1;
-    const timeline = gsap.timeline({ defaults: { ease: 'power2.inOut' }, onComplete: onEntered });
+    const duration = motion.current ? .01 : motionScale;
+    const timeline = gsap.timeline({ defaults: { ease: 'power2.inOut' }, onUpdate: requestRender, onComplete: () => { requestRender(true); onEntered(); } });
     sequence.current = timeline;
     timeline.to(right.current.rotation, { z: 0, x: -.2, duration: .35*duration })
       .to(root.current.rotation, { y: Math.PI/2, duration: .55*duration })
@@ -38,18 +41,34 @@ export default function Robot({ phase, reducedMotion, onEntered }) {
       .to([kneeL.current.rotation,kneeR.current.rotation], { x: 1.35, duration: .65*duration }, 'sit')
       .to([left.current.rotation,right.current.rotation], { x: -.9, duration: .6*duration }, 'sit');
     return () => { timeline.kill(); sequence.current = null; };
-  }, [intro, initiallySeated, onEntered]);
+  }, [intro, initiallySeated, onEntered, requestRender, motionScale]);
 
-  useFrame(({ clock, pointer }, delta) => {
-    if (!root.current || reducedMotion) return;
+  useEffect(() => {
+    if (!intro || reducedMotion) return;
+    const wave = gsap.timeline({ onUpdate: requestRender, onComplete: () => requestRender(true) });
+    wave.set(right.current.rotation, { x: -.48, z: .7 })
+      .to(right.current.rotation, { z: 1.05, duration: .25*motionScale, yoyo: true, repeat: 3 })
+      .to(right.current.rotation, { z: .7, duration: .25*motionScale });
+    return () => wave.kill();
+  }, [intro, reducedMotion, requestRender, motionScale]);
+
+  useEffect(() => {
+    if (reducedMotion || motionScale < 1 || !['INTRO','EXPLORE'].includes(phase)) return;
+    let last = 0, tween;
+    const look = event => {
+      if (event.timeStamp - last < 90) return;
+      last = event.timeStamp;
+      const rect = gl.domElement.getBoundingClientRect();
+      const target = ((event.clientX - rect.left) / rect.width - .5) * .24;
+      tween = gsap.to(head.current.rotation, { y: target, duration: .22, overwrite: true, onUpdate: requestRender });
+    };
+    gl.domElement.addEventListener('pointermove', look, { passive: true });
+    return () => { gl.domElement.removeEventListener('pointermove', look); tween?.kill(); };
+  }, [phase, reducedMotion, gl, requestRender, motionScale]);
+
+  useFrame(({ clock }) => {
+    if (!root.current || reducedMotion || phase !== 'ENTERING') return;
     const t = clock.elapsedTime;
-    head.current.rotation.y += (pointer.x*.12 - head.current.rotation.y)*Math.min(delta*3,1);
-    head.current.rotation.x = Math.sin(t*.65)*.018;
-    if (phase === 'INTRO') {
-      right.current.rotation.z = .7 + Math.sin(t*2.2)*.13;
-      right.current.rotation.x = -.48;
-      left.current.rotation.z = -.08 + Math.sin(t)*.025;
-    }
     if (phase === 'ENTERING' && root.current.position.z > .3 && root.current.rotation.y > 1) {
       thighL.current.rotation.x = Math.sin(t*8)*.26;
       thighR.current.rotation.x = -Math.sin(t*8)*.26;
@@ -65,7 +84,7 @@ export default function Robot({ phase, reducedMotion, onEntered }) {
       <Block size={[1.13,.89,.85]} color="#e1e5e2" radius={.32}/>
       <Block size={[.99,.7,.18]} position={[0,-.015,.395]} color="#202932" radius={.23} metalness={.5} roughness={.22}/>
       <Block size={[.9,.59,.07]} position={[0,-.018,.495]} color="#07121c" radius={.2} metalness={.55} roughness={.14}/>
-      {[-1,1].map(side=><group key={side}><Block size={[.075,.23,.04]} position={[side*.23,-.005,.54]} color="#a5e3f4" radius={.035} glow={2.8}/><Cylinder radius={.235} height={.09} rotation={[0,0,Math.PI/2]} position={[side*.6,0,0]} color="#656e74"/><Ring radius={.175} tube={.023} rotation={[0,Math.PI/2,0]} position={[side*.66,0,0]} glow={2}/></group>)}
+      {[-1,1].map(side=><group key={side}><Block size={[.075,.23,.04]} position={[side*.23,-.005,.54]} color="#a5e3f4" radius={.035} glow={2.8}/><Cylinder radius={.235} height={.09} rotation={[0,0,Math.PI/2]} position={[side*.6,0,0]} color="#656e74"/><Ring name={side===1?'robot-ear':'robot-left-ear'} radius={.175} tube={.023} rotation={[0,Math.PI/2,0]} position={[side*.66,0,0]} glow={2}/></group>)}
       <Block size={[.44,.23,.035]} position={[0,-.07,-.438]} color="#bcc5c6" radius={.07}/>
     </group>
     <Arm side={-1} jointRef={left} seated={initiallySeated}/><Arm side={1} jointRef={right} seated={initiallySeated}/>

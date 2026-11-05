@@ -3,14 +3,21 @@
 Repository: `C:\Users\suso1\VS code\Portfolio`.
 Branch: `feature/spacefolio`. No push or production deployment was performed.
 
+## Latest placement and CPU revision
+
+The later user-requested revision attaches the speech bubble to the robot's ear,
+frames the medal on the left wall, puts the logbook on a lectern and mounts the
+command screen above the desk. CPU measurements and limits are in PERFORMANCE.md.
+The earlier ceiling-suspended medal arrangement is superseded by this request.
+
 ## Executed checks
 
 | Check | Result | Evidence |
 | --- | --- | --- |
 | ESLint | PASSED | `npm.cmd run lint`, no errors |
 | Production build | PASSED | Vite 7.3.7, lazy Three.js scene chunk |
-| Navigation unit tests | PASSED | 3 tests; duplicate starts, six sections, stale/invalid events |
-| Browser suite | PASSED | 12 Playwright tests, 5.2 minutes, Chromium/SwiftShader |
+| Unit tests | PASSED | 6 tests; navigation, frame coalescing, caps, software detection, cancellation |
+| Browser suite | PASSED | 14 Playwright tests, 3.2 minutes, Chromium/SwiftShader |
 | Production smoke | PASSED | Built app at localhost:4173, real Canvas, Enter, Projects and Escape |
 | Git whitespace | PASSED | `git diff --check` |
 | Visual detector | PASSED | No findings in the changed interface |
@@ -44,10 +51,12 @@ Desktop: 1440×900 and 1920×1080. Tablet: 768×1024 and 1024×768.
 Mobile: 390×844 and 430×932. No horizontal overflow was observed in these views.
 
 A repeated-navigation check opens/closes twelve sections and bounds GPU
-geometry growth. The final instrumented sample contained 271 geometries,
-486 draw calls and 359030 triangles. These are scene counters, not a real-device
-frame-rate benchmark. Source review independently verified geometry disposal
-and the robot's one-shot boarding lifecycle.
+geometry growth. The final instrumented sample contained 282 geometries,
+509 draw calls and 301846 triangles. These are scene counters, not a real-device
+frame-rate benchmark. Source review independently verified geometry disposal,
+the robot's one-shot boarding lifecycle and the render scheduler's teardown.
+The two additional browser tests check ear anchoring, book/monitor clearance,
+and zero idle frames while motion remains enabled, including with a panel open.
 
 ## Real captures
 
