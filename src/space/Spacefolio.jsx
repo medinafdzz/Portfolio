@@ -1,0 +1,92 @@
+import { Component, lazy, Suspense, useCallback, useEffect, useReducer, useState, useSyncExternalStore } from 'react';
+import usePreferences from '../hooks/usePreferences';
+import { initialNavigation, navigationReducer, sectionIds } from './navigation';
+import { spaceCopy } from './copy';
+import SectionOverlay from './SectionOverlay';
+import Icon from './Icons';
+import './spacefolio.css';
+
+const Scene = lazy(() => import('./Scene'));
+const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+const subscribeMotion = callback => { motionQuery.addEventListener('change', callback); return () => motionQuery.removeEventListener('change', callback); };
+
+function supportsWebGL() {
+  try {
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('webgl2');
+    if (!context) return false;
+    context.getExtension('WEBGL_lose_context')?.loseContext();
+    return true;
+  } catch { return false; }
+}
+
+class SceneBoundary extends Component {
+  state = { failed: false };
+  static getDerivedStateFromError() { return { failed: true }; }
+  componentDidCatch() { this.props.onFailure(); }
+  render() { return this.state.failed ? null : this.props.children; }
+}
+
+export default function Spacefolio() {
+  const { copy, language, setLanguage } = usePreferences();
+  const labels = spaceCopy[language];
+  const [navigation, dispatch] = useReducer(navigationReducer, initialNavigation);
+  const [webgl, setWebgl] = useState(supportsWebGL);
+  const [light, setLight] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const systemMotion = useSyncExternalStore(subscribeMotion, () => motionQuery.matches);
+  const [quiet, setQuiet] = useState(false);
+  const reducedMotion = systemMotion || quiet;
+  const fallback = !webgl || light;
+  const { phase, section } = navigation;
+  const select = useCallback(id => dispatch({ type: 'SELECT', section: id }), []);
+  const start = useCallback(() => dispatch({ type: 'START' }), []);
+  const failure = useCallback(() => setWebgl(false), []);
+  const ready = useCallback(() => setLoaded(true), []);
+  const entered = useCallback(() => dispatch({ type: 'ENTERED' }), []);
+  const close = useCallback(() => dispatch({ type: 'CLOSE' }), []);
+  const blocked = ['ENTERING', 'OPENING_SECTION', 'SECTION_OPEN', 'CLOSING_SECTION'].includes(phase);
+
+  useEffect(() => {
+    const durations = { OPENING_SECTION: reducedMotion ? 0 : 500, CLOSING_SECTION: reducedMotion ? 0 : 420 };
+    const events = { OPENING_SECTION: 'OPENED', CLOSING_SECTION: 'CLOSED' };
+    if (!events[phase]) return;
+    const timer = setTimeout(() => dispatch({ type: events[phase] }), durations[phase]);
+    return () => clearTimeout(timer);
+  }, [phase, reducedMotion]);
+  useEffect(() => {
+    if (phase !== 'INTRO') return;
+    const handleKey = event => {
+      if (event.key === 'Enter' && !['BUTTON', 'A', 'SELECT'].includes(event.target.tagName)) { event.preventDefault(); start(); }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [phase, start]);
+  useEffect(() => {
+    if (phase !== 'ENTERING' || !fallback) return;
+    const timer = setTimeout(entered, 0);
+    return () => clearTimeout(timer);
+  }, [phase, fallback, entered]);
+
+  return <div className="spacefolio" data-phase={phase} data-motion={reducedMotion ? 'reduced' : 'full'}>
+    <a className="skip-link" href="#section-navigation">{copy.skipLink}</a>
+    <header className="flight-header">
+      <a href="#" className="brand" onClick={event => { event.preventDefault(); if (!blocked) select('about'); }} aria-label="Alejandro Medina"><span className="brand-mark" aria-hidden="true"><span/></span><span>Alejandro Medina<small>SOFTWARE ENGINEER</small></span></a>
+      <div className="flight-identity"><span className="status-dot"/>SPACEFOLIO<span className="identity-divider"/>{language === 'es' ? 'UNIVERSO PERSONAL' : 'PERSONAL UNIVERSE'}</div>
+      <div className="header-actions"><a className="header-profile" href="https://github.com/medinafdzz" target="_blank" rel="noopener noreferrer">GitHub</a><a className="header-profile" href="https://linkedin.com/in/medinafdzz" target="_blank" rel="noopener noreferrer">LinkedIn</a><a className="cv-link" href="/CV.pdf" download="CV_Alejandro_Medina.pdf">CV<Icon name="download"/></a><div className="language-switch" role="group" aria-label={copy.header.languageLabel}>{['es', 'en'].map(value => <button key={value} onClick={() => setLanguage(value)} aria-pressed={language === value} aria-label={value === 'es' ? 'Español' : 'English'}>{value.toUpperCase()}</button>)}</div></div>
+    </header>
+    <main id="main-content" className="flight-main" tabIndex={-1}>
+      <h1 className="sr-only">Alejandro Medina — {copy.hero.kicker}</h1>
+      <div className="scene-stage" aria-label={language === 'es' ? 'Cabina espacial interactiva' : 'Interactive spacecraft cabin'}>
+        {!fallback && <SceneBoundary onFailure={failure}><Suspense fallback={<div className="scene-loading"><span/>{labels.loading}</div>}><Scene phase={phase} section={section} onSelect={select} onEntered={entered} onReady={ready} onFailure={failure} reducedMotion={reducedMotion} labels={labels}/></Suspense></SceneBoundary>}
+        {fallback && <div className="flat-view"><div className="flat-orbit" aria-hidden="true"/><span className="flat-monogram" aria-hidden="true">AM</span><h2>{labels.fallback}</h2><p>{labels.fallbackBody}</p><p className="flat-role">{copy.hero.kicker}</p></div>}
+        <div className="scene-caption" aria-hidden="true"><span className="status-dot"/>{labels.ready}<span className="scene-coordinate">43.5322° N · 5.6611° W</span></div>
+        {phase === 'INTRO' && !fallback && <div className="intro-card"><p className="intro-hello">{labels.hello}</p><h2>{labels.greeting}</h2><p className="intro-description">{labels.invitation}</p><button className="start-button" onClick={start} disabled={!loaded}>{labels.start}<Icon name="arrow"/></button><span className="enter-hint"><kbd>↵</kbd>{labels.enter}</span></div>}
+        <div className="flight-tools"><button onClick={() => setLight(value => !value)} disabled={!webgl} aria-pressed={light}>{fallback ? labels.spatial : labels.light}</button><span/><button onClick={() => setQuiet(value => !value)} aria-pressed={reducedMotion} disabled={systemMotion}>{reducedMotion ? labels.resumeMotion : labels.motion}</button></div>
+      </div>
+      <div className="navigation-deck"><div className="deck-message" aria-live="polite"><p>{phase === 'ENTERING' ? labels.entering : labels.explore}</p><span>{labels.hint}</span></div><nav id="section-navigation" className="section-navigation" aria-label={labels.nav} tabIndex={-1}>{sectionIds.map((id, index) => <button key={id} type="button" className="nav-station" data-section={id} aria-haspopup="dialog" aria-current={section === id ? 'true' : undefined} disabled={blocked} onClick={() => select(id)}><Icon name={id}/><span>{labels.sections[index]}<small>{labels.objects[index]}</small></span></button>)}</nav></div>
+    </main>
+    <footer className="flight-footer"><span>{copy.hero.role}</span><span>{labels.location}<span className="footer-separator">/</span>© 2026</span></footer>
+    {section && <SectionOverlay section={section} labels={labels} onClose={close} closing={phase === 'CLOSING_SECTION'}/>}
+  </div>;
+}
