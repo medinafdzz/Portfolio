@@ -5,6 +5,11 @@ export default {
     './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
+    fontFamily: {
+      sans: ['Satoshi'],
+      serif: ['Satoshi'],
+      mono: ['Satoshi'],
+    },
     extend: {
       screens: {
         xs: '475px',

@@ -4,7 +4,7 @@
   --line: #46505a; --line-soft: #333c46;
   background: #10161d; color: var(--ink); height: 100dvh; min-height: 620px;
   display: flex; flex-direction: column; overflow: hidden;
-  font-family: 'Segoe UI', system-ui, sans-serif; color-scheme: dark;
+  font-family: 'Satoshi'; color-scheme: dark;
 }
 html:has(.spacefolio) { scroll-snap-type: none; scroll-behavior: auto; background: #10161d; }
 body:has(.spacefolio) { background: #10161d; margin: 0; }
@@ -75,7 +75,7 @@ body:has(.spacefolio) { background: #10161d; margin: 0; }
 @keyframes loading-orbit { to { transform: rotate(360deg); } }
 .flat-view { position: absolute; inset: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 24px; text-align: center; background: #172431; }
 .flat-orbit { position: absolute; width: 650px; height: 650px; border: 1px solid #36434e; border-radius: 50%; transform: rotate(-20deg) scaleY(.65); pointer-events: none; }
-.flat-monogram { font-family: 'Barlow Condensed',sans-serif; font-size: 90px; line-height: 1; color: #ffb15c; margin-bottom: 20px; }
+.flat-monogram { font-family: 'Satoshi'; font-size: 90px; line-height: 1; color: #ffb15c; margin-bottom: 20px; }
 .flat-view h2 { font-size: clamp(26px,3vw,44px); font-weight: 500; margin: 0 0 16px; }
 .flat-view>p { font-size: 14px; max-width: 460px; line-height: 1.8; color: #bac8d3; }
 .flat-view .flat-role { font-size: 12px; color: #ffbd78; margin-top: 20px; }

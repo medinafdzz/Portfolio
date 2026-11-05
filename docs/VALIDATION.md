@@ -23,7 +23,7 @@ position/angle, an extruded console body and the high-resolution radar texture.
 | ESLint | PASSED | `npm.cmd run lint`, no errors |
 | Production build | PASSED | Vite 7.3.7, lazy Three.js scene chunk |
 | Unit tests | PASSED | 6 tests; navigation, frame coalescing, caps, software detection, cancellation |
-| Browser suite | PASSED | 14 Playwright tests, 2.9 minutes, Chromium/SwiftShader |
+| Browser suite | PASSED | 15 scenarios including typography, Chromium/SwiftShader; interrupted mobile-large case rerun successfully |
 | Production smoke | PASSED | Built app at localhost:4173, real Canvas, Enter, Projects and Escape |
 | Git whitespace | PASSED | `git diff --check` |
 | Visual detector | PASSED | No findings in the changed interface |
@@ -43,6 +43,20 @@ that toolchain change was not forced. There are no reported high or critical
 advisories after the safe updates. JSON audit evidence is in `artifacts/`.
 
 ## Browser coverage
+
+The Satoshi revision adds an actual-glyph audit via Chromium's
+`CSS.getPlatformFontsForNode` for the intro, lightweight view and all six panels
+in both languages. Every rendered text node uses the custom Satoshi font, and
+all procedural Canvas text declarations use Satoshi. The unsupported Enter
+symbol was replaced with an SVG icon to prevent system-font substitution.
+The normal/italic WOFF2 files match the supplied originals by SHA-256; their
+license is included, and the old Barlow dependency has been removed.
+
+The initial 15-scenario run had one mobile-large failure when a source update
+triggered Vite hot reload mid-navigation. With source edits stopped, that case
+passed on its own (`playwright test --last-failed`). Desktop, tablet and mobile
+captures were visually inspected after the font change; lint, six unit tests
+and the production build also passed again.
 
 The suite checks all six sections, both ES/EN content variants, three featured
 project selectors and original repository links. It exercises each 3D object

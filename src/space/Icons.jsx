@@ -1,4 +1,5 @@
 const paths = {
+  enter: <path d="M20 4v7a2 2 0 0 1-2 2H4m5-5-5 5 5 5"/>,
   experience: <><path d="M4 19V5M4 19h16M7 15l4-5 4 2 5-8"/><circle cx="11" cy="10" r="1"/><circle cx="15" cy="12" r="1"/></>,
   projects: <><path d="M14 5c3-2 6-2 6-2s0 3-2 6l-5 6-5-5zM8 10l-4 1-1 4 5-1M13 15l-1 5 4-1 1-5M7 17l-3 3"/><circle cx="15" cy="8" r="1.5"/></>,
   about: <><path d="M5 4h12a2 2 0 0 1 2 2v15H7a3 3 0 0 1-3-3V6a2 2 0 0 1 1-2zM4 17h15M9 8h6M9 11h4"/></>,

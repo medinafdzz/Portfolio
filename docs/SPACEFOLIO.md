@@ -13,6 +13,15 @@ technology tags; the component is reused inside the Projects panel.
 `src/space/copy.js` holds only the new navigation and spacecraft interface copy.
 `src/space/SectionContent.jsx` maps original content to six readable HTML panels.
 
+## Typography
+
+Satoshi is the sole website font family, including controls and Canvas screen
+labels. `src/space/fonts.css` loads the original supplied variable WOFF2 files
+from `public/fonts/`, with normal and italic styles and weights 300–900.
+`main.jsx` waits for these faces before mounting so Canvas textures never bake
+in a system fallback. Keep the family exclusive; use SVG icons for unsupported
+symbols. The original license is `public/fonts/Satoshi-LICENSE.txt`.
+
 ## Scene
 
 `config.js` defines the palette and the positions of the six navigation objects.

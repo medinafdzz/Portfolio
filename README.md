@@ -57,6 +57,10 @@ public/CV.pdf          CV original
 
 Guía de mantenimiento: [docs/SPACEFOLIO.md](docs/SPACEFOLIO.md).
 
+Toda la web utiliza exclusivamente Satoshi, incluidos controles y pantallas 3D.
+Los archivos variables originales (normal y cursiva, pesos 300–900) se sirven
+localmente desde `public/fonts/`, junto con su licencia.
+
 ## Verificar
 
 ```powershell

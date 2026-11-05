@@ -28,7 +28,7 @@
   --station-node-size: 1.25rem;
   --station-node-y: clamp(1.5rem, 4vh, 3rem);
   --route-gutter: clamp(2rem, 4vw, 4rem);
-  --body-font: Aptos, 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --body-font: 'Satoshi';
   --display-font: var(--body-font);
   color-scheme: light;
   font-synthesis: none;
