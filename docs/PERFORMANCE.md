@@ -1,4 +1,77 @@
-# SPACEFOLIO CPU and placement corrections — 2026-11-05
+# SPACEFOLIO performance — 2026-11-05
+
+## Latest: Blender scene with baked lighting
+
+The static shell, desk, console and chair now share a 2048² diffuse-light atlas
+and use unlit materials. Movable parts retain shared PBR materials and the
+existing animation groups. Cached floor contact shadows only include the robot;
+self-shadow acne on tiny bevels is avoided. All animations remain finite, and
+no loop requests idle frames. The 24 FPS hardware / 8 FPS software budgets and
+original pixel ratios were retained for a comparable measurement.
+
+Blender 5.3.0 RC `c956fd684542` generated/baked the original assets using AMD HIP
+on the RX 9070 XT, 128 samples. The visitor does not run Blender. The final GLB
+is **4,522,920 bytes**, down from 10,354,980 bytes before Draco compression.
+Local decoder assets add 250,876 bytes. No remote decoder is requested.
+
+### Comparable before/after results
+
+1440×900; one Chromium instance at a time; 8-second warmups, 3-second idle
+samples and the same four-second boarding window. The baseline was archived
+from `cdacaa1`, with the existing user header/copy preserved. CPU below is the
+sum of browser/renderer/GPU-process CPU time: **100% equals one logical core**.
+
+The hardware run explicitly used Direct3D11 and reported **AMD Radeon(TM)
+Graphics (0x164E)**, the integrated GPU. It was not the RX 9070 XT used for
+asset baking. The default headless renderer and the software run reported
+SwiftShader, so those are never labelled hardware measurements.
+
+| Counter, final exploration frame | Before | After |
+| --- | ---: | ---: |
+| Main-pass draw calls | 269 | 90 |
+| Shadow-pass draw calls | 223 | 33 |
+| Main-pass triangles | 169,742 | 273,646 |
+| Shadow-pass triangles | 120,616 | 37,316 |
+| Resident geometries | 277 | 90 |
+| Resident textures | 9 | 10 |
+
+Main-pass triangles increased **61.2%**, while draw calls fell **66.5%**.
+The render instrument measures the shadow pass separately rather than counting
+its triangles as additional model geometry.
+
+| CPU sample | Before | After |
+| --- | ---: | ---: |
+| Hardware: boarding aggregate | 11.64% | 7.17% |
+| Hardware: boarding main thread | 4.47% | 2.57% |
+| Hardware: introduction idle | 0.062% | 0.069% |
+| Hardware: exploration idle | 0.054% | 0.057% |
+| SwiftShader: boarding aggregate | 640.63% | 617.33% |
+| SwiftShader: boarding main thread | 2.67% | 1.61% |
+
+The final hardware sample uses **38.4% less aggregate CPU during boarding**.
+The baseline rendered 96 boarding frames in hardware and the final model 97;
+both rendered 11 in software. An earlier after-sample measured 5.84% aggregate
+hardware CPU (49.9% reduction). These are short local measurements with variance,
+not a universal device guarantee.
+All measured idle windows produced **zero new frames**.
+
+Software rendering still has high aggregate CPU during movement. After-samples
+ranged from 617.33% to 649.50%, against 640.63% initially, so no reliable aggregate
+software-CPU improvement is claimed. The higher polygon
+count is intended for GPU rendering. The main-thread reduction and unchanged
+software frame budget do not make CPU rasterisation inexpensive. Loading and
+shader/decoder startup may also have peaks. Use the lightweight view when
+hardware WebGL is unavailable and continuous interaction is too costly.
+
+Raw local evidence: `artifacts/performance-baked-before.json`,
+`performance-baked-after.json`, `performance-baked-before-hardware.json`,
+`performance-baked-after-hardware.json`, `performance-baked-final.json`,
+`performance-baked-final-hardware.json`, and their intro/explore captures.
+
+Reproduce with `node tests/performance.mjs <label> <dev-url> <mode>`, where mode
+is `software`, `default` or `hardware`. Separate labels preserve old results.
+
+## Earlier on-demand rendering revision (historical)
 
 The earlier `frameloop="always"` rendered the entire cabin and its shadow pass
 continuously. Robot idle motion and the suspended medal kept changing every frame.

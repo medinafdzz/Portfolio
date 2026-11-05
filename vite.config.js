@@ -3,22 +3,24 @@ import react from '@vitejs/plugin-react'
 
 const cspDev = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval'",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self' data:",
   "connect-src 'self' http: https: ws: blob:",
+  "worker-src 'self' blob:",
   "object-src 'none'",
   "base-uri 'self'"
 ].join('; ')
 
 const cspPreview = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
+  "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self' data:",
   "connect-src 'self' https: blob:",
+  "worker-src 'self' blob:",
   "object-src 'none'",
   "base-uri 'self'",
   "upgrade-insecure-requests"

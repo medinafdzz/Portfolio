@@ -317,9 +317,9 @@ cylinder(.105, .14, (0, .24, 0), 'dark')
 ring(.247, .009, (0, 1.01, 0), 'bronze', (-math.pi / 2, 0, 0))
 part('RocketBody')
 
-box((1.06, .09, .84), material='dark', bevel=.04)
-box((.18, .73, .15), (0, .4, -.15), 'steel', .035, (.38, 0, 0))
-box((.14, .35, .12), (0, .23, .3), 'steel', .025)
+box((1.06, .09, .84), (0, .13, 0), material='dark', bevel=.04)
+box((.18, .65, .15), (0, .44, -.15), 'steel', .035, (.38, 0, 0))
+box((.14, .29, .12), (0, .255, .3), 'steel', .025)
 box((.97, 1.08, .06), (0, .85, -.12), 'steel', .025, (-.6, -.08, -.06))
 box((1.02, .08, .16), (0, .4, .32), 'bronze', .025)
 part('Lectern')
@@ -512,7 +512,7 @@ bpy.ops.object.select_all(action='DESELECT')
 for obj in parts.values():
     obj.select_set(True)
 bpy.context.view_layer.objects.active = parts['CabinShell']
-bpy.ops.export_scene.gltf(filepath=str(output), export_format='GLB', use_selection=True, export_cameras=False, export_lights=False, export_yup=True)
+bpy.ops.export_scene.gltf(filepath=str(output), export_format='GLB', use_selection=True, export_cameras=False, export_lights=False, export_yup=True, export_draco_mesh_compression_enable=True, export_draco_mesh_compression_level=6, export_draco_position_quantization=14, export_draco_normal_quantization=12, export_draco_texcoord_quantization=16)
 atlas.pack()
 
 # Lay out the editable source after export; GLB parts stay in local coordinates

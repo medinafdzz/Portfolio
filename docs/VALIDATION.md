@@ -3,6 +3,60 @@
 Repository: `C:\Users\suso1\VS code\Portfolio`.
 Branch: `feature/spacefolio`. No push or production deployment was performed.
 
+## Baked Blender scene — latest revision
+
+The complete implementation plan is
+`docs/superpowers/plans/2026-11-05-spacefolio-baked-scene.md`. The editable Blender
+source, generator, 2048² light atlas and manifest are in `assets/spacefolio/`.
+The local GLB contains named articulated parts and a Draco-compressed static
+shell with unlit baked illumination. It is 4,522,920 bytes. Six fixed, invisible
+box hitboxes replace triangle picking on detailed meshes; they are checked by
+actual 3D clicks. The raised lectern now has a lower world bound above 2.08.
+
+Blender CPU and AMD HIP baking/export were exercised. The generated GLB was
+checked for named parts, UVs, embedded textures, compression and unlit material;
+its images and decoder load under actual dev CSP and the stricter Vercel policy
+applied to the production build. No CSP bypass or external decoder is used.
+
+The browser coverage includes exclusive actual-glyph Satoshi rendering in ES/EN,
+six real 3D targets, finite robot boarding, physical feedback, ear anchoring,
+book/console/lectern clearance, keyboard and reduced motion, context-loss and
+WebGL fallback, touch, local CV/assets, focus and axe checks. Repeated navigation
+retained a stable 90 geometries; the GLB cache also survives lightweight remounts.
+The first full run exposed an outdated hardcoded English footer assertion after
+the user's local bilingual copy edits. The assertion now checks the canonical
+ES translation, preserving the user's copy. All five affected cases passed.
+Both the lectern clearance and proxy-selection checks were observed failing
+before their fixes, then passing with the final model.
+
+After the final regenerated GLB and proxy pass, the **entire 16-test browser
+suite passed in one run (3.4 minutes)**. Its HTML report is in
+`artifacts/playwright-report/index.html`; full output is
+`artifacts/baked-e2e-final.log`. An additional text-range check passed 14 fallback
+states, ES/EN at 360–1920px (`artifacts/baked-final-layout.json`), with both 360px
+captures inspected. The final production smoke reran after the same asset build.
+
+Lint, seven Node tests, production build, production smoke (zero console errors),
+eight external HTTP HEAD links, zero runtime npm vulnerabilities and whitespace
+checks passed. A fresh independent read-only review, including the final fix
+pass, found no confirmed Critical, Important or Minor issues. Its runtime and
+performance conclusions rely on the primary agent's measured evidence.
+
+The primary agent measured both SwiftShader and native Direct3D11 on the AMD
+integrated GPU, separately from Blender's RX 9070 XT. Final hardware boarding
+CPU was 7.17% versus 11.64% of one logical core, with 61.2% more main-pass
+triangles and 66.5% fewer main-pass draw calls. Repeated after-samples varied;
+full methodology, raw filenames and the expensive software-animation limit
+are in PERFORMANCE.md. All measured idle samples produced zero new frames.
+
+Real captures include `artifacts/production-intro.png`,
+`production-explore.png`, `production-section.png`,
+`baked-final-hardware-intro.png`, `baked-final-hardware-explore.png` and the
+current desktop/tablet/mobile captures. Blender's authoring render omits the
+web-only planet maps, screens and HTML; final browser captures are the visual
+authority. Physical phones, Safari and Firefox were not tested. The following
+sections retain the earlier implementation/typography verification history.
+
 ## Home typography revision
 
 The requested home-page text is approximately 25% larger and uses Satoshi 700,

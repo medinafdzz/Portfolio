@@ -7,6 +7,8 @@ test('generated scene includes baked unlit shell, articulated parts and embedded
   const data=readFileSync(new URL('../public/models/spacefolio.glb',import.meta.url));
   assert.equal(data.toString('ascii',0,4),'glTF');
   const model=JSON.parse(data.toString('utf8',20,20+data.readUInt32LE(12)));
+  assert.ok(model.extensionsRequired.includes('KHR_draco_mesh_compression'),'Geometry compression missing');
+  assert.ok(data.length<6*1024*1024,'GLB exceeds 6 MiB download budget');
   const names=new Set(model.nodes.map(n=>n.name));
   for(const name of ['CabinShell','ConsoleBody','Chair','RoadmapFrame','RocketBody','Lectern','BookBase','BookCover','MedalFrame','MedalFace','TechBase','TechGear','PhoneBase','PhoneReceiver','RobotTorso','RobotHead','RobotUpperArmL','RobotLowerArmL','RobotThighL','RobotShinL']) assert.ok(names.has(name),`Missing ${name}`);
   assert.ok(model.materials.some(m=>m.extensions?.KHR_materials_unlit && m.pbrMetallicRoughness?.baseColorTexture),'No unlit atlas material');

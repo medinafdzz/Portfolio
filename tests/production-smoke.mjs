@@ -1,10 +1,17 @@
 import { chromium } from '@playwright/test';
 import assert from 'node:assert/strict';
-import { writeFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import { PerspectiveCamera, Vector3 } from 'three';
 
 const browser = await chromium.launch({ headless: true, args: ['--use-angle=swiftshader', '--enable-webgl', '--ignore-gpu-blocklist'] });
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+const vercel=JSON.parse(await readFile('vercel.json','utf8'));
+const deployedCsp=vercel.headers[0].headers.find(h=>h.key==='Content-Security-Policy').value;
+// Exercise the stricter deployed policy, including the local WASM decoder.
+await page.route('http://127.0.0.1:4173/',async route=>{
+  const response=await route.fetch();
+  await route.fulfill({response,headers:{...response.headers(),'content-security-policy':deployedCsp}});
+});
 const errors = [];
 const warnings = [];
 page.on('pageerror', error => errors.push(error.message));

@@ -31,6 +31,12 @@ Only CabinShell, ConsoleBody and Chair are light-baked. Animated models are
 excluded from the bake and use shared PBR materials. The three static nodes
 share one atlas exported with KHR_materials_unlit to avoid double lighting.
 
+Geometry is exported with Draco (level 6, position 14 bits, normal 12 bits, UV
+16 bits). The final GLB is 4,522,920 bytes instead of 10,354,980 uncompressed.
+The unmodified decoder is served from `public/draco/` with its Apache license;
+two workers bound decode concurrency. This is loading-time compression, not
+an ongoing rendering effect. No additional npm dependency is required.
+
 Performance: `node tests/performance.mjs <label> http://127.0.0.1:5173/ <mode>`.
 Modes are `software`, `default`, `hardware`. Reports record the actual renderer,
 separate main/shadow passes, resource sizes and aggregate process CPU; 100% is

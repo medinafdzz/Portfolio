@@ -66,16 +66,28 @@ function WallPhone({ active, reducedMotion, motionScale }) {
 }
 
 const objects = [Roadmap,Rocket,Logbook,Medal,TechPanel,WallPhone];
+const hitboxes = [
+  {size:[1.8,1.85,.6],position:[0,0,.05]},
+  {size:[1.1,1.95,1.1],position:[0,.9,0]},
+  {size:[1.2,1.6,1.3],position:[0,.8,.1]},
+  {size:[1.16,1.16,.65],position:[0,0,0],rotation:[0,1.05,0]},
+  {size:[1.7,1.4,1.1],position:[0,.6,-.1]},
+  {size:[.8,2.3,.8],position:[0,-.3,.15],rotation:[0,-.3,0]},
+];
 
 function InteractiveObject({ index, phase, section, onSelect, labels, reducedMotion, motionScale }) {
   const [hover,setHover]=useState(false);
   const id=sectionIds[index]; const Model=objects[index];
+  const hitbox=hitboxes[index];
   const enabled=phase==='EXPLORE';
   const active=section===id&&phase!=='CLOSING_SECTION';
   useEffect(()=>()=>{document.body.style.cursor='';},[]);
   useEffect(()=>{if(!enabled)document.body.style.cursor='';},[enabled]);
   return <group position={objectPositions[index]} name={`object-${id}`} onPointerOver={event=>{if(enabled){event.stopPropagation();setHover(true);document.body.style.cursor='pointer';}}} onPointerOut={()=>{setHover(false);document.body.style.cursor='';}} onClick={event=>{if(enabled){event.stopPropagation();setHover(false);document.body.style.cursor='';onSelect(id);}}}>
     <Model active={active||hover} reducedMotion={reducedMotion} motionScale={motionScale}/>
+    <mesh name={`${id}-hitbox`} position={hitbox.position} rotation={hitbox.rotation}>
+      <boxGeometry args={hitbox.size}/><meshBasicMaterial visible={false}/>
+    </mesh>
     {hover&&enabled&&<Html center position={[0,index===3?-.95:1.45,.3]} style={{pointerEvents:'none'}}><span className="object-label">{labels.sections[index]}</span></Html>}
   </group>;
 }

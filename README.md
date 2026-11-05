@@ -57,6 +57,10 @@ public/CV.pdf          CV original
 
 Guía de mantenimiento: [docs/SPACEFOLIO.md](docs/SPACEFOLIO.md).
 
+La cabina actual utiliza modelos propios de Blender con iluminación horneada,
+un GLB comprimido y piezas articuladas independientes. El código de generación,
+el archivo editable y las instrucciones están en [assets/spacefolio](assets/spacefolio/README.md).
+
 Toda la web utiliza exclusivamente Satoshi, incluidos controles y pantallas 3D.
 Los archivos variables originales (normal y cursiva, pesos 300–900) se sirven
 localmente desde `public/fonts/`, junto con su licencia.

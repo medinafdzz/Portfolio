@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { PerspectiveCamera, Vector3 } from 'three';
 import { clickSceneObject } from './scene-helpers';
+import { translations } from '../src/i18n/translations';
 
 const ids = ['experience', 'projects', 'about', 'education', 'skills', 'contact'];
 const titles = ['Experiencia', 'Proyectos', 'Sobre mí', 'Formación', 'Tecnologías', 'Contacto'];
@@ -94,7 +95,7 @@ for(const [name,width,height] of [['desktop-large',1920,1080],['tablet-portrait'
     await page.setViewportSize({width,height});
     await page.goto('/');
     await expect(page.locator('.start-button')).toBeEnabled({timeout:60000});
-    await expect(page.locator('.flight-footer')).toContainText('Software AI Engineer');
+    await expect(page.locator('.flight-footer')).toContainText(translations.es.hero.role);
     const lightText = await page.locator('.spacefolio').evaluate(root => [...root.querySelectorAll('header *, main *, footer *')].filter(el =>
       el.getBoundingClientRect().width > 1 && el.getBoundingClientRect().height > 1 &&
       [...el.childNodes].some(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim()) &&

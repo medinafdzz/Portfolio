@@ -26,6 +26,7 @@ test('ear-anchored speech, framed medal and desk clearance', async ({ page }) =>
       gap: rect.left - canvas.left - (ear.x + 1)*size.width/2,
       tailGap: Math.abs(rect.top - canvas.top + parseFloat(document.querySelector('.intro-card').style.getPropertyValue('--tail-y')) + 8 - (1-ear.y)*size.height/2),
       bookBottom: new Box3().setFromObject(scene.getObjectByName('captains-log')).min.y,
+      lecternBottom: new Box3().setFromObject(scene.getObjectByName('logbook-lectern')).min.y,
       consoleBottom: new Box3().setFromObject(scene.getObjectByName('command-console')).min.y,
       medal: scene.getObjectByName('object-education').position.toArray(),
       medalAngle: scene.getObjectByName('framed-medal').rotation.y,
@@ -37,6 +38,7 @@ test('ear-anchored speech, framed medal and desk clearance', async ({ page }) =>
   expect(layout.gap).toBeLessThanOrEqual(20);
   expect(layout.tailGap).toBeLessThan(3);
   expect(layout.bookBottom).toBeGreaterThan(2.3);
+  expect(layout.lecternBottom).toBeGreaterThan(2.08);
   expect(layout.consoleBottom).toBeGreaterThan(1.96);
   expect(layout.medal[0]).toBeLessThan(-5.8);
   expect(layout.medalAngle).toBeGreaterThan(.9);

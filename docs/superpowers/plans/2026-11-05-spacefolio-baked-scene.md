@@ -1,6 +1,6 @@
 # SPACEFOLIO: cabina detallada con iluminación horneada — Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Mejorar el acabado de la cabina manteniendo la distribución, todas las interacciones y un consumo mínimo en reposo.
 
@@ -62,8 +62,8 @@
 - [x] Comprobar `blender --version`, ejecución sin interfaz, disponibilidad de Cycles y exportador glTF.
 - [x] Ejecutar prueba pequeña de horneado y GLB con textura embebida; abrir el resultado con el cargador Three.js existente en una página aislada con el ajuste CSP identificado. Exigir UV, imagen no vacía, geometría y ausencia de errores de carga.
 - [x] Detectar dispositivos Cycles sin modificar drivers y ejecutar un bake con la RX 9070 XT mediante HIP, además de CPU. No confundirlo con el renderizado de la web.
-- [ ] Ampliar mínimamente `tests/performance.mjs` con argumento de renderizador y etiqueta/salida para no sobrescribir resultados anteriores; verificar que el informe identifica el renderer real y expresa CPU en unidades de un núcleo.
-- [ ] Capturar referencia actual y medir línea base con un navegador a la vez, misma configuración y calentamiento. Guardar cambios propios mediante commit local.
+- [x] Ampliar mínimamente `tests/performance.mjs` con argumento de renderizador y etiqueta/salida para no sobrescribir resultados anteriores; verificar que el informe identifica el renderer real y expresa CPU en unidades de un núcleo.
+- [x] Capturar referencia actual y medir línea base con un navegador a la vez, misma configuración y calentamiento. Guardar cambios propios mediante commit local.
 
 ## Hito 2: cabina estática terminada en Blender
 
@@ -71,12 +71,12 @@
 
 **Consumes:** posiciones actuales y capturas base. **Produces:** colección estática y piezas móviles separadas, UV y atlas horneados.
 
-- [ ] Llevar posiciones/paleta desde `config.js` al script mediante una exportación JSON temporal; no mantener dos tablas manuales de coordenadas.
-- [ ] Construir casco, ventana, escritorio, consola, silla, marcos, plantas y detalles con biseles y normales suaves donde mejoren la silueta visible; no subdividir superficies planas sin beneficio.
-- [ ] Agrupar por material/atlas únicamente superficies estáticas. Mantener los seis objetos y pivotes de animación separados.
-- [ ] Crear UV sin solapes accidentales y márgenes suficientes para mipmaps. Empezar con atlas 2048 y aumentar solo las superficies que lo necesiten según capturas de la cámara web.
-- [ ] Hornear iluminación difusa, rebotes y oclusión estática con Cycles. Excluir robot y piezas móviles como oclusores del horneado estático. No fijar reflejos especulares dependientes de la cámara dentro del atlas.
-- [ ] Hacer renders de revisión desde las cámaras de introducción/exploración y corregir proporciones, costuras y sombras. Guardar fuentes y commit del hito validado.
+- [x] Llevar posiciones/paleta desde `config.js` al script mediante una exportación JSON temporal; no mantener dos tablas manuales de coordenadas.
+- [x] Construir casco, ventana, escritorio, consola, silla, marcos, plantas y detalles con biseles y normales suaves donde mejoren la silueta visible; no subdividir superficies planas sin beneficio.
+- [x] Agrupar por material/atlas únicamente superficies estáticas. Mantener los seis objetos y pivotes de animación separados.
+- [x] Crear UV sin solapes accidentales y márgenes suficientes para mipmaps. Empezar con atlas 2048 y aumentar solo las superficies que lo necesiten según capturas de la cámara web.
+- [x] Hornear iluminación difusa, rebotes y oclusión estática con Cycles. Excluir robot y piezas móviles como oclusores del horneado estático. No fijar reflejos especulares dependientes de la cámara dentro del atlas.
+- [x] Hacer renders de revisión desde las cámaras de introducción/exploración y corregir proporciones, costuras y sombras. Guardar fuentes y commit del hito validado.
 
 ## Hito 3: GLB e integración completa
 
@@ -84,14 +84,14 @@
 
 **Consumes:** colecciones del hito 2. **Produces:** escena web final con interacciones actuales y geometría sustituida.
 
-- [ ] Exportar base estática con materiales sin iluminación dinámica y partes móviles con PBR/oclusión apropiados; evitar aplicar las luces web sobre iluminación ya horneada.
-- [ ] Permitir `blob:` únicamente en `connect-src` de dev, preview y despliegue para decodificar imágenes embebidas. Comprobar textura cargada y consola sin infracciones CSP con las cabeceras reales, sin bypass de seguridad en la prueba final.
-- [ ] Mantener `object-experience`, `object-projects`, `object-about`, `object-education`, `object-skills`, `object-contact`, `host-robot` y `robot-ear` en la jerarquía web. Mantener pivotes de cabeza, hombros, caderas y rodillas y los estados de asiento inicial.
-- [ ] Montar piezas GLB dentro de los grupos/controladores actuales. Libro abre, cohete responde, engranaje gira y receptor se desplaza; no reemplazar estas acciones por efectos HTML.
-- [ ] Mantener Tierra/Luna, pantallas locales y etiquetas con Satoshi; conservar radares estáticos y texto legible. No incluir vídeo o animaciones continuas decorativas.
-- [ ] Usar hitboxes simples y estables para interacción; comprobar objetos lateralizados y raycasting real sin aumentar el trabajo por fotograma.
-- [ ] Retirar geometrías procedurales sustituidas y luces/sombras redundantes. Reutilizar materiales/geometrías y garantizar limpieza/remontaje sin destruir recursos todavía usados.
-- [ ] Ejecutar pruebas de seis objetos, una única introducción, oreja, altura del libro, consola sin patas, ambos modos de movimiento, idiomas y recuperación sin WebGL; actualizar aserciones sobre representación sin debilitar comportamiento. Commit local.
+- [x] Exportar base estática con materiales sin iluminación dinámica y partes móviles con PBR/oclusión apropiados; evitar aplicar las luces web sobre iluminación ya horneada.
+- [x] Permitir `blob:` únicamente en `connect-src` de dev, preview y despliegue para decodificar imágenes embebidas. Comprobar textura cargada y consola sin infracciones CSP con las cabeceras reales, sin bypass de seguridad en la prueba final.
+- [x] Mantener `object-experience`, `object-projects`, `object-about`, `object-education`, `object-skills`, `object-contact`, `host-robot` y `robot-ear` en la jerarquía web. Mantener pivotes de cabeza, hombros, caderas y rodillas y los estados de asiento inicial.
+- [x] Montar piezas GLB dentro de los grupos/controladores actuales. Libro abre, cohete responde, engranaje gira y receptor se desplaza; no reemplazar estas acciones por efectos HTML.
+- [x] Mantener Tierra/Luna, pantallas locales y etiquetas con Satoshi; conservar radares estáticos y texto legible. No incluir vídeo o animaciones continuas decorativas.
+- [x] Usar hitboxes simples y estables para interacción; comprobar objetos lateralizados y raycasting real sin aumentar el trabajo por fotograma.
+- [x] Retirar geometrías procedurales sustituidas y luces/sombras redundantes. Reutilizar materiales/geometrías y garantizar limpieza/remontaje sin destruir recursos todavía usados.
+- [x] Ejecutar pruebas de seis objetos, una única introducción, oreja, altura del libro, consola sin patas, ambos modos de movimiento, idiomas y recuperación sin WebGL; actualizar aserciones sobre representación sin debilitar comportamiento. Commit local.
 
 ## Hito 4: optimización, calibración y entrega
 
@@ -99,11 +99,11 @@
 
 **Consumes:** escena integrada y línea base del hito 1. **Produces:** comparación verificable y versión lista para revisión.
 
-- [ ] Inspeccionar GLB, tamaño, nodos, atlas y llamadas de dibujo. Aplicar deduplicación/compresión solo preservando nombres, pivotes, UV e interacción. Draco/Meshopt reducen descarga; no tratarlos como garantía de menos CPU durante animación. KTX2 solo si la memoria/texturas lo justifican.
-- [ ] Repetir medición comparable en hardware disponible y software, declarando cualquier recorrido no verificable. Comprobar cero fotogramas ociosos y que pestañas ocultas cancelen trabajo.
-- [ ] Capturar y revisar introducción, navegación y secciones en los tamaños indicados y ambos idiomas. Corregir diferencias visuales y recortes, sin cambiar la distribución para ocultar defectos.
-- [ ] Ejecutar `npm.cmd run lint`, `npm.cmd test`, `npm.cmd run build`, `npm.cmd run test:e2e`, `node tests/production-smoke.mjs` con preview activo y `git diff --check`. Exigir cero errores de consola; documentar avisos conocidos.
-- [ ] Verificar licencia/atribución, CV y enlaces conservados, accesibilidad y uso exclusivo real de Satoshi. Actualizar comandos reproducibles y resultados; commit final propio, sin push.
+- [x] Inspeccionar GLB, tamaño, nodos, atlas y llamadas de dibujo. Aplicar deduplicación/compresión solo preservando nombres, pivotes, UV e interacción. Draco/Meshopt reducen descarga; no tratarlos como garantía de menos CPU durante animación. KTX2 solo si la memoria/texturas lo justifican.
+- [x] Repetir medición comparable en hardware disponible y software, declarando cualquier recorrido no verificable. Comprobar cero fotogramas ociosos y que pestañas ocultas cancelen trabajo.
+- [x] Capturar y revisar introducción, navegación y secciones en los tamaños indicados y ambos idiomas. Corregir diferencias visuales y recortes, sin cambiar la distribución para ocultar defectos.
+- [x] Ejecutar `npm.cmd run lint`, `npm.cmd test`, `npm.cmd run build`, `npm.cmd run test:e2e`, `node tests/production-smoke.mjs` con preview activo y `git diff --check`. Exigir cero errores de consola; documentar avisos conocidos.
+- [x] Verificar licencia/atribución, CV y enlaces conservados, accesibilidad y uso exclusivo real de Satoshi. Actualizar comandos reproducibles y resultados; commit final propio, sin push.
 
 ## Review Focus
 
@@ -116,3 +116,44 @@
 ## Límites del compromiso
 
 La imagen guía el acabado, pero no fija un número de polígonos ni garantiza un resultado idéntico con una cabina diferente. CPU casi nula es un objetivo de reposo, no de carga, horneado ni animación. El horneado puede consumir recursos del equipo durante la construcción; sus picos no son consumo permanente de la web. No se promete aceleración de la Radeon hasta verificarla.
+
+
+## Execution result — 2026-11-05
+
+All four milestones completed and validated locally. Checkpoints: `cdacaa1`
+(measured baseline), `31d97de` (Blender model/atlas), `bc6e090` (integration),
+and the final optimisation/validation commit recorded in Git history.
+
+- Final checks: lint; 7 Node tests; complete 16-test browser suite (3.4 min);
+  14 additional ES/EN responsive fallback states; production build and smoke
+  under Vercel CSP with zero console errors; 8 successful external links;
+  zero runtime npm vulnerabilities; whitespace check.
+- Static draw calls and geometry were profiled separately from shadows.
+  Main pass: 269 -> 90 calls, 169742 -> 273646 triangles. Final hardware
+  transition CPU: 11.64% -> 7.17% of one logical core; idle generated no frames.
+  Reports preserve variance and the costly software-rendering limit rather
+  than claiming universal near-zero CPU during animation.
+- Original Blender source, generator and atlas are retained. Final compressed
+  GLB is 4522920 bytes, with local licensed decoder and no new npm dependency.
+- Fresh read-only review and the final delta review reported no confirmed
+  Critical, Important or Minor defects.
+
+Execution rulings:
+
+- Existing feature checkout and native PowerShell ledger were used to preserve
+  concurrent user changes and the active preview. No unrelated user edits were
+  committed; preflight patch remains in ignored artifacts.
+- The existing translated role is the footer source of truth. Its outdated
+  hardcoded English test was corrected after the user's local copy update,
+  without changing that copy.
+- Blender's authoring intro render checks manufactured geometry; browser
+  captures of both cameras, including planets/screens/HTML, are the final visual
+  authority. Display-transform differences are not claimed to be calibrated.
+- Six stable box proxies were completed in the optimisation pass. The lectern
+  base/supports were lifted clear of the desk after a failing clearance test;
+  book placement and all navigation pivots remain unchanged.
+- The reviewer's deferred runtime/benchmark judgments were covered by the
+  primary agent's actual tests and controlled measurements. Hardware browser
+  measurements used the AMD integrated GPU via D3D11; baking used RX9070XT/HIP.
+- Kept the feature branch with local commits, as requested. No merge, push or
+  deployment. Physical mobile devices, Safari and Firefox remain untested.
