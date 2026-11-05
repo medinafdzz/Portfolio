@@ -51,7 +51,10 @@ SECTION_OPEN → CLOSING_SECTION → EXPLORE. Direct HTML navigation can open a
 section immediately from INTRO. 3D objects are enabled only in EXPLORE.
 
 The native modal dialog traps focus, supports Escape and restores the opener.
-The alternative navigation, language controls, CV and profile links are HTML.
+The section navigation is shown only in lightweight/fallback mode; 3D mode uses
+the cabin objects and gives the scene the freed vertical space. The always-visible
+lightweight toggle provides keyboard access to the HTML section navigation.
+Language controls, CV and profile links are HTML.
 Unavailable/lost WebGL and the lightweight toggle keep the full content usable.
 Reduced-motion mode skips cinematics. All modes render on demand; hidden tabs
 cancel pending redraw timers. Software rasterizers use a conservative budget

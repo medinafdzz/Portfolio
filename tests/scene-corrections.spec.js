@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { clickSceneObject } from './scene-helpers';
 
 async function state(page) {
   return page.evaluate(async () => {
@@ -67,7 +68,7 @@ test('motion enabled stops rendering when idle, including an open panel', async 
   await page.locator('.start-button').click();
   await expect(page.locator('.spacefolio')).toHaveAttribute('data-phase','EXPLORE');
   await expectSleeping();
-  await page.locator('[data-section="skills"]').click();
+  await clickSceneObject(page,'skills');
   await expect(page.locator('.spacefolio')).toHaveAttribute('data-phase','SECTION_OPEN');
   await expectSleeping();
   await page.keyboard.press('Escape');

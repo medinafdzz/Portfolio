@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { PerspectiveCamera, Vector3 } from 'three';
+import { clickSceneObject } from './scene-helpers';
 
 const ids = ['experience', 'projects', 'about', 'education', 'skills', 'contact'];
 const titles = ['Experiencia', 'Proyectos', 'Sobre mí', 'Formación', 'Tecnologías', 'Contacto'];
@@ -17,6 +18,7 @@ async function sceneSnapshot(page) {
   });
 }
 const openSection = async (page, index) => {
+  if (!await page.locator('.flat-view').isVisible()) await page.getByRole('button',{name:/Vista ligera|Lightweight view/,exact:true}).click();
   await page.locator(`[data-section="${ids[index]}"]`).click();
   await expect(page.locator('#section-heading')).toHaveText(titles[index]);
   await expect(page.locator('.section-panel')).toContainText(contents[index]);
@@ -35,6 +37,7 @@ test('real WebGL introduction, guarded Enter, six sections, projects, languages 
   page.on('console', message => { if(message.type()==='error') errors.push(message.text()); });
   await page.goto('/');
   await expect(page.locator('canvas')).toBeVisible();
+  await expect(page.locator('.navigation-deck')).toHaveCount(0);
   await expect(page.locator('.start-button')).toBeEnabled({timeout:60000});
   await page.screenshot({ path:'artifacts/desktop-intro.png' });
   await page.keyboard.press('Enter');
@@ -134,6 +137,8 @@ test('reduced motion, keyboard focus containment and lightweight toggle',async (
   await expect(page.locator('.panel-bottom button')).toBeFocused();
   await page.keyboard.press('Tab'); await expect(close).toBeFocused();
   await closeSection(page);
+  await page.getByRole('button',{name:'Vista 3D',exact:true}).click();
+  await expect.poll(async () => (await sceneSnapshot(page))?.position).toEqual([0,.22,.25]);
   const before = await sceneSnapshot(page);
   expect(before.position).toEqual([0,.22,.25]);
   expect(before.rotation).toBeCloseTo(Math.PI);
@@ -156,7 +161,7 @@ test('motion preference does not replay boarding and repeated navigation release
   const before=await sceneSnapshot(page);
   expect(before.position).toEqual([0,.22,.25]);
   expect(before.rotation).toBeCloseTo(Math.PI);
-  for(let i=0;i<12;i++){await openSection(page,i%6);await closeSection(page);}
+  for(let i=0;i<12;i++){await clickSceneObject(page,ids[i%6]);await expect(page.locator('.spacefolio')).toHaveAttribute('data-phase','SECTION_OPEN');await closeSection(page);}
   const after=await sceneSnapshot(page);
   expect(after.geometries).toBeLessThanOrEqual(before.geometries+20);
   console.log('WebGL budget',JSON.stringify(after));
@@ -178,6 +183,8 @@ test('touch input, CV, licensed texture assets and profile links',async ({browse
   await expect(page.locator('.start-button')).toBeEnabled({timeout:60000});
   await page.locator('.start-button').tap();
   await expect(page.locator('.spacefolio')).toHaveAttribute('data-phase','EXPLORE');
+  await expect(page.locator('.navigation-deck')).toHaveCount(0);
+  await page.getByRole('button',{name:'Vista ligera',exact:true}).tap();
   for(let i=0;i<6;i++){
     await page.locator(`[data-section="${ids[i]}"]`).tap();
     await expect(page.locator('#section-heading')).toHaveText(titles[i]);

@@ -42,7 +42,7 @@ export default function Spacefolio() {
   const { phase, section } = navigation;
   const [opener, setOpener] = useState(null);
   const select = useCallback(id => {
-    setOpener(document.activeElement?.matches('button, a, select') ? document.activeElement : document.querySelector(`[data-section="${id}"]`));
+    setOpener(document.activeElement?.matches('button, a, select') ? document.activeElement : document.querySelector('.flight-tools button'));
     dispatch({ type: 'SELECT', section: id });
   }, []);
   const start = useCallback(() => dispatch({ type: 'START' }), []);
@@ -74,7 +74,7 @@ export default function Spacefolio() {
   }, [phase, fallback, entered]);
 
   return <div className="spacefolio" data-phase={phase} data-motion={reducedMotion ? 'reduced' : 'full'}>
-    <a className="skip-link" href="#section-navigation">{copy.skipLink}</a>
+    <a className="skip-link" href={fallback ? '#section-navigation' : '#main-content'}>{copy.skipLink}</a>
     <header className="flight-header">
       <a href="#" className="brand" onClick={event => { event.preventDefault(); if (!blocked) select('about'); }}><span className="brand-mark" aria-hidden="true"><span/></span><span>Alejandro Medina<small>SOFTWARE ENGINEER</small></span></a>
       <div className="flight-identity"><span className="status-dot"/>SPACEFOLIO<span className="identity-divider"/>{language === 'es' ? 'UNIVERSO PERSONAL' : 'PERSONAL UNIVERSE'}</div>
@@ -89,7 +89,7 @@ export default function Spacefolio() {
         {phase === 'INTRO' && !fallback && <div ref={dialogRef} className="intro-card"><p className="intro-hello">{labels.hello}</p><h2>{labels.greeting}</h2><p className="intro-description">{labels.invitation}</p><button className="start-button" onClick={start} disabled={!loaded}>{labels.start}<Icon name="arrow"/></button><span className="enter-hint"><kbd>↵</kbd>{labels.enter}</span></div>}
         <div className="flight-tools"><button onClick={() => setLight(value => !value)} disabled={!webgl} aria-pressed={light}>{fallback ? labels.spatial : labels.light}</button><span/><button onClick={() => setQuiet(value => !value)} aria-pressed={reducedMotion} disabled={systemMotion}>{reducedMotion ? labels.resumeMotion : labels.motion}</button></div>
       </div>
-      <div className="navigation-deck"><div className="deck-message" aria-live="polite"><p>{phase === 'ENTERING' ? labels.entering : labels.explore}</p><span>{labels.hint}</span></div><nav id="section-navigation" className="section-navigation" aria-label={labels.nav} tabIndex={-1}>{sectionIds.map((id, index) => <button key={id} type="button" className="nav-station" data-section={id} aria-haspopup="dialog" aria-current={section === id ? 'true' : undefined} disabled={blocked} onClick={() => select(id)}><Icon name={id}/><span>{labels.sections[index]}<small>{labels.objects[index]}</small></span></button>)}</nav></div>
+      {fallback && <div className="navigation-deck"><div className="deck-message" aria-live="polite"><p>{phase === 'ENTERING' ? labels.entering : labels.explore}</p><span>{labels.hint}</span></div><nav id="section-navigation" className="section-navigation" aria-label={labels.nav} tabIndex={-1}>{sectionIds.map((id, index) => <button key={id} type="button" className="nav-station" data-section={id} aria-haspopup="dialog" aria-current={section === id ? 'true' : undefined} disabled={blocked} onClick={() => select(id)}><Icon name={id}/><span>{labels.sections[index]}<small>{labels.objects[index]}</small></span></button>)}</nav></div>}
     </main>
     <footer className="flight-footer"><span>{copy.hero.role}</span><span>{labels.location}<span className="footer-separator">/</span>© 2026</span></footer>
     {section && <SectionOverlay section={section} labels={labels} onClose={close} closing={phase === 'CLOSING_SECTION'} opener={opener}/>}

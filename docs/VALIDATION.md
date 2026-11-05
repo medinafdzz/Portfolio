@@ -23,7 +23,7 @@ position/angle, an extruded console body and the high-resolution radar texture.
 | ESLint | PASSED | `npm.cmd run lint`, no errors |
 | Production build | PASSED | Vite 7.3.7, lazy Three.js scene chunk |
 | Unit tests | PASSED | 6 tests; navigation, frame coalescing, caps, software detection, cancellation |
-| Browser suite | PASSED | 14 Playwright tests, 3.1 minutes, Chromium/SwiftShader |
+| Browser suite | PASSED | 14 Playwright tests, 2.9 minutes, Chromium/SwiftShader |
 | Production smoke | PASSED | Built app at localhost:4173, real Canvas, Enter, Projects and Escape |
 | Git whitespace | PASSED | `git diff --check` |
 | Visual detector | PASSED | No findings in the changed interface |
@@ -58,7 +58,7 @@ Mobile: 390×844 and 430×932. No horizontal overflow was observed in these view
 
 A repeated-navigation check opens/closes twelve sections and bounds GPU
 geometry growth. The final instrumented sample contained 278 geometries,
-501 draw calls and 296374 triangles. These are scene counters, not a real-device
+269 draw calls and 169742 triangles. These are scene counters, not a real-device
 frame-rate benchmark. Source review independently verified geometry disposal,
 the robot's one-shot boarding lifecycle and the render scheduler's teardown.
 The two additional browser tests check ear anchoring, book/monitor clearance,

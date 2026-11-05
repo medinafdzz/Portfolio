@@ -22,7 +22,7 @@ npm.cmd run preview
 
 - Enter o el botón de inicio: saludo, giro, desplazamiento y asiento del robot.
 - Ratón o toque: seleccionar los objetos una vez a bordo.
-- Navegación inferior: acceso directo a las seis secciones, incluso antes de entrar.
+- Objetos de la cabina: acceso a las seis secciones en la vista 3D. La barra inferior de secciones se muestra únicamente en la vista ligera.
 - Escape o el botón del panel: cerrar y recuperar el foco y la cámara.
 - ES/EN: cambiar idioma; se guarda la preferencia localmente cuando es posible.
 - CV, GitHub y LinkedIn en la cabecera; también en Contacto.
