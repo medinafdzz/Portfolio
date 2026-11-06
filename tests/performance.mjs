@@ -1,6 +1,7 @@
 import { chromium } from '@playwright/test';
 import { writeFile } from 'node:fs/promises';
 import assert from 'node:assert/strict';
+import {execFileSync} from 'node:child_process';
 
 const label = process.argv[2] || 'after';
 assert.match(label, /^[a-z0-9-]+$/i);
@@ -17,6 +18,8 @@ try {
   const cpu = async () => (await browserCdp.send('SystemInfo.getProcessInfo')).processInfo.reduce((sum,p)=>sum+p.cpuTime,0);
   const tasks = async () => (await cdp.send('Performance.getMetrics')).metrics.find(m=>m.name==='TaskDuration').value;
   await page.goto(baseUrl);
+  const spatial=page.getByRole('button',{name:/^Vista 3D$|^3D view$/});
+  if(await spatial.isVisible()) await spatial.click();
   await page.waitForFunction(()=>{const b=document.querySelector('.start-button');return b&&!b.disabled;},null,{timeout:90000});
   const renderer = await page.evaluate(async()=>{
     const { _roots }=await import('/node_modules/.vite/deps/@react-three_fiber.js');
@@ -77,7 +80,12 @@ try {
   }
   const passes=await page.evaluate(()=>window.passSamples);
   const resources=await page.evaluate(()=>performance.getEntriesByType('resource').map(r=>({name:r.name.split('/').at(-1),bytes:r.encodedBodySize})).filter(r=>/glb|jpg|woff2/.test(r.name)));
-  const result={label,mode,renderer,viewport:'1440x900',cpuUnits:'100 percent equals one CPU core',warmupSeconds:8,samples:[intro,boarding,explore,...interaction],passes,resources};
+  const metrics=(await cdp.send('Performance.getMetrics')).metrics;
+  const ids=(await browserCdp.send('SystemInfo.getProcessInfo')).processInfo.map(p=>Number(p.id));
+  assert.ok(ids.every(Number.isSafeInteger));
+  const memory={jsHeapBytes:metrics.find(m=>m.name==='JSHeapUsedSize').value};
+  if(process.platform==='win32') memory.processPrivateBytes=Number(execFileSync('powershell.exe',['-NoProfile','-Command',`(Get-Process -Id ${ids.join(',')} -ErrorAction SilentlyContinue | Measure-Object PrivateMemorySize64 -Sum).Sum`],{encoding:'utf8'}).trim());
+  const result={label,mode,renderer,viewport:'1440x900',cpuUnits:'100 percent equals one CPU core',warmupSeconds:8,samples:[intro,boarding,explore,...interaction],passes,resources,memory};
   assert.equal(intro.frames,0,'Intro keeps drawing while idle');
   assert.equal(explore.frames,0,'Exploration keeps drawing while idle');
   assert.ok(boarding.frames>0 && passes.length>=boarding.frames,'Missing render samples');

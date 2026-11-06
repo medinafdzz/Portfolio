@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useThree } from '@react-three/fiber';
+import {CanvasTexture} from 'three';
 import gsap from 'gsap';
 import ModelPart from './models';
 import { useSceneRender } from './render-context';
+import {robotPose} from './robot-pose';
 
 function Arm({ side, jointRef, seated }) {
   const suffix=side<0?'L':'R';
@@ -26,25 +28,38 @@ export default function Robot({ phase, reducedMotion, onEntered, onHostReady, on
   const requestRender = useSceneRender();
   const gl = useThree(state => state.gl);
   const root = useRef(); const head = useRef(); const left = useRef(); const right = useRef();
+  const waist=useRef(); const shadow=useRef();
   const thighL = useRef(); const thighR = useRef(); const kneeL = useRef(); const kneeR = useRef();
   const [initiallySeated] = useState(() => !['INTRO','ENTERING'].includes(phase));
   const sequence = useRef(null);
+  const travel=useMemo(()=>({value:initiallySeated?1:0}),[initiallySeated]);
+  const contact=useMemo(()=>{
+    const canvas=document.createElement('canvas'); canvas.width=canvas.height=64;
+    const ctx=canvas.getContext('2d'),gradient=ctx.createRadialGradient(32,32,0,32,32,32);
+    gradient.addColorStop(0,'#0009'); gradient.addColorStop(1,'#0000');
+    ctx.fillStyle=gradient;ctx.fillRect(0,0,64,64);
+    return new CanvasTexture(canvas);
+  },[]);
+  useEffect(()=>()=>contact.dispose(),[contact]);
+  const updatePose=useCallback(()=>{
+    const pose=robotPose(travel.value);
+    root.current.position.set(pose.x,pose.y,pose.z); root.current.rotation.y=pose.yaw;
+    thighL.current.rotation.x=pose.thighL; thighR.current.rotation.x=pose.thighR;
+    kneeL.current.rotation.x=pose.kneeL; kneeR.current.rotation.x=pose.kneeR;
+    left.current.rotation.x=pose.armL; right.current.rotation.x=pose.armR; right.current.rotation.z=pose.wave;
+    waist.current.rotation.x=pose.lean;
+    shadow.current.position.set(pose.x,-.045,pose.z);
+    requestRender();
+  },[travel,requestRender]);
   const intro = phase === 'INTRO' || phase === 'HOST_GREETING';
   useEffect(() => {
-    const timeline = gsap.timeline({ paused:true, defaults: { ease: 'power2.inOut', immediateRender:false }, onUpdate: requestRender, onComplete: () => { requestRender(true); onEntered(); }, onReverseComplete: () => { requestRender(true); onHostReady(); } });
+    const timeline = gsap.timeline({ paused:true, onUpdate:updatePose, onComplete:onEntered, onReverseComplete:onHostReady });
     sequence.current = timeline;
-    timeline.fromTo(right.current.rotation,{z:.7,x:-.48},{z:0,x:-.2,duration:.35},0)
-      .fromTo(root.current.rotation,{y:-.08},{y:Math.PI/2,duration:.55},.35)
-      .fromTo(root.current.position,{x:-1.4,y:0,z:2.15},{x:0,y:0,z:.25,duration:1.15},.9)
-      .fromTo(root.current.rotation,{y:Math.PI/2},{y:Math.PI,duration:.5},2.05)
-      .fromTo(root.current.position,{y:0},{y:.22,duration:.65},2.55)
-      .fromTo([thighL.current.rotation,thighR.current.rotation],{x:0},{x:-1.32,duration:.65},2.55)
-      .fromTo([kneeL.current.rotation,kneeR.current.rotation],{x:0},{x:1.35,duration:.65},2.55)
-      .fromTo(left.current.rotation,{x:0},{x:-.9,duration:.6},2.55)
-      .fromTo(right.current.rotation,{x:-.2},{x:-.9,duration:.6},2.55);
+    timeline.fromTo(travel,{value:0},{value:1,duration:3.4,ease:'none',immediateRender:false});
     timeline.timeScale(1/motionScale).progress(initiallySeated?1:0,true).pause();
+    updatePose();
     return () => { timeline.kill(); sequence.current = null; };
-  }, [initiallySeated, onEntered, onHostReady, requestRender, motionScale]);
+  }, [initiallySeated, onEntered, onHostReady, updatePose, motionScale, travel]);
 
   useEffect(() => {
     const timeline = sequence.current;
@@ -52,17 +67,14 @@ export default function Robot({ phase, reducedMotion, onEntered, onHostReady, on
     if (['ENTERING','HOST_SITTING','HOST_RISING'].includes(phase)) {
       if (reducedMotion) {
         timeline.pause().progress(rising?0:1,true);
-        requestRender(true);
+        updatePose();
         if (rising) onHostReady(); else onEntered();
       } else if (rising) timeline.reverse(); else timeline.play();
     } else {
       timeline.pause().progress(intro?0:1,true);
-      // Walking is applied during rendered frames; settle both legs at the endpoint.
-      gsap.set([thighL.current.rotation,thighR.current.rotation],{x:intro?0:-1.32});
-      gsap.set([kneeL.current.rotation,kneeR.current.rotation],{x:intro?0:1.35});
-      requestRender(true);
+      updatePose();
     }
-  }, [phase, intro, reducedMotion, motionScale, onHostReady, onEntered, requestRender]);
+  }, [phase, intro, reducedMotion, motionScale, onHostReady, onEntered, updatePose]);
 
   useEffect(() => {
     if (!intro || reducedMotion) return;
@@ -87,25 +99,20 @@ export default function Robot({ phase, reducedMotion, onEntered, onHostReady, on
     return () => { gl.domElement.removeEventListener('pointermove', look); tween?.kill(); };
   }, [phase, reducedMotion, gl, requestRender, motionScale]);
 
-  useFrame(({ clock }) => {
-    if (!root.current || reducedMotion || !['ENTERING','HOST_RISING','HOST_SITTING'].includes(phase)) return;
-    const t = clock.elapsedTime;
-    if (root.current.position.z > .3 && root.current.rotation.y > 1) {
-      thighL.current.rotation.x = Math.sin(t*8)*.26;
-      thighR.current.rotation.x = -Math.sin(t*8)*.26;
-    }
-  });
-  return <group ref={root} position={initiallySeated?[0,.22,.25]:[-1.4,0,2.15]} rotation={[0,initiallySeated?Math.PI:-.08,0]} name="host-robot">
+  return <group><mesh ref={shadow} name="robot-contact-shadow" rotation={[-Math.PI/2,0,0]} scale={[1.3,.9,1]}>
+    <planeGeometry args={[2,2]}/><meshBasicMaterial map={contact} transparent depthWrite={false} toneMapped={false}/>
+  </mesh><group ref={root} name="host-robot">
     <mesh name="robot-hitbox" position={[0,1.4,0]} onClick={event=>{if(['EXPLORE','HOST_GREETING'].includes(phase)&&event.button===0&&event.delta<=4){event.stopPropagation();onHostToggle();}}}>
       <boxGeometry args={[1.4,2.8,1.2]}/><meshBasicMaterial visible={false}/>
     </mesh>
-    <ModelPart part="RobotTorso"/>
+    <group ref={waist} position={[0,.91,0]}><group position={[0,-.91,0]}><ModelPart part="RobotTorso"/>
     <group ref={head} position={[0,2.26,0]}>
       <ModelPart part="RobotHead"/>
       <group name="robot-ear" position={[.66,0,0]}/>
       <group name="robot-left-ear" position={[-.66,0,0]}/>
     </group>
     <Arm side={-1} jointRef={left} seated={initiallySeated}/><Arm side={1} jointRef={right} seated={initiallySeated}/>
+    </group></group>
     <Leg side={-1} thighRef={thighL} kneeRef={kneeL} seated={initiallySeated}/><Leg side={1} thighRef={thighR} kneeRef={kneeR} seated={initiallySeated}/>
-  </group>;
+  </group></group>;
 }

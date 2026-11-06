@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 import AxeBuilder from '@axe-core/playwright';
 import { PerspectiveCamera, Vector3 } from 'three';
 import { clickSceneObject } from './scene-helpers';
@@ -146,15 +146,15 @@ test('reduced motion, keyboard focus containment and lightweight toggle',async (
   await page.keyboard.press('Tab'); await expect(close).toBeFocused();
   await closeSection(page);
   await page.getByRole('button',{name:'Vista 3D',exact:true}).click();
-  await expect.poll(async () => (await sceneSnapshot(page))?.position).toEqual([0,.22,.25]);
+  await expect.poll(async () => (await sceneSnapshot(page))?.position).toEqual([0,-.22,.25]);
   const before = await sceneSnapshot(page);
-  expect(before.position).toEqual([0,.22,.25]);
+  expect(before.position).toEqual([0,-.22,.25]);
   expect(before.rotation).toBeCloseTo(Math.PI);
   await page.getByRole('button',{name:'Vista ligera',exact:true}).click();
   await expect(page.locator('.flat-view')).toBeVisible();
   await page.getByRole('button',{name:'Vista 3D',exact:true}).click();
   await expect(page.locator('canvas')).toBeVisible();
-  await expect.poll(async () => (await sceneSnapshot(page))?.position).toEqual([0,.22,.25]);
+  await expect.poll(async () => (await sceneSnapshot(page))?.position).toEqual([0,-.22,.25]);
   const accessibility=await new AxeBuilder({page}).analyze();
   expect(accessibility.violations).toEqual([]);
 });
@@ -167,7 +167,7 @@ test('motion preference does not replay boarding and repeated navigation release
   await page.getByRole('button',{name:'Reducir movimiento',exact:true}).click();
   await page.getByRole('button',{name:'Activar movimiento',exact:true}).click();
   const before=await sceneSnapshot(page);
-  expect(before.position).toEqual([0,.22,.25]);
+  expect(before.position).toEqual([0,-.22,.25]);
   expect(before.rotation).toBeCloseTo(Math.PI);
   for(let i=0;i<12;i++){await clickSceneObject(page,ids[i%6]);await expect(page.locator('.spacefolio')).toHaveAttribute('data-phase','SECTION_OPEN');await closeSection(page);}
   const after=await sceneSnapshot(page);

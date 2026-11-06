@@ -28,7 +28,7 @@ out in the actual cabin arrangement for editing. It deliberately omits web-only
 Moon maps, screen text and HTML; inspect final web captures for those elements.
 
 Only CabinShell, ConsoleBody and Chair are light-baked. Animated models are
-excluded from the bake and use shared PBR materials. The three static nodes
+excluded from the atlas bake and use shared vertex-color illumination. The three static nodes
 share one atlas exported with KHR_materials_unlit to avoid double lighting.
 
 Geometry is exported with Draco (level 6, position 14 bits, normal 12 bits, UV
@@ -48,6 +48,14 @@ Those references were not downloadable; no viewer model was extracted.
 `Satoshi-Bold.otf` is the user's original, unmodified font, converted to mesh
 only for the medal numeral and phone keypad. Its license is retained in
 `public/fonts/Satoshi-LICENSE.txt`. The build fails if the font is missing.
-The phone cord uses a single 14-turn sweep with 169 samples and a small section.
+The phone cord was removed. LaptopBase/LaptopLid retain a real hinge pivot.
 The planet has raised coastlines, mountain caps, forest cones and opaque clouds;
 it shares the existing GLB and does not request the old Earth photography.
+
+The pressure hull surrounds the whole cabin/camera, with one window aperture.
+Non-atlas meshes store studio illumination in vertex colors and share one
+unlit material; each rigid part exports one primitive. Normals and unused UVs
+are omitted because the browser no longer calculates lighting. The embedded
+atlas uses JPEG quality86. `cabin-light.png` remains the lossless editable source.
+The robot's lower chair and reversible Bezier route keep its seated feet near
+the floor and allow it to rise to a genuinely higher head position.

@@ -13,7 +13,8 @@ import IntroAnchor from './IntroAnchor';
 import { isSoftwareRenderer } from './render-budget';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-gsap.ticker.fps(24);
+gsap.ticker.fps(60);
+gsap.config({autoSleep:12});
 
 function CameraController({ phase, section, reducedMotion, motionScale, resetView }) {
   const { camera, size, gl, set } = useThree();
@@ -26,15 +27,22 @@ function CameraController({ phase, section, reducedMotion, motionScale, resetVie
   useEffect(() => {
     controls.connect(gl.domElement);
     controls.enableDamping = false;
-    controls.minAzimuthAngle = -.5; controls.maxAzimuthAngle = .5;
-    controls.minPolarAngle = 1.14; controls.maxPolarAngle = 1.56;
-    controls.minDistance = 8; controls.maxDistance = 16.5;
+    controls.minAzimuthAngle = -.32; controls.maxAzimuthAngle = .32;
+    controls.minPolarAngle = 1.35; controls.maxPolarAngle = 1.56;
+    controls.minDistance = 8; controls.maxDistance = 15.5;
     controls.cursor.set(0,2.45,-1.3); controls.maxTargetRadius = 1.6;
     controls.rotateSpeed = .55; controls.panSpeed = .6; controls.zoomSpeed = .7;
     controls.target.set(0,2.45,-1.3);
-    controls.addEventListener('change', requestRender);
+    const change=()=>{
+      if(controls.enabled) {
+        const y=THREE.MathUtils.clamp(controls.target.y,1.8,3.2);
+        if(y!==controls.target.y) { controls.target.y=y; controls.update(); }
+      }
+      requestRender();
+    };
+    controls.addEventListener('change', change);
     set({ controls });
-    return () => { controls.removeEventListener('change', requestRender); controls.dispose(); set({controls:null}); };
+    return () => { controls.removeEventListener('change', change); controls.dispose(); set({controls:null}); };
   }, [controls,gl,set,requestRender]);
   useEffect(() => {
     const last = previous.current;
@@ -89,19 +97,14 @@ function Ready({ onReady, onFailure }) {
   return null;
 }
 
-export default function Scene({ onReady, onFailure, dialogRef, ...props }) {
+export default function Scene({ onReady, onFailure, dialogRef, lowPower, ...props }) {
   const [visible,setVisible] = useState(()=>!document.hidden);
   const [software, setSoftware] = useState(false);
   useEffect(()=>{ const update=()=>setVisible(!document.hidden); document.addEventListener('visibilitychange',update);return()=>document.removeEventListener('visibilitychange',update); },[]);
-  const small = window.matchMedia('(max-width: 767px)').matches;
-  const motionScale = software ? .25 : 1;
-  return <Canvas className="space-canvas" shadows={!small} dpr={software?.8:[1,small?1:1.25]} frameloop={visible?'demand':'never'} camera={{ position:[0,3.8,10.4], fov:40, near:.1, far:100 }} gl={{ antialias:!small, powerPreference:'low-power', alpha:false }} onCreated={({gl})=>{setSoftware(isSoftwareRenderer(gl));gl.toneMapping=THREE.ACESFilmicToneMapping;gl.toneMappingExposure=1.05;gl.shadowMap.type=THREE.PCFShadowMap;gl.shadowMap.autoUpdate=false;gl.shadowMap.needsUpdate=true;}}>
-    <RenderBudget>
+  const motionScale = 1;
+  return <Canvas className="space-canvas" dpr={software?.4:1} frameloop={visible?'demand':'never'} camera={{ position:[0,3.8,10.4], fov:40, near:.1, far:100 }} gl={{ antialias:!lowPower, powerPreference:'low-power', alpha:false, stencil:false }} onCreated={({gl})=>{setSoftware(isSoftwareRenderer(gl));gl.toneMapping=THREE.ACESFilmicToneMapping;gl.toneMappingExposure=1.05;}}>
+    <RenderBudget active={!['INTRO','EXPLORE','SECTION_OPEN','HOST_GREETING'].includes(props.phase)}>
     <color attach="background" args={['#050e1b']}/>
-    <ambientLight intensity={.45} color="#bdccdd"/>
-    <hemisphereLight args={['#b9d1df','#69533e',1.4]}/>
-    <directionalLight position={[-3,7,5]} color="#ffe4c5" intensity={2} castShadow={!small} shadow-mapSize={software?[512,512]:[1024,1024]} shadow-camera-left={-8} shadow-camera-right={8} shadow-camera-top={8} shadow-camera-bottom={-5} shadow-bias={-.001}/>
-    <directionalLight position={[0,4,-12]} color="#72a9e5" intensity={2}/>
     <Cabin/>
     <Objects {...props} motionScale={motionScale}/>
     <Robot phase={props.phase} reducedMotion={props.reducedMotion} onEntered={props.onEntered} onHostReady={props.onHostReady} onHostToggle={props.onHostToggle} motionScale={motionScale}/>

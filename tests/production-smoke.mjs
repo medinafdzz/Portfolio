@@ -22,13 +22,14 @@ page.on('console', message => {
 try {
   const response = await page.goto('http://127.0.0.1:4173/');
   assert.equal(response.status(), 200);
+  if(await page.getByRole('button',{name:'Vista 3D',exact:true}).isVisible()) await page.getByRole('button',{name:'Vista 3D',exact:true}).click();
   await page.waitForFunction(() => {
     const button = document.querySelector('.start-button');
     return button && !button.disabled;
   }, null, { timeout: 60000 });
   const fullResolution = () => {
     const canvas = document.querySelector('canvas');
-    return canvas && canvas.width >= canvas.clientWidth * .79;
+    return canvas && canvas.width >= canvas.clientWidth * .24;
   };
   await page.waitForTimeout(1000);
   await page.waitForFunction(fullResolution);

@@ -5,20 +5,11 @@ import { spaceCopy } from './copy';
 import SectionOverlay from './SectionOverlay';
 import Icon from './Icons';
 import './spacefolio.css';
+import {detectGraphics} from './graphics-profile';
 
 const Scene = lazy(() => import('./Scene'));
 const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 const subscribeMotion = callback => { motionQuery.addEventListener('change', callback); return () => motionQuery.removeEventListener('change', callback); };
-
-function supportsWebGL() {
-  try {
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('webgl2');
-    if (!context) return false;
-    context.getExtension('WEBGL_lose_context')?.loseContext();
-    return true;
-  } catch { return false; }
-}
 
 class SceneBoundary extends Component {
   state = { failed: false };
@@ -31,8 +22,16 @@ export default function Spacefolio() {
   const { copy, language, setLanguage } = usePreferences();
   const labels = spaceCopy[language];
   const [navigation, dispatch] = useReducer(navigationReducer, initialNavigation);
-  const [webgl, setWebgl] = useState(supportsWebGL);
-  const [light, setLight] = useState(false);
+  const [graphics] = useState(detectGraphics);
+  const [webgl, setWebgl] = useState(graphics.supported);
+  const [light, setLight] = useState(()=>{
+    try {return localStorage.getItem('spacefolio-view') ? localStorage.getItem('spacefolio-view')==='light' : graphics.constrained;}
+    catch {return graphics.constrained;}
+  });
+  const toggleView=()=>setLight(value=>{
+    try {localStorage.setItem('spacefolio-view',value?'3d':'light');} catch { /* Storage is optional. */ }
+    return !value;
+  });
   const [loaded, setLoaded] = useState(false);
   const [resetView, setResetView] = useState(0);
   const dialogRef = useRef(null);
@@ -87,11 +86,11 @@ export default function Spacefolio() {
     <main id="main-content" className="flight-main" tabIndex={-1}>
       <h1 className="sr-only">Alejandro Medina — {copy.hero.kicker}</h1>
       <div className="scene-stage" aria-label={language === 'es' ? 'Cabina espacial interactiva' : 'Interactive spacecraft cabin'}>
-        {!fallback && <SceneBoundary onFailure={failure}><Suspense fallback={<div className="scene-loading"><span/>{labels.loading}</div>}><Scene phase={phase} section={section} onSelect={select} onEntered={entered} onHostToggle={hostToggle} onHostReady={hostReady} resetView={resetView} onReady={ready} onFailure={failure} reducedMotion={reducedMotion} labels={labels} dialogRef={dialogRef}/></Suspense></SceneBoundary>}
+        {!fallback && <SceneBoundary onFailure={failure}><Suspense fallback={<div className="scene-loading"><span/>{labels.loading}</div>}><Scene lowPower={graphics.constrained} phase={phase} section={section} onSelect={select} onEntered={entered} onHostToggle={hostToggle} onHostReady={hostReady} resetView={resetView} onReady={ready} onFailure={failure} reducedMotion={reducedMotion} labels={labels} dialogRef={dialogRef}/></Suspense></SceneBoundary>}
         {fallback && <div className="flat-view"><div className="flat-orbit" aria-hidden="true"/><span className="flat-monogram" aria-hidden="true">AM</span><h2>{labels.fallback}</h2><p>{labels.fallbackBody}</p><p className="flat-role">{copy.hero.kicker}</p></div>}
         <div className="scene-caption" aria-hidden="true"><span className="status-dot"/>{labels.ready}<span className="scene-coordinate">43.5322° N · 5.6611° W</span></div>
         {(phase === 'INTRO' || greeting) && !fallback && <div ref={dialogRef} className="intro-card"><p className="intro-hello">{labels.hello}</p><h2>{greeting ? labels.hostGreeting : labels.greeting}</h2><p className="intro-description">{labels.invitation}</p><button className="start-button" onClick={greeting ? hostToggle : start} disabled={!loaded}>{labels.start}<Icon name="arrow"/></button><span className="enter-hint"><kbd aria-hidden="true"><Icon name="enter" width="12" height="12"/></kbd>{labels.enter}</span></div>}
-        <div className="flight-tools">{!fallback && <><button className="tool-icon" onClick={()=>setResetView(value=>value+1)} disabled={!loaded||blocked} aria-label={labels.resetView} title={labels.resetView}><Icon name="reset"/></button><button className="tool-icon" onClick={hostToggle} disabled={!loaded||!['EXPLORE','HOST_GREETING'].includes(phase)} aria-label={labels.replay} title={labels.replay}><Icon name="robot"/></button></>}<button onClick={() => setLight(value => !value)} disabled={!webgl} aria-pressed={light}>{fallback ? labels.spatial : labels.light}</button><span/><button onClick={() => setQuiet(value => !value)} aria-pressed={reducedMotion} disabled={systemMotion}>{reducedMotion ? labels.resumeMotion : labels.motion}</button></div>
+        <div className="flight-tools">{!fallback && <><button className="tool-icon" onClick={()=>setResetView(value=>value+1)} disabled={!loaded||blocked} aria-label={labels.resetView} title={labels.resetView}><Icon name="reset"/></button><button className="tool-icon" onClick={hostToggle} disabled={!loaded||!['EXPLORE','HOST_GREETING'].includes(phase)} aria-label={labels.replay} title={labels.replay}><Icon name="robot"/></button></>}<button onClick={toggleView} disabled={!webgl} aria-pressed={light}>{fallback ? labels.spatial : labels.light}</button><span/><button onClick={() => setQuiet(value => !value)} aria-pressed={reducedMotion} disabled={systemMotion}>{reducedMotion ? labels.resumeMotion : labels.motion}</button></div>
       </div>
       {fallback && <div className="navigation-deck"><div className="deck-message" aria-live="polite"><p>{phase === 'ENTERING' ? labels.entering : labels.explore}</p><span>{labels.hint}</span></div><nav id="section-navigation" className="section-navigation" aria-label={labels.nav} tabIndex={-1}>{sectionIds.map((id, index) => <button key={id} type="button" className="nav-station" data-section={id} aria-haspopup="dialog" aria-current={section === id ? 'true' : undefined} disabled={blocked} onClick={() => select(id)}><Icon name={id}/><span>{labels.sections[index]}<small>{labels.objects[index]}</small></span></button>)}</nav></div>}
     </main>

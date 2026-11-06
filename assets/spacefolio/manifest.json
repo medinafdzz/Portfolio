@@ -55,94 +55,99 @@
   "geometry_font": "Satoshi-Bold.otf",
   "parts": {
     "CabinShell": {
-      "vertices": 41636,
-      "triangles": 82092,
+      "vertices": 30380,
+      "triangles": 59580,
+      "materials": 1
+    },
+    "ShipHull": {
+      "vertices": 1076,
+      "triangles": 2088,
       "materials": 1
     },
     "ConsoleBody": {
-      "vertices": 4112,
-      "triangles": 8144,
+      "vertices": 1832,
+      "triangles": 3584,
       "materials": 1
     },
     "Chair": {
-      "vertices": 3696,
-      "triangles": 7336,
+      "vertices": 2496,
+      "triangles": 4936,
       "materials": 1
     },
     "RoadmapFrame": {
-      "vertices": 944,
-      "triangles": 1864,
-      "materials": 3
+      "vertices": 704,
+      "triangles": 1384,
+      "materials": 1
     },
     "RoadmapSupport": {
-      "vertices": 1054,
-      "triangles": 2084,
-      "materials": 3
+      "vertices": 550,
+      "triangles": 1076,
+      "materials": 1
     },
     "RocketBase": {
-      "vertices": 1536,
-      "triangles": 3064,
-      "materials": 3
+      "vertices": 1152,
+      "triangles": 2296,
+      "materials": 1
     },
     "RocketBody": {
-      "vertices": 3386,
-      "triangles": 6620,
-      "materials": 5
+      "vertices": 2058,
+      "triangles": 3964,
+      "materials": 1
     },
     "Lectern": {
-      "vertices": 1080,
-      "triangles": 2140,
-      "materials": 3
+      "vertices": 480,
+      "triangles": 940,
+      "materials": 1
     },
     "BookBase": {
-      "vertices": 648,
-      "triangles": 1284,
-      "materials": 3
+      "vertices": 288,
+      "triangles": 564,
+      "materials": 1
     },
     "BookCover": {
-      "vertices": 1416,
-      "triangles": 2820,
-      "materials": 3
+      "vertices": 672,
+      "triangles": 1332,
+      "materials": 1
     },
     "BookPage": {
-      "vertices": 1296,
-      "triangles": 2568,
-      "materials": 2
+      "vertices": 576,
+      "triangles": 1128,
+      "materials": 1
     },
     "MedalFrame": {
-      "vertices": 1222,
-      "triangles": 2420,
-      "materials": 3
+      "vertices": 838,
+      "triangles": 1652,
+      "materials": 1
     },
     "MedalFace": {
-      "vertices": 2468,
-      "triangles": 4892,
-      "materials": 2
+      "vertices": 1700,
+      "triangles": 3356,
+      "materials": 1
     },
     "MedalNumber": {
       "vertices": 48,
       "triangles": 68,
       "materials": 1
     },
-    "TechBase": {
-      "vertices": 1296,
-      "triangles": 2568,
-      "materials": 5
+    "LaptopBase": {
+      "vertices": 1632,
+      "triangles": 3068,
+      "materials": 1
     },
-    "TechGear": {
-      "vertices": 4128,
-      "triangles": 8208,
+    "LaptopLid": {
+      "vertices": 672,
+      "triangles": 1332,
       "materials": 1
     },
     "PhoneBase": {
-      "vertices": 5820,
-      "triangles": 9952,
-      "materials": 5
+      "vertices": 4368,
+      "triangles": 7072,
+      "materials": 1
     },
     "PhoneReceiver": {
-      "vertices": 958,
-      "triangles": 1864,
-      "materials": 2
+      "vertices": 718,
+      "triangles": 1384,
+      "materials": 1
     },
     "EarthOcean": {
       "vertices": 1986,
@@ -152,7 +157,7 @@
     "EarthLand": {
       "vertices": 8972,
       "triangles": 15139,
-      "materials": 6
+      "materials": 1
     },
     "EarthClouds": {
       "vertices": 882,
@@ -160,55 +165,55 @@
       "materials": 1
     },
     "RobotTorso": {
-      "vertices": 3626,
-      "triangles": 7212,
-      "materials": 5
+      "vertices": 1962,
+      "triangles": 3884,
+      "materials": 1
     },
     "RobotHead": {
-      "vertices": 3600,
-      "triangles": 7168,
-      "materials": 5
+      "vertices": 2112,
+      "triangles": 4192,
+      "materials": 1
     },
     "RobotUpperArmL": {
-      "vertices": 1354,
-      "triangles": 2696,
-      "materials": 3
+      "vertices": 554,
+      "triangles": 1096,
+      "materials": 1
     },
     "RobotLowerArmL": {
-      "vertices": 2002,
-      "triangles": 3980,
-      "materials": 2
+      "vertices": 842,
+      "triangles": 1660,
+      "materials": 1
     },
     "RobotThighL": {
-      "vertices": 1354,
-      "triangles": 2696,
-      "materials": 3
+      "vertices": 554,
+      "triangles": 1096,
+      "materials": 1
     },
     "RobotShinL": {
-      "vertices": 1032,
-      "triangles": 2048,
-      "materials": 3
+      "vertices": 672,
+      "triangles": 1328,
+      "materials": 1
     },
     "RobotUpperArmR": {
-      "vertices": 1354,
-      "triangles": 2696,
-      "materials": 3
+      "vertices": 554,
+      "triangles": 1096,
+      "materials": 1
     },
     "RobotLowerArmR": {
-      "vertices": 2002,
-      "triangles": 3980,
-      "materials": 2
+      "vertices": 842,
+      "triangles": 1660,
+      "materials": 1
     },
     "RobotThighR": {
-      "vertices": 1354,
-      "triangles": 2696,
-      "materials": 3
+      "vertices": 554,
+      "triangles": 1096,
+      "materials": 1
     },
     "RobotShinR": {
-      "vertices": 1032,
-      "triangles": 2048,
-      "materials": 3
+      "vertices": 672,
+      "triangles": 1328,
+      "materials": 1
     }
   },
-  "glb_bytes": 4481244
+  "glb_bytes": 1201772
 }

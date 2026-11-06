@@ -1,7 +1,7 @@
 export const spaceCopy = {
   es: {
     sections: ['Experiencia', 'Proyectos', 'Sobre mí', 'Formación', 'Tecnologías', 'Contacto'],
-    objects: ['Roadmap', 'Cohete', 'Bitácora', 'Medalla', 'Consola', 'Teléfono'],
+    objects: ['Roadmap', 'Cohete', 'Bitácora', 'Medalla', 'Portátil', 'Teléfono'],
     greeting: 'Un pequeño universo. Muchas ideas por explorar.',
     hostGreeting: '¡Bienvenido a la nave espacial de medinafdzz!', resetView: 'Restablecer vista',
     hello: '¡Hola! Soy tu guía a bordo.',
@@ -20,7 +20,7 @@ export const spaceCopy = {
   },
   en: {
     sections: ['Experience', 'Projects', 'About me', 'Education', 'Tech stack', 'Contact'],
-    objects: ['Roadmap', 'Rocket', 'Logbook', 'Medal', 'Console', 'Phone'],
+    objects: ['Roadmap', 'Rocket', 'Logbook', 'Medal', 'Laptop', 'Phone'],
     greeting: 'A small universe. A world of ideas to explore.',
     hostGreeting: "Welcome aboard medinafdzz's spaceship!", resetView: 'Reset view',
     hello: 'Hello! I’m your guide on board.',

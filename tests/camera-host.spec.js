@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 import { clickSceneObject } from './scene-helpers';
 
 async function robotPoint(page) {
@@ -69,7 +69,7 @@ test('repeat greeting has a real reversible pose, Enter, translations and safe r
     const root=[..._roots.values()].find(r=>r.store.getState().gl.domElement.isConnected);
     return root?.store.getState().scene.getObjectByName('host-robot')?.position.toArray() ?? null;
   });
-  expect(await pose()).toEqual([0,.22,.25]);
+  expect(await pose()).toEqual([0,-.22,.25]);
   await page.getByRole('button',{name:'Repetir bienvenida'}).click();
   await expect(page.locator('.spacefolio')).toHaveAttribute('data-phase','HOST_GREETING');
   await expect(page.locator('.intro-card')).toContainText('¡Bienvenido a la nave espacial de medinafdzz!');
@@ -78,13 +78,13 @@ test('repeat greeting has a real reversible pose, Enter, translations and safe r
   await expect(page.locator('.intro-card')).toContainText("Welcome aboard medinafdzz's spaceship!");
   await page.locator('main').focus(); await page.keyboard.press('Enter');
   await expect(page.locator('.spacefolio')).toHaveAttribute('data-phase','EXPLORE');
-  expect(await pose()).toEqual([0,.22,.25]);
+  expect(await pose()).toEqual([0,-.22,.25]);
   await page.getByRole('button',{name:'Replay welcome'}).click();
   await expect(page.locator('.spacefolio')).toHaveAttribute('data-phase','HOST_GREETING');
   await page.getByRole('button',{name:'Lightweight view',exact:true}).click();
   await expect(page.locator('.spacefolio')).toHaveAttribute('data-phase','EXPLORE');
   await page.getByRole('button',{name:'3D view',exact:true}).click();
-  await expect.poll(pose).toEqual([0,.22,.25]);
+  await expect.poll(pose).toEqual([0,-.22,.25]);
 });
 
 test('three physical robot cycles, drag guard, animation cancellation and zero idle frames', async ({page})=>{
@@ -109,7 +109,7 @@ test('three physical robot cycles, drag guard, animation cancellation and zero i
       const {scene}=[..._roots.values()].find(r=>r.store.getState().gl.domElement.isConnected).store.getState();
       return ['robot-thigh-L','robot-thigh-R','robot-knee-L','robot-knee-R'].map(name=>scene.getObjectByName(name).rotation.x);
     });
-    expect(legs).toEqual([0,0,0,0]);
+    for(const angle of legs) expect(angle).toBeCloseTo(0,10);
     if(i===0) await page.screenshot({path:'artifacts/refined-host-greeting.png'});
     if(i===1) await page.locator('.start-button').click();
     else { point=await robotPoint(page); await page.mouse.click(point.x,point.y); }

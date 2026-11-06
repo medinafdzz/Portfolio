@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 import { clickSceneObject } from './scene-helpers';
 
 test.use({launchOptions:{args:['--use-angle=d3d11','--enable-gpu']}});

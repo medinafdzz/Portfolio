@@ -1,12 +1,12 @@
 import { memo, useEffect, useMemo } from 'react';
 import * as THREE from 'three';
-import { useTexture } from '@react-three/drei';
+import {useLoader} from '@react-three/fiber';
 import { Screen } from './geometry';
 import { createDisplay } from './textures';
 import ModelPart from './models';
 
 function SpaceEnvironment() {
-  const moon = useTexture('/textures/moon.jpg');
+  const moon = useLoader(THREE.TextureLoader,'/textures/moon-512.jpg');
   // Three.js texture resources are mutable and shared outside React state.
   // eslint-disable-next-line react-hooks/immutability
   useEffect(() => { moon.colorSpace = THREE.SRGBColorSpace; }, [moon]);
@@ -20,7 +20,7 @@ function SpaceEnvironment() {
     <group name="miniature-earth" position={[.8,3.1,-18]} rotation={[0,.2,.08]} scale={4.6}>
       <ModelPart part="EarthOcean"/><ModelPart part="EarthLand"/><ModelPart part="EarthClouds"/>
     </group>
-    <mesh position={[7,5.6,-17]}><sphereGeometry args={[.55,32,24]}/><meshStandardMaterial map={moon} roughness={1}/></mesh>
+    <mesh position={[7,5.6,-17]}><sphereGeometry args={[.55,24,16]}/><meshBasicMaterial map={moon}/></mesh>
   </group>;
 }
 
@@ -30,6 +30,7 @@ function Cabin() {
   return <group>
     <SpaceEnvironment/>
     <ModelPart part="CabinShell" name="cabin-baked"/>
+    <ModelPart part="ShipHull" name="spaceship-hull"/>
     <group name="command-console">
       <ModelPart part="ConsoleBody" name="console-integrated-body"/>
       <group position={[0,2.865,-1.94]} rotation={[-.872,0,0]}>
@@ -37,9 +38,6 @@ function Cabin() {
       </group>
     </group>
     <ModelPart part="Chair"/>
-    <mesh rotation={[-Math.PI/2,0,0]} position={[0,-.045,1.7]} receiveShadow>
-      <circleGeometry args={[2.65,64]}/><shadowMaterial transparent opacity={.24}/>
-    </mesh>
   </group>;
 }
 

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 test('baked GLB loads embedded textures under real CSP and survives lightweight remount', async ({page}) => {
   const errors=[];

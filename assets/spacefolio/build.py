@@ -96,7 +96,7 @@ def finish(obj, material, p=(0, 0, 0), r=(0, 0, 0), smooth=False):
     return obj
 
 
-def box(size, p=(0, 0, 0), material='dark', bevel=.06, r=(0, 0, 0), segments=5):
+def box(size, p=(0, 0, 0), material='dark', bevel=.06, r=(0, 0, 0), segments=3):
     bpy.ops.mesh.primitive_cube_add()
     obj = bpy.context.object
     obj.dimensions = (size[0], size[2], size[1])
@@ -123,7 +123,7 @@ def cylinder(radius, height, p=(0, 0, 0), material='steel', top=None, r=(0, 0, 0
 
 
 def orb(size, p=(0, 0, 0), material='white', r=(0, 0, 0)):
-    bpy.ops.mesh.primitive_uv_sphere_add(segments=40, ring_count=24)
+    bpy.ops.mesh.primitive_uv_sphere_add(segments=24, ring_count=16)
     obj = bpy.context.object
     obj.scale = (size[0], size[2], size[1])
     bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
@@ -141,12 +141,12 @@ def mesh(vertices, faces, material='dark', smooth=False):
 
 def ring(radius, tube, p=(0, 0, 0), material='bronze', r=(0, 0, 0)):
     vertices = []
-    for i in range(64):
-        a = math.tau * i / 64
-        for j in range(12):
-            b = math.tau * j / 12
+    for i in range(48):
+        a = math.tau * i / 48
+        for j in range(8):
+            b = math.tau * j / 8
             vertices.append(((radius + tube * math.cos(b)) * math.cos(a), (radius + tube * math.cos(b)) * math.sin(a), tube * math.sin(b)))
-    obj = mesh(vertices, [(i * 12 + j, ((i + 1) % 64) * 12 + j, ((i + 1) % 64) * 12 + (j + 1) % 12, i * 12 + (j + 1) % 12) for i in range(64) for j in range(12)], material, True)
+    obj = mesh(vertices, [(i * 8 + j, ((i + 1) % 48) * 8 + j, ((i + 1) % 48) * 8 + (j + 1) % 8, i * 8 + (j + 1) % 8) for i in range(48) for j in range(8)], material, True)
     obj.matrix_world = Matrix.Translation(point(p)) @ rotation(r)
     return obj
 
@@ -222,10 +222,11 @@ def part(name):
     bpy.ops.object.origin_set(type='ORIGIN_CURSOR')
     obj.name = obj.data.name = name
     bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
-    bpy.ops.object.mode_set(mode='EDIT')
-    bpy.ops.mesh.select_all(action='SELECT')
-    bpy.ops.uv.smart_project(angle_limit=math.radians(66), island_margin=.004)
-    bpy.ops.object.mode_set(mode='OBJECT')
+    if name in ['CabinShell', 'ConsoleBody', 'Chair']:
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.mesh.select_all(action='SELECT')
+        bpy.ops.uv.smart_project(angle_limit=math.radians(66), island_margin=.004)
+        bpy.ops.object.mode_set(mode='OBJECT')
     parts[name] = obj
     current.clear()
     return obj
@@ -313,6 +314,20 @@ for p, scale in [((-5.7, 0, 2.7), 1.3), ((5.8, 0, 2.8), 1.1)]:
         item.matrix_world = matrix @ item.matrix_world
 part('CabinShell')
 
+# A complete pressure hull surrounds the camera; the front aperture is the
+# only opening. Its rear/side/ceiling surfaces also cover wide portrait views.
+box((14.8, .25, 30), (0, -.38, 10.5), 'floor', .08)
+box((14.8, .25, 30), (0, 7.5, 10.5), 'hull', .08)
+for side in [-1, 1]:
+    box((.25, 7.8, 30), (side * 7.35, 3.55, 10.5), 'hull', .08)
+    for z in [3, 9, 17]:
+        box((.12, 7.2, .22), (side * 7.18, 3.6, z), 'steel', .025)
+box((14.8, 7.8, .25), (0, 3.55, 25.4), 'dark', .08)
+outer = [(-7.45, -.5), (-7.45, 1.5), (-7.45, 5.5), (-7.45, 7.65), (0, 7.65), (7.45, 7.65), (7.45, 5.5), (7.45, 1.5), (7.45, -.5), (0, -.5)]
+inner = window[:-1]
+mesh([(x, y, -4.04) for x, y, _ in inner] + [(x, y, -4.04) for x, y in outer], [(i, (i + 1) % 10, (i + 1) % 10 + 10, i + 10) for i in range(10)], 'hull')
+part('ShipHull')
+
 # Command console is one enclosed wedge seated on the desktop.
 profile = [(-.5, 0), (.5, 0), (.5, 1.24), (-.5, .4)]
 verts = [(x, 2.025 + y, -1.96 - z) for x in [-1.525, 1.525] for z, y in profile]
@@ -325,15 +340,15 @@ part('ConsoleBody')
 
 # Chair remains independent so its source stays editable.
 cylinder(.62, .12, (0, .12, .95), 'dark')
-cylinder(.12, .65, (0, .48, .95), 'steel')
-box((1.35, .28, 1.2), (0, .88, .95), 'dark', .13)
-box((1.38, 1.38, .34), (0, 1.35, 1.45), 'dark', .16, (-.12, 0, 0))
-box((1.12, 1.1, .12), (0, 1.39, 1.63), 'fabric', .055, (-.12, 0, 0))
+cylinder(.12, .27, (0, .28, .95), 'steel')
+box((1.35, .28, 1.2), (0, .44, .95), 'dark', .13)
+box((1.38, 1.38, .34), (0, 1.1, 1.45), 'dark', .16, (-.12, 0, 0))
+box((1.12, 1.1, .12), (0, 1.14, 1.63), 'fabric', .055, (-.12, 0, 0))
 for x in [-.35, -.18, 0, .18, .35]:
-    box((.014, .8, .009), (x, 1.36, 1.698), 'steel', .003)
+    box((.014, .8, .009), (x, 1.11, 1.698), 'steel', .003)
 for side in [-1, 1]:
-    cylinder(.055, .6, (side * .77, 1, 1.05), 'steel')
-    box((.23, .17, .95), (side * .77, 1.15, .95), 'fabric', .07)
+    cylinder(.055, .3, (side * .77, .65, 1.05), 'steel')
+    box((.23, .17, .95), (side * .77, .75, .95), 'fabric', .07)
 part('Chair')
 
 # Flight-log frame.
@@ -406,20 +421,21 @@ part('MedalFace')
 lettering('1', .59, (0, .025, .078), 'goldLight')
 part('MedalNumber')
 
-box((1.6, .16, 1), material='dark')
-start = len(current)
-box((1.6, 1.04, .15), material='bronze', bevel=.065)
-box((1.5, .94, .09), (0, 0, .08), 'rubber', .035)
-transform_new(start, (0, .6, -.25), (-.25, 0, 0))
-for x in [-.5, 0, .5]:
-    box((.15, .03, .06), (x, .1, .37), 'blue' if x == 0 else 'amber', .01)
-part('TechBase')
-ring(.235, .035, material='blue')
-ring(.12, .023, material='blue')
-for i in range(12):
-    a = i * math.tau / 12
-    box((.09, .1, .035), (-math.sin(a) * .26, math.cos(a) * .26, 0), 'blue', .015, (0, 0, a))
-part('TechGear')
+box((1.72, .105, 1.12), (0, .06, 0), 'steel', .055)
+box((1.62, .018, 1.02), (0, .12, 0), 'dark', .025)
+for row in range(4):
+    for col in range(11):
+        box((.105, .018, .095), (-.69 + col * .137, .138, -.33 + row * .125), 'rubber', .008, segments=1)
+box((.39, .012, .2), (0, .14, .33), 'steel', .015)
+box((.5, .016, .07), (0, .14, .13), 'rubber', .008)
+cylinder(.055, 1.48, (0, .18, -.48), 'bronze', r=(0, 0, math.pi / 2), vertices=24)
+part('LaptopBase')
+# Lid origin is the hinge. Its glass and webcam rotate with the shell.
+box((1.72, 1.04, .075), (0, .52, 0), 'steel', .045)
+box((1.59, .9, .018), (0, .53, .047), 'rubber', .025)
+box((.026, .026, .008), (0, .99, .059), 'blue', .01)
+ring(.11, .012, (0, .52, -.047), 'bronze')
+part('LaptopLid')
 
 box((.92, 1.72, .24), material='red', bevel=.14)
 box((.64, 1.32, .07), (.07, -.04, .145), 'red', .06)
@@ -433,10 +449,6 @@ for y in [.53, .62]:
     box((.35, .025, .018), (.13, y, .2), 'rubber', .008, segments=2)
 for y in [-.5, .52]:
     box((.18, .075, .19), (-.41, y, .21), 'steel', .025, segments=2)
-# The helix is sampled once, rather than expanding each point into 12 curve steps.
-helix = [(-.39 + math.sin(i / 168 * math.tau * 14) * .06, -.62 - i / 168 * .85, .22 + math.cos(i / 168 * math.tau * 14) * .05) for i in range(169)]
-tube(helix, .015, 'rubber', resolution=1, bevel_resolution=1)
-tube([(-.39, -1.47, .22), (-.18, -1.64, .2), (.23, -1.46, .15), (.23, -.85, .07)], .017, 'rubber', resolution=4, bevel_resolution=1)
 part('PhoneBase')
 tube([(-.42, -.59, .18), (-.47, -.32, .4), (-.48, .3, .4), (-.42, .59, .18)], .1, 'red', resolution=6, bevel_resolution=3)
 for sign in [-1, 1]:
@@ -644,13 +656,48 @@ for name in static_names:
     obj.data.materials.append(baked)
     for poly in obj.data.polygons:
         poly.material_index = 0
+# Store fixed studio illumination in the moving meshes' vertex colors. Every
+# rigid part becomes one unlit draw call, without realtime lights or shadows.
+vertex_lit = bpy.data.materials.new('Baked vertex radiance')
+vertex_lit.node_tree.nodes.clear()
+white_node = vertex_lit.node_tree.nodes.new('ShaderNodeRGB')
+white_node.outputs[0].default_value = (1, 1, 1, 1)
+vertex_output = vertex_lit.node_tree.nodes.new('ShaderNodeOutputMaterial')
+vertex_lit.node_tree.links.new(white_node.outputs[0], vertex_output.inputs['Surface'])
+key = Vector((-.45, .7, .55)).normalized()
+fill = Vector((.5, .3, -.8)).normalized()
+for name, obj in parts.items():
+    if name in static_names:
+        continue
+    data = obj.data
+    palette = []
+    for material in data.materials:
+        shader = material.node_tree.nodes.get('Principled BSDF')
+        palette.append((shader.inputs['Base Color'].default_value[:3], shader.inputs['Metallic'].default_value))
+    attribute = data.color_attributes.new(name='BakedLight', type='FLOAT_COLOR', domain='CORNER')
+    for poly in data.polygons:
+        color, metallic = palette[poly.material_index]
+        for index in poly.loop_indices:
+            n = data.corner_normals[index].vector
+            normal = Vector((n.x, n.z, -n.y))
+            shade = .58 + .53 * max(0, normal.dot(key)) + .17 * max(0, normal.dot(fill))
+            glint = metallic * .35 * max(0, normal.dot(Vector((.1, .5, .86)))) ** 24
+            attribute.data[index].color = (*[min(1, c * shade + glint) for c in color], 1)
+    data.materials.clear()
+    data.materials.append(vertex_lit)
+    for poly in data.polygons:
+        poly.material_index = 0
 for obj in parts.values():
     obj.hide_render = False
 bpy.ops.object.select_all(action='DESELECT')
 for obj in parts.values():
     obj.select_set(True)
 bpy.context.view_layer.objects.active = parts['CabinShell']
-bpy.ops.export_scene.gltf(filepath=str(output), export_format='GLB', use_selection=True, export_cameras=False, export_lights=False, export_yup=True, export_draco_mesh_compression_enable=True, export_draco_mesh_compression_level=6, export_draco_position_quantization=14, export_draco_normal_quantization=12, export_draco_texcoord_quantization=16)
+bpy.ops.export_scene.gltf(filepath=str(output), export_format='GLB', use_selection=True, export_cameras=False, export_lights=False, export_normals=False, export_yup=True, export_vertex_color='ACTIVE', export_image_format='JPEG', export_image_quality=86, export_draco_mesh_compression_enable=True, export_draco_mesh_compression_level=6, export_draco_position_quantization=14, export_draco_texcoord_quantization=14)
+# Show the same baked vertex colors in the editable Blender source/preview.
+vertex_color = vertex_lit.node_tree.nodes.new('ShaderNodeVertexColor')
+vertex_color.layer_name = 'BakedLight'
+vertex_lit.node_tree.links.new(vertex_color.outputs['Color'], vertex_output.inputs['Surface'])
 atlas.pack()
 
 # Lay out the editable source after export; GLB parts stay in local coordinates
@@ -668,8 +715,8 @@ placements = {
     'BookBase': tr(positions[2]) @ tr((0, .85, 0), (-.6, -.08, -.06)),
     'MedalFrame': tr(positions[3], (0, 1.05, 0)),
     'MedalFace': tr(positions[3], (0, 1.05, 0)) @ tr((0, 0, .15)) @ Matrix.Diagonal((.84, .84, .84, 1)),
-    'TechBase': tr(positions[4]),
-    'TechGear': tr(positions[4]) @ tr((0, .6, -.25), (-.25, 0, 0)) @ tr((0, 0, .16)),
+    'LaptopBase': tr(positions[4]),
+    'LaptopLid': tr(positions[4]) @ tr((0, .22, -.48), (-.18, 0, 0)),
     'PhoneBase': tr(positions[5], (0, -.3, 0)),
     'PhoneReceiver': tr(positions[5], (0, -.3, 0)) @ tr((0, 0, .12)),
 }

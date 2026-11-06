@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Html } from '@react-three/drei';
+import { Html } from '@react-three/drei/web/Html.js';
 import gsap from 'gsap';
 import { Cylinder, Screen } from './geometry';
 import { colors, objectPositions } from './config';
@@ -46,15 +46,15 @@ function Medal({ active, reducedMotion, motionScale }) {
   return <group name="framed-medal" rotation={[0,1.05,0]}><ModelPart part="MedalFrame"/><group ref={medal} position={[0,0,.15]} scale={.84}><ModelPart part="MedalFace"/><ModelPart part="MedalNumber"/></group></group>;
 }
 
-function TechPanel({ active, reducedMotion, motionScale }) {
+function Laptop({ active, reducedMotion, motionScale }) {
   const requestRender=useSceneRender();
-  const gear=useRef();
-  const texture=useMemo(()=>createDisplay('console'),[]);
+  const lid=useRef();
+  const texture=useMemo(()=>createDisplay('gear'),[]);
   useEffect(()=>()=>texture.dispose(),[texture]);
-  useEffect(()=>{const tween=gsap.to(gear.current.rotation,{z:active?-Math.PI/2:0,duration:reducedMotion?0:.8*motionScale,onUpdate:requestRender,onComplete:()=>requestRender(true)});return()=>tween.kill();},[active,reducedMotion,requestRender,motionScale]);
-  return <group><ModelPart part="TechBase"/><group rotation={[-.25,0,0]} position={[0,.6,-.25]}>
-    <Screen texture={texture} size={[1.4,.84]} position={[0,0,.131]}/>
-    <group ref={gear} position={[0,0,.16]}><ModelPart part="TechGear"/></group>
+  useEffect(()=>{const tween=gsap.to(lid.current.rotation,{x:active?-.18:Math.PI/2,duration:reducedMotion?0:.65*motionScale,ease:'power2.inOut',onUpdate:requestRender});return()=>tween.kill();},[active,reducedMotion,requestRender,motionScale]);
+  return <group name="tech-laptop"><ModelPart part="LaptopBase"/><group ref={lid} name="laptop-lid" rotation={[Math.PI/2,0,0]} position={[0,.22,-.48]}>
+    <ModelPart part="LaptopLid"/>
+    <Screen texture={texture} size={[1.46,.79]} position={[0,.53,.059]}/>
   </group></group>;
 }
 
@@ -65,7 +65,7 @@ function WallPhone({ active, reducedMotion, motionScale }) {
   return <group rotation={[0,-.3,0]}><ModelPart part="PhoneBase"/><group ref={receiver} position={[0,0,.12]}><ModelPart part="PhoneReceiver"/></group></group>;
 }
 
-const objects = [Roadmap,Rocket,Logbook,Medal,TechPanel,WallPhone];
+const objects = [Roadmap,Rocket,Logbook,Medal,Laptop,WallPhone];
 const hitboxes = [
   {size:[1.8,1.85,.6],position:[0,0,.05]},
   {size:[1.1,1.95,1.1],position:[0,.9,0]},
