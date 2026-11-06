@@ -17,7 +17,7 @@
     "objectPositions": [
       [
         -5,
-        3.15,
+        3.8,
         -1.65
       ],
       [
@@ -52,6 +52,7 @@
     "ConsoleBody",
     "Chair"
   ],
+  "geometry_font": "Satoshi-Bold.otf",
   "parts": {
     "CabinShell": {
       "vertices": 41636,
@@ -71,6 +72,11 @@
     "RoadmapFrame": {
       "vertices": 944,
       "triangles": 1864,
+      "materials": 3
+    },
+    "RoadmapSupport": {
+      "vertices": 1054,
+      "triangles": 2084,
       "materials": 3
     },
     "RocketBase": {
@@ -104,14 +110,19 @@
       "materials": 2
     },
     "MedalFrame": {
-      "vertices": 432,
-      "triangles": 856,
-      "materials": 2
+      "vertices": 1222,
+      "triangles": 2420,
+      "materials": 3
     },
     "MedalFace": {
-      "vertices": 12648,
-      "triangles": 25236,
+      "vertices": 2468,
+      "triangles": 4892,
       "materials": 2
+    },
+    "MedalNumber": {
+      "vertices": 48,
+      "triangles": 68,
+      "materials": 1
     },
     "TechBase": {
       "vertices": 1296,
@@ -124,14 +135,29 @@
       "materials": 1
     },
     "PhoneBase": {
-      "vertices": 24452,
-      "triangles": 48816,
+      "vertices": 5820,
+      "triangles": 9952,
       "materials": 5
     },
     "PhoneReceiver": {
-      "vertices": 1944,
-      "triangles": 3852,
-      "materials": 3
+      "vertices": 958,
+      "triangles": 1864,
+      "materials": 2
+    },
+    "EarthOcean": {
+      "vertices": 1986,
+      "triangles": 3968,
+      "materials": 1
+    },
+    "EarthLand": {
+      "vertices": 7937,
+      "triangles": 13275,
+      "materials": 5
+    },
+    "EarthClouds": {
+      "vertices": 882,
+      "triangles": 1680,
+      "materials": 1
     },
     "RobotTorso": {
       "vertices": 3626,
@@ -184,5 +210,5 @@
       "materials": 3
     }
   },
-  "glb_bytes": 4522920
+  "glb_bytes": 4468344
 }

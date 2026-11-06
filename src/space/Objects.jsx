@@ -11,7 +11,7 @@ import ModelPart from './models';
 function Roadmap() {
   const texture=useMemo(()=>createDisplay('roadmap'),[]);
   useEffect(()=>()=>texture.dispose(),[texture]);
-  return <group rotation={[0,.23,0]}><ModelPart part="RoadmapFrame"/><Screen texture={texture} size={[1.42,1.43]} position={[0,0,.157]}/></group>;
+  return <group rotation={[0,.23,0]}><ModelPart part="RoadmapSupport"/><ModelPart part="RoadmapFrame"/><Screen texture={texture} size={[1.42,1.43]} position={[0,0,.157]}/></group>;
 }
 
 function Rocket({ active, reducedMotion, motionScale }) {
@@ -43,7 +43,7 @@ function Medal({ active, reducedMotion, motionScale }) {
   const requestRender=useSceneRender();
   const medal=useRef();
   useEffect(()=>{const tween=gsap.to(medal.current.rotation,{z:active?-.08:0,duration:reducedMotion?0:.4*motionScale,onUpdate:requestRender,onComplete:()=>requestRender(true)});return()=>tween.kill();},[active,reducedMotion,requestRender,motionScale]);
-  return <group name="framed-medal" rotation={[0,1.05,0]}><ModelPart part="MedalFrame"/><group ref={medal} position={[0,0,.15]} scale={.84}><ModelPart part="MedalFace"/></group></group>;
+  return <group name="framed-medal" rotation={[0,1.05,0]}><ModelPart part="MedalFrame"/><group ref={medal} position={[0,0,.15]} scale={.84}><ModelPart part="MedalFace"/><ModelPart part="MedalNumber"/></group></group>;
 }
 
 function TechPanel({ active, reducedMotion, motionScale }) {
@@ -72,7 +72,7 @@ const hitboxes = [
   {size:[1.2,1.6,1.3],position:[0,.8,.1]},
   {size:[1.16,1.16,.65],position:[0,0,0],rotation:[0,1.05,0]},
   {size:[1.7,1.4,1.1],position:[0,.6,-.1]},
-  {size:[.8,2.3,.8],position:[0,-.3,.15],rotation:[0,-.3,0]},
+  {size:[1.3,2.65,1.1],position:[-.12,-.32,.3],rotation:[0,-.3,0]},
 ];
 
 function InteractiveObject({ index, phase, section, onSelect, labels, reducedMotion, motionScale }) {
@@ -83,7 +83,7 @@ function InteractiveObject({ index, phase, section, onSelect, labels, reducedMot
   const active=section===id&&phase!=='CLOSING_SECTION';
   useEffect(()=>()=>{document.body.style.cursor='';},[]);
   useEffect(()=>{if(!enabled)document.body.style.cursor='';},[enabled]);
-  return <group position={objectPositions[index]} name={`object-${id}`} onPointerOver={event=>{if(enabled){event.stopPropagation();setHover(true);document.body.style.cursor='pointer';}}} onPointerOut={()=>{setHover(false);document.body.style.cursor='';}} onClick={event=>{if(enabled){event.stopPropagation();setHover(false);document.body.style.cursor='';onSelect(id);}}}>
+  return <group position={objectPositions[index]} name={`object-${id}`} onPointerOver={event=>{if(enabled){event.stopPropagation();setHover(true);document.body.style.cursor='pointer';}}} onPointerOut={()=>{setHover(false);document.body.style.cursor='';}} onClick={event=>{if(enabled&&event.button===0&&event.delta<=4){event.stopPropagation();setHover(false);document.body.style.cursor='';onSelect(id);}}}>
     <Model active={active||hover} reducedMotion={reducedMotion} motionScale={motionScale}/>
     <mesh name={`${id}-hitbox`} position={hitbox.position} rotation={hitbox.rotation}>
       <boxGeometry args={hitbox.size}/><meshBasicMaterial visible={false}/>

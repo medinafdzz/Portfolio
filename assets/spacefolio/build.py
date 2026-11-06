@@ -10,6 +10,7 @@ import sys
 from pathlib import Path
 import bpy
 from mathutils import Matrix, Vector
+from mathutils.geometry import tessellate_polygon
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--config', required=True)
@@ -74,6 +75,14 @@ m = {
     'amber': mat('Amber marking', '#ffc37c', .1, .4, .6),
     'blue': mat('Ice blue indicators', '#a8e1e8', .1, .26, .8),
     'glass': mat('Ink blue glass', '#102d3d', .35, .17),
+    'gold': mat('Medallion gold', '#e6ad36', .45, .28),
+    'goldLight': mat('Raised satin gold', '#ffe49a', .3, .35),
+    'red': mat('Cherry red enamel', '#b92532', .12, .3),
+    'ocean': mat('Cerulean ocean', '#287ea8', .12, .42),
+    'land': mat('Meadow green', '#7aa85e', 0, .8),
+    'sand': mat('Warm coastal shelf', '#baad75', 0, .85),
+    'rock': mat('Mountain slate', '#9a9d90', 0, .85),
+    'cloud': mat('Cloud porcelain', '#f0f0df', 0, .9),
 }
 
 
@@ -87,7 +96,7 @@ def finish(obj, material, p=(0, 0, 0), r=(0, 0, 0), smooth=False):
     return obj
 
 
-def box(size, p=(0, 0, 0), material='dark', bevel=.06, r=(0, 0, 0)):
+def box(size, p=(0, 0, 0), material='dark', bevel=.06, r=(0, 0, 0), segments=5):
     bpy.ops.mesh.primitive_cube_add()
     obj = bpy.context.object
     obj.dimensions = (size[0], size[2], size[1])
@@ -95,7 +104,7 @@ def box(size, p=(0, 0, 0), material='dark', bevel=.06, r=(0, 0, 0)):
     if bevel:
         mod = obj.modifiers.new('Manufactured edge radii', 'BEVEL')
         mod.width = min(bevel, min(size) * .47)
-        mod.segments = 5
+        mod.segments = segments
         bpy.ops.object.modifier_apply(modifier=mod.name)
         normal = obj.modifiers.new('Surface normals', 'WEIGHTED_NORMAL')
         normal.keep_sharp = True
@@ -142,12 +151,12 @@ def ring(radius, tube, p=(0, 0, 0), material='bronze', r=(0, 0, 0)):
     return obj
 
 
-def tube(points, radius=.02, material='steel'):
+def tube(points, radius=.02, material='steel', resolution=12, bevel_resolution=3):
     data = bpy.data.curves.new('Swept conduit', 'CURVE')
     data.dimensions = '3D'
-    data.resolution_u = 12
+    data.resolution_u = resolution
     data.bevel_depth = radius
-    data.bevel_resolution = 3
+    data.bevel_resolution = bevel_resolution
     spline = data.splines.new('BEZIER')
     spline.bezier_points.add(len(points) - 1)
     for node, p in zip(spline.bezier_points, points):
@@ -159,6 +168,41 @@ def tube(points, radius=.02, material='steel'):
     obj.select_set(True)
     bpy.ops.object.convert(target='MESH')
     return finish(bpy.context.object, material, smooth=True)
+
+
+font_path = source / 'Satoshi-Bold.otf'
+if not font_path.is_file():
+    raise FileNotFoundError(f'Original Satoshi font required: {font_path}')
+font = bpy.data.fonts.load(str(font_path))
+
+
+def lettering(body, size, p, material):
+    data = bpy.data.curves.new('Satoshi relief', 'FONT')
+    data.font = font
+    data.body = body
+    data.align_x = data.align_y = 'CENTER'
+    data.size = size
+    data.extrude = .006
+    data.bevel_depth = .002
+    data.bevel_resolution = 1
+    data.resolution_u = 4
+    obj = bpy.data.objects.new('Satoshi relief', data)
+    bpy.context.collection.objects.link(obj)
+    bpy.ops.object.select_all(action='DESELECT')
+    obj.select_set(True)
+    bpy.context.view_layer.objects.active = obj
+    bpy.ops.object.convert(target='MESH')
+    obj = bpy.context.object
+    obj.matrix_world = Matrix.Rotation(math.pi / 2, 4, 'X')
+    return finish(obj, material, p)
+
+
+def pebble(size, p, material):
+    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=2)
+    obj = bpy.context.object
+    obj.scale = (size[0], size[2], size[1])
+    bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+    return finish(obj, material, p, smooth=True)
 
 
 def transform_new(start, p, r=(0, 0, 0)):
@@ -299,6 +343,15 @@ for side in [-1, 1]:
     for y in [-.72, .72]:
         cylinder(.024, .012, (side * .72, y, .162), 'steel', r=(math.pi / 2, 0, 0), vertices=16)
 part('RoadmapFrame')
+# A rear arm and split clamp follow the actual window tube at this height.
+experience = config['objectPositions'][0]
+dx, dz = -4.9 - experience[0], -3.8 - experience[2]
+anchor_x = dx * math.cos(.23) - dz * math.sin(.23)
+reach = dx * math.sin(.23) + dz * math.cos(.23)
+tube([(0, 0, -.13), (0, 0, -.55), (anchor_x, 0, reach)], .075, 'steel', resolution=3)
+ring(.27, .045, (anchor_x, 0, reach), 'white', (0, math.pi / 2 - .23, 0))
+box((.24, .18, .16), (anchor_x, 0, reach + .22), 'bronze', .02)
+part('RoadmapSupport')
 
 cylinder(.53, .13, material='dark')
 cylinder(.45, .06, (0, .09, 0), 'bronze')
@@ -337,17 +390,21 @@ for y in [.24, .15, .06, -.03, -.12]:
     box((.48, .008, .003), (.38, y, .008), 'bronze', .001)
 part('BookPage')
 
-box((1.08, 1.06, .13), material='bronze', bevel=.045)
-box((.94, .92, .05), (0, 0, .08), 'dark', .02)
+cylinder(.49, .1, material='dark', r=(math.pi / 2, 0, 0))
+ring(.46, .025, (0, 0, .07), 'bronze')
+tube([(-.18, .38, -.05), (0, .63, -.08), (.18, .38, -.05)], .025, 'steel', resolution=3)
 part('MedalFrame')
-cylinder(.4, .085, material='bronze', r=(math.pi / 2, 0, 0))
-ring(.36, .025, (0, 0, .06), 'amber')
-box((.29, .13, .035), (0, .075, .12), 'bronze', .008, (0, 0, .35))
-box((.22, .14, .05), (0, -.06, .13), 'bronze', .015)
+cylinder(.46, .085, material='gold', r=(math.pi / 2, 0, 0), vertices=64)
+ring(.425, .023, (0, 0, .058), 'goldLight')
+ring(.37, .009, (0, 0, .058), 'goldLight')
 for side in [-1, 1]:
-    for i in range(6):
-        orb((.025, .055, .014), (side * (.22 + math.sin(i * .5) * .025), -.2 + i * .075, .07), 'amber', (0, 0, side * (.3 + i * .12)))
+    for i in range(5):
+        a = -.8 + i * .32
+        leaf = pebble((.022, .047, .012), (side * (.26 + .025 * math.cos(a)), -.17 + i * .078, .068), 'goldLight')
+        leaf.matrix_world = leaf.matrix_world @ rotation((0, 0, side * -.55))
 part('MedalFace')
+lettering('1', .59, (0, .025, .078), 'goldLight')
+part('MedalNumber')
 
 box((1.6, .16, 1), material='dark')
 start = len(current)
@@ -364,21 +421,98 @@ for i in range(12):
     box((.09, .1, .035), (-math.sin(a) * .26, math.cos(a) * .26, 0), 'blue', .015, (0, 0, a))
 part('TechGear')
 
-box((.58, 1.48, .18), material='bronze', bevel=.065)
-box((.45, 1.36, .12), (0, 0, .12), 'dark', .045)
-box((.035, .68, .04), (.2, 0, .2), 'amber', .015)
-for i in range(9):
-    box((.042, .045, .025), (.13 + (i % 3) * .055, -.28 - (i // 3) * .075, .21), 'steel', .01)
-helix = [(.09 + math.sin(i / 179 * math.pi * 42) * .055, -.68 - i / 179 * .62, math.cos(i / 179 * math.pi * 42) * .035 + .1) for i in range(180)]
-tube(helix, .014, 'rubber')
-tube([(.09, -1.3, .1), (.12, -1.43, .1), (.27, -1.3, .1), (.27, -.5, .05)], .015, 'rubber')
+box((.92, 1.72, .24), material='red', bevel=.14)
+box((.64, 1.32, .07), (.07, -.04, .145), 'red', .06)
+box((.44, .74, .025), (.13, -.05, .196), 'rubber', .035)
+for i, digit in enumerate('123456789*0#'):
+    x, y = -.025 + i % 3 * .15, .205 - i // 3 * .17
+    box((.12, .135, .045), (x, y, .223), 'paper', .018, segments=2)
+    lettering(digit, .09, (x, y, .25), 'dark')
+box((.43, .14, .016), (.13, -.65, .198), 'steel', .012, segments=2)
+for y in [.53, .62]:
+    box((.35, .025, .018), (.13, y, .2), 'rubber', .008, segments=2)
+for y in [-.5, .52]:
+    box((.18, .075, .19), (-.41, y, .21), 'steel', .025, segments=2)
+# The helix is sampled once, rather than expanding each point into 12 curve steps.
+helix = [(-.39 + math.sin(i / 168 * math.tau * 14) * .06, -.62 - i / 168 * .85, .22 + math.cos(i / 168 * math.tau * 14) * .05) for i in range(169)]
+tube(helix, .015, 'rubber', resolution=1, bevel_resolution=1)
+tube([(-.39, -1.47, .22), (-.18, -1.64, .2), (.23, -1.46, .15), (.23, -.85, .07)], .017, 'rubber', resolution=4, bevel_resolution=1)
 part('PhoneBase')
-box((.2, .72, .15), (-.06, 0, .12), 'rubber', .07)
+tube([(-.42, -.59, .18), (-.47, -.32, .4), (-.48, .3, .4), (-.42, .59, .18)], .1, 'red', resolution=6, bevel_resolution=3)
 for sign in [-1, 1]:
-    box((.31, .3, .26), (-.06, sign * .47, .14), 'dark', .1)
+    box((.34, .34, .29), (-.42, sign * .59, .2), 'red', .11)
     for i in [-1, 0, 1]:
-        box((.14, .018, .01), (-.06, sign * .47 + i * .035, .275), 'steel', .005)
+        box((.18, .018, .012), (-.42, sign * .59 + i * .045, .351), 'rubber', .004, segments=2)
 part('PhoneReceiver')
+
+# Sculpted miniature Earth: geographic shelves, biomes and small cloud banks.
+bpy.ops.mesh.primitive_uv_sphere_add(segments=64, ring_count=32)
+finish(bpy.context.object, 'ocean', smooth=True)
+part('EarthOcean')
+
+
+def globe(lon, lat, radius=1):
+    lon, lat = math.radians(lon), math.radians(lat)
+    return (radius * math.cos(lat) * math.sin(lon), radius * math.sin(lat), radius * math.cos(lat) * math.cos(lon))
+
+
+continents = [
+    [(-17, 36), (9, 37), (33, 30), (51, 11), (43, -12), (30, -35), (18, -35), (11, -5), (-15, 12)],
+    [(-10, 36), (-9, 43), (-1, 44), (-5, 49), (6, 54), (9, 58), (5, 61), (20, 71), (30, 70), (26, 60), (39, 65), (55, 76), (95, 73), (145, 60), (170, 51), (143, 35), (121, 20), (106, 1), (99, 6), (94, 20), (87, 21), (80, 8), (73, 19), (69, 24), (57, 26), (51, 12), (43, 13), (34, 32), (27, 40), (23, 36), (19, 41), (16, 39), (12, 46), (8, 44), (3, 42)],
+    [(-166, 65), (-140, 71), (-110, 74), (-82, 62), (-55, 53), (-66, 45), (-80, 25), (-89, 15), (-105, 23), (-123, 40), (-150, 57)],
+    [(-81, 12), (-61, 10), (-35, -7), (-40, -24), (-65, -55), (-75, -40), (-81, -5)],
+    [(112, -12), (137, -11), (154, -26), (145, -40), (116, -34)],
+    [(-53, 59), (-22, 70), (-30, 82), (-58, 82), (-73, 69)],
+    [(44, -13), (50, -17), (47, -26), (44, -25)],
+]
+for outline in continents:
+    vertices, faces = [], []
+    polygon = [Vector((x, y, 0)) for x, y in outline]
+    for indices in tessellate_polygon([polygon]):
+        tri = [polygon[i] for i in indices]
+        # Subdivide in angular space so the surface follows the ocean curvature.
+        n = max(3, math.ceil(max((a - b).length for a in tri for b in tri) / 7))
+        rows = {}
+        for i in range(n + 1):
+            for j in range(n + 1 - i):
+                v = tri[0] + (tri[1] - tri[0]) * (i / n) + (tri[2] - tri[0]) * (j / n)
+                rows[i, j] = len(vertices)
+                vertices.append(globe(v.x, v.y, 1.025))
+        for i in range(n):
+            for j in range(n - i):
+                faces.append((rows[i, j], rows[i + 1, j], rows[i, j + 1]))
+                if j < n - i - 1:
+                    faces.append((rows[i + 1, j], rows[i + 1, j + 1], rows[i, j + 1]))
+    for k, face in enumerate(faces):
+        a, b, c = (Vector(vertices[v]) for v in face)
+        if (b - a).cross(c - a).dot(a) < 0:
+            faces[k] = tuple(reversed(face))
+    land = mesh(vertices, faces, 'land', True)
+    bpy.ops.object.select_all(action='DESELECT')
+    land.select_set(True)
+    land.data.normals_split_custom_set_from_vertices([v.co.normalized() for v in land.data.vertices])
+    coast = []
+    for a, b in zip(outline, outline[1:] + outline[:1]):
+        steps = max(1, math.ceil(math.dist(a, b) / 5))
+        coast.extend([(a[0] + (b[0] - a[0]) * i / steps, a[1] + (b[1] - a[1]) * i / steps) for i in range(steps)])
+    shore = [globe(lon, lat, radius) for lon, lat in coast for radius in [.999, 1.025]]
+    mesh(shore, [(i * 2, (i * 2 + 2) % len(shore), (i * 2 + 3) % len(shore), i * 2 + 1) for i in range(len(coast))], 'sand')
+# Mountain chains and forests remain low-poly, visible as genuine relief.
+for lon, lat in [(-70, -18), (-74, -9), (-72, -30), (-112, 42), (-120, 49), (7, 46), (14, 46), (39, 7), (82, 30), (91, 32)]:
+    normal = point(globe(lon, lat))
+    mountain = cylinder(.028, .095, material='rock', top=0, vertices=5)
+    mountain.matrix_world = Matrix.Translation(normal * 1.06) @ normal.to_track_quat('Z', 'Y').to_matrix().to_4x4()
+    cap = cylinder(.013, .04, material='cloud', top=0, vertices=5)
+    cap.matrix_world = Matrix.Translation(normal * 1.095) @ normal.to_track_quat('Z', 'Y').to_matrix().to_4x4()
+for lon, lat in [(-63, -4), (-60, -10), (-55, -5), (18, 1), (23, 7), (28, -2), (29, 53), (39, 57), (-101, 54)]:
+    normal = point(globe(lon, lat))
+    tree = cylinder(.018, .065, material='leaf', top=0, vertices=6)
+    tree.matrix_world = Matrix.Translation(normal * 1.055) @ normal.to_track_quat('Z', 'Y').to_matrix().to_4x4()
+part('EarthLand')
+for lon, lat in [(-42, 33), (-17, -22), (18, 58), (58, 12), (-99, 20), (98, -26), (-145, -15)]:
+    for i in range(3):
+        pebble((.055, .025 + (i % 2) * .012, .035), globe(lon + i * 4, lat, 1.075), 'cloud')
+part('EarthClouds')
 
 # Articulated robot parts preserve the original pivots and move as rigid shells.
 orb((.36, .23, .27), (0, .97, 0), 'rubber')
@@ -524,6 +658,7 @@ def tr(p=(0, 0, 0), r=(0, 0, 0)):
 positions = config['objectPositions']
 placements = {
     'RoadmapFrame': tr(positions[0], (0, .23, 0)),
+    'RoadmapSupport': tr(positions[0], (0, .23, 0)),
     'RocketBase': tr(positions[1]), 'RocketBody': tr(positions[1]),
     'Lectern': tr(positions[2]),
     'BookBase': tr(positions[2]) @ tr((0, .85, 0), (-.6, -.08, -.06)),
@@ -534,6 +669,9 @@ placements = {
     'PhoneBase': tr(positions[5], (0, -.3, 0)),
     'PhoneReceiver': tr(positions[5], (0, -.3, 0)) @ tr((0, 0, .12)),
 }
+placements['MedalNumber'] = placements['MedalFace']
+for name in ['EarthOcean', 'EarthLand', 'EarthClouds']:
+    placements[name] = tr((.8, 3.1, -18), (0, .2, .08)) @ Matrix.Diagonal((4.6, 4.6, 4.6, 1))
 placements['BookCover'] = placements['BookBase'] @ tr((-.44, 0, .19))
 placements['BookPage'] = placements['BookBase'] @ tr((-.385, 0, .15))
 root = tr((-1.4, 0, 2.15), (0, -.08, 0))
@@ -565,6 +703,7 @@ manifest = {
     'device': args.device, 'samples': args.samples, 'atlas': args.atlas,
     'source_config': config,
     'static_nodes': static_names,
+    'geometry_font': font_path.name,
     'parts': {name: {'vertices': len(obj.data.vertices), 'triangles': sum(len(p.vertices) - 2 for p in obj.data.polygons), 'materials': len(obj.data.materials)} for name, obj in parts.items()},
     'glb_bytes': output.stat().st_size,
 }
