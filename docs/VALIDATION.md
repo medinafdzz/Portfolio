@@ -5,6 +5,18 @@ Branch: `feature/spacefolio-interactive-cabin`.
 
 ## Model, camera and robot refinements
 
+Published on 2026-11-06 at https://medinafdzz.is-a.dev/. Vercel production
+deployment `dpl_4p36t5W3TpaD8xuHTtzdbsB3ibxT` was READY for app commit
+`b9e74548453e7ba86f3fd28e672b89a94f364747`. Public Chromium verification
+completed at 16:24 UTC, without authentication or bypass headers. It physically
+selected all six 3D objects, exercised boarding/orbit/reset/repeat greeting in
+ES/EN, mobile/lightweight navigation and the CV's PDF signature, with zero
+console errors. Served GLB SHA-256 matches the local file:
+`a1b48afec1d8bddbef88672fa0494aef63c69df9b42e98d965badb2cdf1402eb`.
+The served favicon also matches. Reproduce with `node tests/verify-published.mjs`;
+evidence is in `artifacts/published-refinements.json` and
+`published-refinements-{intro,explore,orbit,greeting,mobile}.png`.
+
 The current GLB has a circular gold medal with a Satoshi numeral, a red wall
 telephone with separate curved receiver/keypad/coil, and a sculpted mini-Earth
 with raised coasts, mountains, forests, desert, rivers and clouds. Experience

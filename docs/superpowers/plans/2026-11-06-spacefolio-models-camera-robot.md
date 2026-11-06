@@ -103,7 +103,7 @@ original proporcionado y conservar su licencia, sin modificar el binario.
 - [x] Ejecutar lint, 7 tests base más los nuevos, build, suite completa de navegador y smoke de producción bajo CSP real. Cero errores de consola, sin peticiones a descodificadores externos.
 - [x] Revisar escritorio, ambas orientaciones de tablet y móvil 360/390/430px, ES/EN, seis secciones, tres ciclos del robot, clic/arrastre/rueda/táctil, foco y movimiento reducido. Corregir y repetir únicamente las comprobaciones afectadas, además del pase completo final.
 - [x] Medir antes/después con mismo viewport y renderizador: transición, arrastre y reposo. Exigir cero fotogramas nuevos en ventanas ociosas después de navegar y saludar; registrar CPU principal/agregada, triángulos, llamadas y peso descargado.
-- [ ] Obtener revisión independiente del cambio completo, resolver defectos confirmados y registrar límites de dispositivo. Guardar el hito validado y verificar la versión publicada si se actualiza producción.
+- [x] Obtener revisión independiente del cambio completo, resolver defectos confirmados y registrar límites de dispositivo. Guardar el hito validado y verificar la versión publicada si se actualiza producción.
 
 ## Review Focus
 
@@ -115,6 +115,9 @@ original proporcionado y conservar su licencia, sin modificar el binario.
 
 ## Estado del plan
 
-Preparado tras inspección del código, las miniaturas y los metadatos públicos.
-No se han modificado aún los modelos, la cámara, el robot ni el favicon.
-No se han ejecutado todavía pruebas de las mejoras descritas.
+Implementado y publicado en https://medinafdzz.is-a.dev/ el 2026-11-06.
+21/21 escenarios de navegador, 8/8 tests Node, lint, build, smoke bajo CSP,
+revisión independiente y mediciones GPU/software completados. La verificación
+pública sin autenticación pasó seis clics 3D, cámara, saludo ES/EN, móvil, CV y
+comparación de hashes. Véanse docs/VALIDATION.md y docs/PERFORMANCE.md para
+evidencias y límites, incluido el coste activo de SwiftShader.
