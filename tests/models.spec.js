@@ -29,7 +29,7 @@ test('baked GLB loads embedded textures under real CSP and survives lightweight 
     scene.traverse(o=>{if(o.name.endsWith('-hitbox') && o.geometry?.type==='BoxGeometry' && !o.material.visible)names.push(o.name);});
     return names;
   });
-  expect(hitboxes).toHaveLength(6);
+  expect(hitboxes).toHaveLength(7);
   await page.screenshot({path:'artifacts/baked-integrated-intro.png'});
   await page.getByRole('button',{name:'Vista ligera',exact:true}).click();
   await page.getByRole('button',{name:'Vista 3D',exact:true}).click();

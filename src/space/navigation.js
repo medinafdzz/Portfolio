@@ -6,7 +6,14 @@ export function navigationReducer(state, event) {
     case 'START':
       return state.phase === 'INTRO' ? { ...state, phase: 'ENTERING' } : state;
     case 'ENTERED':
-      return state.phase === 'ENTERING' ? { ...state, phase: 'EXPLORE' } : state;
+      return ['ENTERING','HOST_SITTING'].includes(state.phase) ? { ...state, phase: 'EXPLORE' } : state;
+    case 'HOST_TOGGLE':
+      if (state.phase === 'EXPLORE') return {...state,phase:'HOST_RISING'};
+      return state.phase === 'HOST_GREETING' ? {...state,phase:'HOST_SITTING'} : state;
+    case 'HOST_READY':
+      return state.phase === 'HOST_RISING' ? {...state,phase:'HOST_GREETING'} : state;
+    case 'HOST_ABORT':
+      return state.phase.startsWith('HOST_') ? {phase:'EXPLORE',section:null} : state;
     case 'SELECT':
       return ['INTRO', 'EXPLORE'].includes(state.phase) && sectionIds.includes(event.section)
         ? { phase: 'OPENING_SECTION', section: event.section } : state;

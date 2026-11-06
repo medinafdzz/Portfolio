@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import gsap from 'gsap';
@@ -11,31 +11,62 @@ import RenderBudget from './RenderBudget';
 import { useSceneRender } from './render-context';
 import IntroAnchor from './IntroAnchor';
 import { isSoftwareRenderer } from './render-budget';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 gsap.ticker.fps(24);
 
-function CameraController({ phase, section, reducedMotion, motionScale }) {
-  const { camera, size } = useThree();
+function CameraController({ phase, section, reducedMotion, motionScale, resetView }) {
+  const { camera, size, gl, set } = useThree();
   const requestRender = useSceneRender();
-  const aim = useRef({ x: 0, y: 2.45, z: -1.3 });
-  const intro = phase === 'INTRO';
+  const controls = useMemo(() => new OrbitControls(camera), [camera]);
+  const previous = useRef(null);
+  const userPose = useRef(null);
   // Three.js camera objects are mutable scene resources, outside React's state model.
   /* eslint-disable react-hooks/immutability */
   useEffect(() => {
+    controls.connect(gl.domElement);
+    controls.enableDamping = false;
+    controls.minAzimuthAngle = -.5; controls.maxAzimuthAngle = .5;
+    controls.minPolarAngle = 1.14; controls.maxPolarAngle = 1.56;
+    controls.minDistance = 8; controls.maxDistance = 16.5;
+    controls.cursor.set(0,2.45,-1.3); controls.maxTargetRadius = 1.6;
+    controls.rotateSpeed = .55; controls.panSpeed = .6; controls.zoomSpeed = .7;
+    controls.target.set(0,2.45,-1.3);
+    controls.addEventListener('change', requestRender);
+    set({ controls });
+    return () => { controls.removeEventListener('change', requestRender); controls.dispose(); set({controls:null}); };
+  }, [controls,gl,set,requestRender]);
+  useEffect(() => {
+    const last = previous.current;
+    const resized = !last || last.width !== size.width || last.height !== size.height;
+    const reset = last?.resetView !== resetView;
+    previous.current = {phase, width:size.width, height:size.height, resetView};
+    const manual = ['EXPLORE','HOST_GREETING'].includes(phase);
+    controls.enabled = manual;
+    if (!resized && !reset && (phase === 'SECTION_OPEN' || (phase === 'EXPLORE' && ['EXPLORE','CLOSING_SECTION'].includes(last?.phase)) || phase === 'HOST_GREETING')) return;
+    if (phase === 'OPENING_SECTION' && last?.phase === 'EXPLORE') userPose.current = {position:camera.position.clone(), target:controls.target.clone()};
     const portrait = size.width / size.height < 1;
+    const intro = ['INTRO','HOST_RISING','HOST_GREETING'].includes(phase);
     const index = sectionIds.indexOf(section);
     const focusing = index >= 0 && phase !== 'CLOSING_SECTION';
     const objectX = focusing ? objectPositions[index][0] : 0;
-    const position = portrait ? [objectX*.32, 4.5, 12] : [objectX*.09, intro ? 3.8 : 4.25, intro ? 10.4 : 10.6];
-    const target = { x: portrait ? objectX*.45 : objectX*.15, y: portrait ? 2.3 : 2.45, z: -1.3 };
+    let position = new THREE.Vector3(...(portrait ? [objectX*.32, 4.5, 12] : [objectX*.09, intro ? 3.8 : 4.25, intro ? 10.4 : 10.6]));
+    let target = new THREE.Vector3(portrait ? objectX*.45 : objectX*.15, portrait ? 2.3 : 2.45, -1.3);
+    if (phase === 'CLOSING_SECTION' && userPose.current && !resized) ({position,target} = userPose.current);
     camera.fov = portrait ? 47 : 40;
     camera.updateProjectionMatrix();
-    const update = () => { camera.lookAt(aim.current.x, aim.current.y, aim.current.z); requestRender(); };
+    controls.enabled = false;
+    const update = () => { controls.update(); requestRender(); };
     const duration = reducedMotion ? 0 : (phase === 'ENTERING' ? 3.25 : .75) * motionScale;
-    const timeline = gsap.timeline({ defaults: { duration, ease: 'power2.inOut', onUpdate: update }, onComplete: () => requestRender(true) });
-    timeline.to(camera.position, { x: position[0], y: position[1], z: position[2] }, 0).to(aim.current, target, 0);
+    if (!duration) {
+      camera.position.copy(position); controls.target.copy(target); controls.update();
+      controls.enabled = manual; requestRender(true);
+      return;
+    }
+    const timeline = gsap.timeline({ defaults: { duration, ease: 'power2.inOut', onUpdate: update }, onComplete: () => { controls.enabled = manual; requestRender(true); } });
+    timeline.to(camera.position, { x: position.x, y: position.y, z: position.z }, 0).to(controls.target, {x:target.x,y:target.y,z:target.z}, 0);
     return () => timeline.kill();
-  }, [camera, size.width, size.height, intro, section, phase, reducedMotion, motionScale, requestRender]);
+  }, [camera, controls, size.width, size.height, section, phase, reducedMotion, motionScale, resetView, requestRender]);
   /* eslint-enable react-hooks/immutability */
   return null;
 }
@@ -67,9 +98,9 @@ export default function Scene({ onReady, onFailure, dialogRef, ...props }) {
     <directionalLight position={[0,4,-12]} color="#72a9e5" intensity={2}/>
     <Cabin/>
     <Objects {...props} motionScale={motionScale}/>
-    <Robot phase={props.phase} reducedMotion={props.reducedMotion} onEntered={props.onEntered} motionScale={motionScale}/>
+    <Robot phase={props.phase} reducedMotion={props.reducedMotion} onEntered={props.onEntered} onHostReady={props.onHostReady} onHostToggle={props.onHostToggle} motionScale={motionScale}/>
     <CameraController {...props} motionScale={motionScale}/><Ready onReady={onReady} onFailure={onFailure}/>
-    {props.phase === 'INTRO' && <IntroAnchor dialogRef={dialogRef}/>}
+    {['INTRO','HOST_GREETING'].includes(props.phase) && <IntroAnchor dialogRef={dialogRef}/>}
     </RenderBudget>
   </Canvas>;
 }

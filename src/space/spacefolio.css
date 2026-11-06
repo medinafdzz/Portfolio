@@ -53,10 +53,12 @@ body:has(.spacefolio) { background: #10161d; margin: 0; }
 .start-button svg { width: 18px; height: 18px; }
 .enter-hint { display: flex; justify-content: center; align-items: center; gap: 7px; margin: 12px 0 0; font-size: 12px; color: #b8c2cb; }
 .enter-hint kbd { border: 1px solid #596671; border-radius: 3px; padding: 0 5px; font-size: 15px; }
-.flight-tools { display: flex; align-items: center; gap: 12px; position: absolute; right: 3.2%; bottom: 16px; }
+.flight-tools { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 12px; position: absolute; right: 3.2%; bottom: 16px; max-width: calc(100% - 40px); }
 .flight-tools button { background: #101720dd; color: #c1ccd5; border: 1px solid #4a545e; border-radius: 4px; padding: 6px 10px; font-size: 12px; min-height: 30px; }
 .flight-tools button:hover { color: #ffbd78; border-color: #ffbd78; }
 .flight-tools button:disabled { opacity: .6; }
+.flight-tools .tool-icon { display: grid; place-items: center; padding: 5px; }
+.flight-tools .tool-icon svg { width: 18px; height: 18px; }
 .navigation-deck { padding: 18px 3.2% 20px; border-top: 1px solid #303942; background: #161e27; }
 .deck-message { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 15px; }
 .deck-message p { margin: 0; font-size: 15px; font-weight: 700; color: #d6dce0; }
