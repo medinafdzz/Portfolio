@@ -54,19 +54,31 @@ test('slow rendering lowers resolution during interaction without starting an id
   await page.locator('.start-button').click();await expect(page.locator('.spacefolio')).toHaveAttribute('data-phase','EXPLORE');
   await page.evaluate(async()=>{
     const {_roots}=await import('/node_modules/.vite/deps/@react-three_fiber.js');
-    const {gl,controls}=[..._roots.values()].find(r=>r.store.getState().gl.domElement.isConnected).store.getState();
-    window.originalRender=gl.render.bind(gl);
-    gl.render=(...args)=>{const end=performance.now()+60;while(performance.now()<end){}return window.originalRender(...args);};
+    const {controls}=[..._roots.values()].find(r=>r.store.getState().gl.domElement.isConnected).store.getState();
     controls.dispatchEvent({type:'start'});
   });
+  const invalidate=async()=>page.evaluate(async()=>{const {_roots}=await import('/node_modules/.vite/deps/@react-three_fiber.js');[..._roots.values()].find(r=>r.store.getState().gl.domElement.isConnected).store.getState().invalidate();});
+  for(let i=0;i<8;i++) {await invalidate();await page.waitForTimeout(80);}
+  const ratio=()=>page.evaluate(async()=>{const {_roots}=await import('/node_modules/.vite/deps/@react-three_fiber.js');return [..._roots.values()].find(r=>r.store.getState().gl.domElement.isConnected).store.getState().viewport.dpr;});
+  expect(await ratio()).toBe(1);
+  await page.evaluate(async()=>{
+    const {_roots}=await import('/node_modules/.vite/deps/@react-three_fiber.js');
+    const {scene}=[..._roots.values()].find(r=>r.store.getState().gl.domElement.isConnected).store.getState();
+    window.originalBefore=scene.onBeforeRender;
+    scene.onBeforeRender=function(...args){window.originalBefore.apply(this,args);const end=performance.now()+60;while(performance.now()<end){/* Simulate drawing work. */}};
+  });
   for(let i=0;i<12;i++) {
-    await page.evaluate(async()=>{const {_roots}=await import('/node_modules/.vite/deps/@react-three_fiber.js');[..._roots.values()].find(r=>r.store.getState().gl.domElement.isConnected).store.getState().invalidate();});
+    await invalidate();
     await page.waitForTimeout(80);
   }
-  const ratio=await page.evaluate(async()=>{
+  const reduced=await page.evaluate(async()=>{
     const {_roots}=await import('/node_modules/.vite/deps/@react-three_fiber.js');
-    const {gl,controls,viewport}=[..._roots.values()].find(r=>r.store.getState().gl.domElement.isConnected).store.getState();
-    controls.dispatchEvent({type:'end'});gl.render=window.originalRender;return viewport.dpr;
+    const {scene,controls,viewport}=[..._roots.values()].find(r=>r.store.getState().gl.domElement.isConnected).store.getState();
+    controls.dispatchEvent({type:'end'});scene.onBeforeRender=window.originalBefore;return viewport.dpr;
   });
-  expect(ratio).toBeLessThan(1);expect(ratio).toBeGreaterThanOrEqual(.5);
+  expect(reduced).toBeLessThan(1);expect(reduced).toBeGreaterThanOrEqual(.5);
+  await page.getByRole('button',{name:'Repetir bienvenida'}).click();
+  await expect(page.locator('.spacefolio')).toHaveAttribute('data-phase','HOST_GREETING');
+  await page.getByRole('button',{name:'EN — English'}).click();
+  expect(await ratio()).toBe(reduced);
 });

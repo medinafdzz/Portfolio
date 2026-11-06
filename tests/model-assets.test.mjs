@@ -29,3 +29,13 @@ test('generated scene includes baked unlit shell, articulated parts and embedded
   assert.ok(model.materials.every(m=>m.extensions?.KHR_materials_unlit),'Runtime lighting was not baked');
   assert.ok(model.meshes.every(mesh=>mesh.primitives.length===1),'Each rigid part must use one draw call');
 });
+
+test('CPU-only asset keeps the same parts and a small triangle budget',()=>{
+  const bytes=readFileSync(new URL('../public/models/spacefolio-lite.glb',import.meta.url));
+  const model=JSON.parse(bytes.toString('utf8',20,20+bytes.readUInt32LE(12)));
+  const manifest=JSON.parse(readFileSync(new URL('../assets/spacefolio/manifest.json',import.meta.url)));
+  assert.ok(manifest.cpu_detail.triangles<40000);
+  assert.ok(bytes.length<1024*1024);
+  for(const name of Object.keys(manifest.parts)) assert.ok(model.nodes.some(n=>n.name===name),`Missing low-detail ${name}`);
+  assert.ok(model.meshes.every(mesh=>mesh.primitives.length===1));
+});

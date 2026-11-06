@@ -34,6 +34,7 @@ try {
   await page.waitForTimeout(1000);
   await page.waitForFunction(fullResolution);
   await page.screenshot({ path: 'artifacts/production-intro.png' });
+  await page.locator('main').focus();
   await page.keyboard.press('Enter');
   await page.waitForFunction(() => document.querySelector('.spacefolio').dataset.phase === 'EXPLORE');
   await page.waitForTimeout(1000);

@@ -15,4 +15,10 @@ test('robot follows a reversible continuous path with planted endpoints',()=>{
     previous=next;
   }
   assert.ok(robotPose(.4).x<-.8,'Walk must pass beside the chair');
+  for(let i=181;i<640;i++) {
+    const progress=i/1000,pose=robotPose(progress,true),next=robotPose(progress-.001,true);
+    const dx=next.x-pose.x,dz=next.z-pose.z;
+    assert.ok(dx*Math.sin(pose.yaw)+dz*Math.cos(pose.yaw)>0,'Rising robot must walk facing travel');
+    assert.ok(Math.abs(pose.yaw-next.yaw)<.08,'No yaw discontinuity on the return path');
+  }
 });

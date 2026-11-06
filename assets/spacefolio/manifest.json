@@ -215,5 +215,10 @@
       "materials": 1
     }
   },
-  "glb_bytes": 1201772
+  "glb_bytes": 1201868,
+  "cpu_detail": {
+    "bytes": 870828,
+    "triangles": 30834,
+    "ratio": 0.22
+  }
 }

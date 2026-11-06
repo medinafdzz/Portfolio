@@ -3,7 +3,56 @@
 Repository: `C:\Users\suso1\VS code\Portfolio`.
 Branch: `feature/spacefolio-interactive-cabin`.
 
-## Model, camera and robot refinements
+## Enclosed cabin and minimum-requirement revision
+
+Branch: `feature/spacefolio-enclosed-performance`, based on `6a48adc`.
+The cabin now has a closed pressure hull with a window aperture, a hinged laptop
+for Technologies, and a wall phone without cord geometry. The robot uses a
+continuous reversible path around the chair, with gait and waist bend driven by
+the same progress value. Its seated root is Y=-.22 and the chair is lower, so
+standing raises its head instead of lowering it.
+
+The final full run passed **24/24 browser scenarios in 4.6 minutes**, plus
+**11/11 Node tests**, lint, build and production smoke under the actual Vercel
+CSP, with zero console errors. The initial full run exposed an old standalone
+touch test expecting 3D immediately on SwiftShader; it now enters via the real
+3D button before testing touch. The final run includes that correction.
+
+New native-D3D11 checks raycast the hull at viewport edges and through the
+window, inspect the laptop's hinge angles, require unlit materials/no lights/
+no shadow pass, and inspect desktop, diagonal, tablet and mobile compositions.
+Software tests load only the reduced model, check all six real 3D targets,
+preserve geometry across lightweight remounts and verify zero remaining decoder
+workers. Existing coverage retains ES/EN, actual Satoshi glyphs, axe, keyboard,
+context loss, reduced motion, CV and idle-frame checks.
+
+The weakest profiles open HTML content without requesting the 3D engine, model,
+Moon or decoder. An additional production test used a 6× CPU slowdown,
+200KiB/s download/150ms latency and reported 2-core/2GiB capabilities. It became
+interactive in 1.63 seconds and exercised all six sections in ES/EN. This was
+emulation, not a physical 2GiB memory cap; its JS heap sample was 5.69 MB.
+
+Independent review identified two adaptive-resolution defects: idle input gaps
+were counted as rendering work, and Canvas props reset the chosen DPR. Both
+were fixed and re-reviewed. Tests first issue sparse fast frames, then add
+actual synchronous drawing work; DPR stays unchanged for the first case,
+decreases for the second, and remains reduced through phase/language changes.
+
+Evidence: `artifacts/enclosed-full-suite-final.log`, `enclosed-production-smoke.log`,
+`enclosed-low-end-performance.json`, `enclosed-design-check.json` (no findings),
+and `enclosed-{desktop-intro,desktop-explore,laptop-open,diagonal,tablet,mobile}.png`.
+CPU/RAM methodology and renderer-specific limits are in PERFORMANCE.md.
+After that full run, a direction-only correction made the returning robot walk
+facing its travel rather than backwards. The continuous-path test now checks
+forward-facing movement on the return leg; all11 Node tests, lint/build, the
+four camera/robot browser scenarios and the CSP smoke passed again. The actual
+animated cycle was recorded and visually inspected in
+`artifacts/enclosed-robot-motion.mp4` and `enclosed-robot-storyboard.png`.
+Physical low-end PCs/phones, Safari and Firefox remain untested. The 3D bundle
+still exceeds Vite's 500kB warning threshold and Three/R3F retains its Clock
+deprecation warning; lightweight visitors do not download that bundle.
+
+## Previous: model, camera and robot refinements
 
 Published on 2026-11-06 at https://medinafdzz.is-a.dev/. Vercel production
 deployment `dpl_4p36t5W3TpaD8xuHTtzdbsB3ibxT` was READY for app commit

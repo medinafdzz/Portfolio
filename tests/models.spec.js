@@ -36,5 +36,8 @@ test('baked GLB loads embedded textures under real CSP and survives lightweight 
   await expect.poll(bakedStats).toEqual(original);
   expect(errors).toEqual([]);
   expect(requests.some(url=>url.endsWith('/draco/draco_decoder.wasm'))).toBe(true);
+  expect(requests.some(url=>url.endsWith('/models/spacefolio-lite.glb'))).toBe(true);
+  expect(requests.some(url=>url.endsWith('/models/spacefolio.glb'))).toBe(false);
+  await expect.poll(()=>page.workers().length).toBe(0);
   expect(requests.filter(url=>!url.startsWith('blob:') && new URL(url).origin!=='http://127.0.0.1:5173')).toEqual([]);
 });

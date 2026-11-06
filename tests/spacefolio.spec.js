@@ -188,6 +188,7 @@ test('touch input, CV, licensed texture assets and profile links',async ({browse
   const context=await browser.newContext({viewport:{width:390,height:844},hasTouch:true,isMobile:true,reducedMotion:'reduce'});
   const page=await context.newPage();
   await page.goto('http://127.0.0.1:5173');
+  await page.getByRole('button',{name:'Vista 3D',exact:true}).tap();
   await expect(page.locator('.start-button')).toBeEnabled({timeout:60000});
   await page.locator('.start-button').tap();
   await expect(page.locator('.spacefolio')).toHaveAttribute('data-phase','EXPLORE');
@@ -203,7 +204,7 @@ test('touch input, CV, licensed texture assets and profile links',async ({browse
   const cv=await request.get('/CV.pdf');
   expect(cv.status()).toBe(200);
   expect((await cv.body()).subarray(0,4).toString()).toBe('%PDF');
-  for(const asset of ['earth-day.jpg','earth-night.jpg','moon.jpg'])expect((await request.get(`/textures/${asset}`)).status()).toBe(200);
+  for(const asset of ['earth-day.jpg','earth-night.jpg','moon.jpg','moon-512.jpg'])expect((await request.get(`/textures/${asset}`)).status()).toBe(200);
   await expect(page.locator('a[href="https://github.com/medinafdzz"]')).toHaveCount(1);
   await expect(page.locator('a[href="https://linkedin.com/in/medinafdzz"]')).toHaveCount(1);
   await context.close();

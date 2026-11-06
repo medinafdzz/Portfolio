@@ -694,6 +694,31 @@ for obj in parts.values():
     obj.select_set(True)
 bpy.context.view_layer.objects.active = parts['CabinShell']
 bpy.ops.export_scene.gltf(filepath=str(output), export_format='GLB', use_selection=True, export_cameras=False, export_lights=False, export_normals=False, export_yup=True, export_vertex_color='ACTIVE', export_image_format='JPEG', export_image_quality=86, export_draco_mesh_compression_enable=True, export_draco_mesh_compression_level=6, export_draco_position_quantization=14, export_draco_texcoord_quantization=14)
+# CPU-only WebGL gets a separately simplified asset, never both downloads.
+lite_parts = {}
+bpy.ops.object.select_all(action='DESELECT')
+for name, original in parts.items():
+    original.name = name + '__source'
+    clone = original.copy()
+    clone.data = original.data.copy()
+    bpy.context.collection.objects.link(clone)
+    clone.name = name
+    bpy.context.view_layer.objects.active = clone
+    if len(clone.data.polygons) > 100:
+        modifier = clone.modifiers.new('CPU-only detail level', 'DECIMATE')
+        modifier.ratio = .22
+        modifier.use_collapse_triangulate = True
+        bpy.ops.object.modifier_apply(modifier=modifier.name)
+    lite_parts[name] = clone
+for obj in lite_parts.values():
+    obj.select_set(True)
+lite_output = output.with_name('spacefolio-lite.glb')
+bpy.ops.export_scene.gltf(filepath=str(lite_output), export_format='GLB', use_selection=True, export_cameras=False, export_lights=False, export_normals=False, export_yup=True, export_vertex_color='ACTIVE', export_image_format='JPEG', export_image_quality=86, export_draco_mesh_compression_enable=True, export_draco_mesh_compression_level=6, export_draco_position_quantization=12, export_draco_texcoord_quantization=14)
+lite_triangles = sum(sum(len(p.vertices) - 2 for p in obj.data.polygons) for obj in lite_parts.values())
+for obj in lite_parts.values():
+    bpy.data.objects.remove(obj, do_unlink=True)
+for name, obj in parts.items():
+    obj.name = name
 # Show the same baked vertex colors in the editable Blender source/preview.
 vertex_color = vertex_lit.node_tree.nodes.new('ShaderNodeVertexColor')
 vertex_color.layer_name = 'BakedLight'
@@ -757,6 +782,7 @@ manifest = {
     'geometry_font': font_path.name,
     'parts': {name: {'vertices': len(obj.data.vertices), 'triangles': sum(len(p.vertices) - 2 for p in obj.data.polygons), 'materials': len(obj.data.materials)} for name, obj in parts.items()},
     'glb_bytes': output.stat().st_size,
+    'cpu_detail': {'bytes': lite_output.stat().st_size, 'triangles': lite_triangles, 'ratio': .22},
 }
 (source / 'manifest.json').write_text(json.dumps(manifest, indent=2), encoding='utf-8')
 print('SPACEFOLIO_BUILD=' + json.dumps({k: v for k, v in manifest.items() if k != 'parts'}))

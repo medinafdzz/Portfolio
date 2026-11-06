@@ -29,7 +29,7 @@ Hitos:
 - [x] Recorrido puro y reversible, postura y sombra; pruebas de continuidad,
   extremos, ciclos reales, Enter y desmontaje.
 - [x] Vista ligera sin descargas3D y resolución que responde a carga inducida.
-- [ ] Suite completa, build/CSP, CPU/RAM/frames antes/después en renderizadores
+- [x] Suite completa, build/CSP, CPU/RAM/frames antes/después en renderizadores
   equivalentes y ensayo de equipo limitado.
 - [ ] Revisión independiente, correcciones, commits finales y publicación
   completa autorizada; verificar el dominio público y hashes servidos.

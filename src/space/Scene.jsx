@@ -99,11 +99,11 @@ function Ready({ onReady, onFailure }) {
 
 export default function Scene({ onReady, onFailure, dialogRef, lowPower, ...props }) {
   const [visible,setVisible] = useState(()=>!document.hidden);
-  const [software, setSoftware] = useState(false);
+  const [pixelRatio,setPixelRatio]=useState(lowPower?.75:1);
   useEffect(()=>{ const update=()=>setVisible(!document.hidden); document.addEventListener('visibilitychange',update);return()=>document.removeEventListener('visibilitychange',update); },[]);
   const motionScale = 1;
-  return <Canvas className="space-canvas" dpr={software?.4:1} frameloop={visible?'demand':'never'} camera={{ position:[0,3.8,10.4], fov:40, near:.1, far:100 }} gl={{ antialias:!lowPower, powerPreference:'low-power', alpha:false, stencil:false }} onCreated={({gl})=>{setSoftware(isSoftwareRenderer(gl));gl.toneMapping=THREE.ACESFilmicToneMapping;gl.toneMappingExposure=1.05;}}>
-    <RenderBudget active={!['INTRO','EXPLORE','SECTION_OPEN','HOST_GREETING'].includes(props.phase)}>
+  return <Canvas className="space-canvas" dpr={pixelRatio} frameloop={visible?'demand':'never'} camera={{ position:[0,3.8,10.4], fov:40, near:.1, far:100 }} gl={{ antialias:!lowPower, powerPreference:'low-power', alpha:false, stencil:false }} onCreated={({gl})=>{const cpu=isSoftwareRenderer(gl);setPixelRatio(value=>Math.min(value,cpu?.4:1));gl.toneMapping=THREE.ACESFilmicToneMapping;gl.toneMappingExposure=1.05;}}>
+    <RenderBudget active={!['INTRO','EXPLORE','SECTION_OPEN','HOST_GREETING'].includes(props.phase)} onResolutionChange={setPixelRatio}>
     <color attach="background" args={['#050e1b']}/>
     <Cabin/>
     <Objects {...props} motionScale={motionScale}/>

@@ -32,6 +32,7 @@ export default function Robot({ phase, reducedMotion, onEntered, onHostReady, on
   const thighL = useRef(); const thighR = useRef(); const kneeL = useRef(); const kneeR = useRef();
   const [initiallySeated] = useState(() => !['INTRO','ENTERING'].includes(phase));
   const sequence = useRef(null);
+  const rising=useRef(false);
   const travel=useMemo(()=>({value:initiallySeated?1:0}),[initiallySeated]);
   const contact=useMemo(()=>{
     const canvas=document.createElement('canvas'); canvas.width=canvas.height=64;
@@ -42,7 +43,7 @@ export default function Robot({ phase, reducedMotion, onEntered, onHostReady, on
   },[]);
   useEffect(()=>()=>contact.dispose(),[contact]);
   const updatePose=useCallback(()=>{
-    const pose=robotPose(travel.value);
+    const pose=robotPose(travel.value,rising.current);
     root.current.position.set(pose.x,pose.y,pose.z); root.current.rotation.y=pose.yaw;
     thighL.current.rotation.x=pose.thighL; thighR.current.rotation.x=pose.thighR;
     kneeL.current.rotation.x=pose.kneeL; kneeR.current.rotation.x=pose.kneeR;
@@ -63,13 +64,14 @@ export default function Robot({ phase, reducedMotion, onEntered, onHostReady, on
 
   useEffect(() => {
     const timeline = sequence.current;
-    const rising = phase === 'HOST_RISING';
+    const backwards = phase === 'HOST_RISING';
+    rising.current=backwards;
     if (['ENTERING','HOST_SITTING','HOST_RISING'].includes(phase)) {
       if (reducedMotion) {
-        timeline.pause().progress(rising?0:1,true);
+        timeline.pause().progress(backwards?0:1,true);
         updatePose();
-        if (rising) onHostReady(); else onEntered();
-      } else if (rising) timeline.reverse(); else timeline.play();
+        if (backwards) onHostReady(); else onEntered();
+      } else if (backwards) timeline.reverse(); else timeline.play();
     } else {
       timeline.pause().progress(intro?0:1,true);
       updatePose();
