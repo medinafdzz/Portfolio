@@ -43,8 +43,10 @@ function CameraController({ phase, section, reducedMotion, motionScale, resetVie
     previous.current = {phase, width:size.width, height:size.height, resetView};
     const manual = ['EXPLORE','HOST_GREETING'].includes(phase);
     controls.enabled = manual;
-    if (!resized && !reset && (phase === 'SECTION_OPEN' || (phase === 'EXPLORE' && ['EXPLORE','CLOSING_SECTION'].includes(last?.phase)) || phase === 'HOST_GREETING')) return;
-    if (phase === 'OPENING_SECTION' && last?.phase === 'EXPLORE') userPose.current = {position:camera.position.clone(), target:controls.target.clone()};
+    controls.maxTargetRadius = manual ? 1.6 : Infinity;
+    if (!resized && !reset && ((phase === 'EXPLORE' && last?.phase === 'EXPLORE') || phase === 'HOST_GREETING')) return;
+    if (resized) userPose.current = null;
+    if (phase === 'OPENING_SECTION' && last?.phase === 'EXPLORE' && !resized) userPose.current = {position:camera.position.clone(), target:controls.target.clone()};
     const portrait = size.width / size.height < 1;
     const intro = ['INTRO','HOST_RISING','HOST_GREETING'].includes(phase);
     const index = sectionIds.indexOf(section);
@@ -52,18 +54,22 @@ function CameraController({ phase, section, reducedMotion, motionScale, resetVie
     const objectX = focusing ? objectPositions[index][0] : 0;
     let position = new THREE.Vector3(...(portrait ? [objectX*.32, 4.5, 12] : [objectX*.09, intro ? 3.8 : 4.25, intro ? 10.4 : 10.6]));
     let target = new THREE.Vector3(portrait ? objectX*.45 : objectX*.15, portrait ? 2.3 : 2.45, -1.3);
-    if (phase === 'CLOSING_SECTION' && userPose.current && !resized) ({position,target} = userPose.current);
+    const restoring = phase === 'CLOSING_SECTION' || (phase === 'EXPLORE' && last?.phase === 'CLOSING_SECTION');
+    if (restoring && userPose.current && !resized) ({position,target} = userPose.current);
     camera.fov = portrait ? 47 : 40;
     camera.updateProjectionMatrix();
     controls.enabled = false;
+    controls.maxTargetRadius = Infinity;
     const update = () => { controls.update(); requestRender(); };
-    const duration = reducedMotion ? 0 : (phase === 'ENTERING' ? 3.25 : .75) * motionScale;
+    // Panel timers can finish before a native-speed camera tween; complete its endpoint.
+    const continuing = phase === 'SECTION_OPEN' || (phase === 'EXPLORE' && last?.phase === 'CLOSING_SECTION');
+    const duration = reducedMotion ? 0 : (phase === 'ENTERING' ? 3.25 : continuing ? .25 : .75) * motionScale;
     if (!duration) {
       camera.position.copy(position); controls.target.copy(target); controls.update();
-      controls.enabled = manual; requestRender(true);
+      controls.enabled = manual; controls.maxTargetRadius = manual ? 1.6 : Infinity; requestRender(true);
       return;
     }
-    const timeline = gsap.timeline({ defaults: { duration, ease: 'power2.inOut', onUpdate: update }, onComplete: () => { controls.enabled = manual; requestRender(true); } });
+    const timeline = gsap.timeline({ defaults: { duration, ease: 'power2.inOut', onUpdate: update }, onComplete: () => { controls.enabled = manual; controls.maxTargetRadius = manual ? 1.6 : Infinity; requestRender(true); } });
     timeline.to(camera.position, { x: position.x, y: position.y, z: position.z }, 0).to(controls.target, {x:target.x,y:target.y,z:target.z}, 0);
     return () => timeline.kill();
   }, [camera, controls, size.width, size.height, section, phase, reducedMotion, motionScale, resetView, requestRender]);

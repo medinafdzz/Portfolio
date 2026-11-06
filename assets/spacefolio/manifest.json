@@ -150,9 +150,9 @@
       "materials": 1
     },
     "EarthLand": {
-      "vertices": 7937,
-      "triangles": 13275,
-      "materials": 5
+      "vertices": 8972,
+      "triangles": 15139,
+      "materials": 6
     },
     "EarthClouds": {
       "vertices": 882,
@@ -210,5 +210,5 @@
       "materials": 3
     }
   },
-  "glb_bytes": 4468344
+  "glb_bytes": 4481244
 }

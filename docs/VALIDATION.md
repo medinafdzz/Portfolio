@@ -1,9 +1,59 @@
-# SPACEFOLIO verification — 2026-11-05
+# SPACEFOLIO verification — 2026-11-06
 
 Repository: `C:\Users\suso1\VS code\Portfolio`.
-Branch: `feature/spacefolio`. No push or production deployment was performed.
+Branch: `feature/spacefolio-interactive-cabin`.
 
-## Baked Blender scene — latest revision
+## Model, camera and robot refinements
+
+The current GLB has a circular gold medal with a Satoshi numeral, a red wall
+telephone with separate curved receiver/keypad/coil, and a sculpted mini-Earth
+with raised coasts, mountains, forests, desert, rivers and clouds. Experience
+is at Y=3.8 with a rear arm/clamp attached to the window frame. Other object
+placements and professional content remain as before. The editable source and
+128-sample HIP build are retained; `manifest.json` records the exact geometry.
+
+Latest full run: **21/21 Playwright tests passed in 4.0 minutes**, plus **8/8 Node
+tests**, lint, production build and whitespace checks. The built-app smoke used
+the actual Vercel CSP: local Draco/embedded textures loaded, six existing
+navigation targets remained valid, boarding/orbit/reset/repeated ES/EN greeting
+worked, and there were zero console errors. The smoke physically clicks the
+rocket; the full suite physically clicks all six objects. Eight external HEAD
+checks returned HTTP 200. No message/email was sent.
+
+New coverage includes left orbit, right pan, wheel, user-pose restoration,
+360px one-finger orbit/two-finger pinch-pan, reset, click-versus-drag guards,
+three animated robot cycles, rapid clicks, Enter, language changes, lightweight
+remount/animation cancellation and zero rendered idle frames. The existing
+suite covers all six sections in ES/EN, actual rendered Satoshi glyphs, axe,
+focus trapping/restoration, unavailable/lost WebGL, CV and bounded resources.
+
+A fresh independent review found camera tweens were cancelled by the earlier
+panel phase timers on the native GPU path. The new native-D3D11 test was seen
+failing before the fix, then passing. It checks full focus/restoration and
+resize to tablet portrait. Manual pan bounds now apply only during manual
+interaction; saved framing is discarded after a viewport resize. The reviewer
+rechecked the final fix and found no further blocking issue. A separate
+regression caught residual walking-leg angles after reversing; both joints
+now settle to explicit endpoint poses.
+
+Browser captures inspected: intro/explore at 1440×900 and 1920×1080, tablet
+768×1024/1024×768, mobile 360×800/390×844/430×932, diagonal camera, repeated
+greeting, and the served robot favicon at 16/32px on light/dark backgrounds.
+Evidence: `artifacts/refinements-full-suite.log`, `production-smoke.json`,
+`refinements-external-links.json`, `refined-camera-diagonal.png`,
+`refined-host-greeting.png`, `refined-favicon-sizes.png` and the responsive
+screenshots. See PERFORMANCE.md for measured resource/CPU results.
+
+Limits: touch input was emulated in Chromium, not tested on a physical phone.
+Safari/Firefox remain untested. Portrait framing intentionally uses the
+lightweight view's HTML menu for lateral objects. Three/R3F emits an existing
+Clock deprecation warning; Vite reports the lazy 3D bundle exceeds 500 kB.
+Neither warning is a failed build or runtime error.
+
+The following sections retain the previous implementation's verification
+history; their branch, byte counts and older delivery limits are historical.
+
+## Baked Blender scene — previous revision (2026-11-05)
 
 The complete implementation plan is
 `docs/superpowers/plans/2026-11-05-spacefolio-baked-scene.md`. The editable Blender

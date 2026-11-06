@@ -1,6 +1,75 @@
-# SPACEFOLIO performance — 2026-11-05
+# SPACEFOLIO performance — 2026-11-06
 
-## Latest: Blender scene with baked lighting
+## Latest: refined models, manual camera and reversible greeting
+
+Baseline `f63d581` was archived to an isolated folder on port 5174. The updated
+app ran on 5173. Measurements used one Chromium instance at a time, 1440×900,
+the same launch flags and 8-second warmups. CPU is aggregate browser/renderer/
+GPU-process CPU time divided by wall time: **100% equals one logical core**.
+The native renderer reports AMD Radeon(TM) Graphics (0x164E), Direct3D11;
+the software renderer explicitly reports SwiftShader. This is not an RX 9070 XT
+browser benchmark; that GPU was used only for Blender HIP asset generation.
+
+| Scene counter | Previous | Current |
+| --- | ---: | ---: |
+| Main-pass triangles | 273,646 | 217,337 |
+| Main-pass draw calls | 90 | 100 |
+| Cached shadow-pass calls | 33 | 33 |
+| Resident geometries | 90 | 101 |
+| Resident textures | 10 | 8 |
+| Draco GLB bytes | 4,522,920 | 4,481,244 |
+| Active Earth photo bytes | 718,374 | 0 |
+
+PhoneBase falls from 48,816 to 9,952 triangles; MedalFace from 25,236 to 4,892.
+The new sculpted planet adds actual relief instead of photographic maps. The
+whole main pass uses 20.6% fewer triangles, while its extra material groups
+increase calls by 11.1%. The active download is 760,050 bytes smaller. These
+geometry/resource reductions do not imply a proportional CPU reduction.
+
+| Native CPU sample | Previous | Current |
+| --- | ---: | ---: |
+| Boarding, aggregate, four-second window | 6.06% | 6.33% |
+| Boarding, main thread | 2.13% | 2.23% |
+| Introduction idle | 0.055% | 0.056% |
+| Exploration idle | 0.052% | 0.050% |
+| Left-drag orbit, aggregate | unavailable | 5.58% |
+| Robot rising, aggregate, four-second window | unavailable | 5.36% |
+
+The native boarding change is small (+4.5% in this sample), not evidence of
+another CPU reduction. All measured idle windows, including after orbit and
+the repeat greeting, rendered **zero new frames**. Native aggregate idle CPU
+ranges from approximately 0.05% to 0.53% of one core across these short windows;
+the higher post-interaction samples include finite scheduler settling.
+
+| SwiftShader CPU sample | Previous | Current |
+| --- | ---: | ---: |
+| Boarding, aggregate, four-second window | 628.77% | 575.13% |
+| Boarding, main thread | 1.31% | 1.32% |
+| Introduction idle | 0.044% | 0.045% |
+| Exploration idle | 0.038% | 0.039% |
+| Left-drag orbit, aggregate | unavailable | 987.81% |
+| Robot rising, aggregate, four-second window | unavailable | 582.75% |
+
+Software boarding uses 8.5% less aggregate CPU in this run, but **software
+rasterization during animation/drag remains expensive** across multiple cores.
+Eight orbit frames were drawn in a 1.81-second input-plus-settling window.
+Idle windows still draw zero frames. Hardware WebGL is needed for an efficient
+interactive 3D experience; the existing lightweight view avoids software 3D
+rendering entirely. No claim of near-zero active software CPU is made.
+
+OrbitControls has no damping/auto-rotation/RAF loop. Its change events use the
+existing 24 FPS native / 8 FPS software render budget, and panel/programmatic
+movement owns the camera until complete. Robot paths and waves finish and
+sleep. The 3D view remains paused while the page is hidden. A panel-phase/native
+GPU regression was tested separately so software-shortened animations could
+not conceal an incomplete camera restore.
+
+Raw results: `artifacts/performance-refinements-{before,after}-{hardware,software}.json`.
+`tests/performance.mjs` now samples orbit, repeated greeting and their idle
+windows when those controls are present. It asserts zero idle frames. Results
+are short controlled samples on this machine, not universal device guarantees.
+
+## Previous: Blender scene with baked lighting (2026-11-05)
 
 The static shell, desk, console and chair now share a 2048² diffuse-light atlas
 and use unlit materials. Movable parts retain shared PBR materials and the

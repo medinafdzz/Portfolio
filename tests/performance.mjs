@@ -55,9 +55,29 @@ try {
   await page.waitForTimeout(8000);
   await page.screenshot({path:`artifacts/${label}-explore.png`});
   const explore=await sample('EXPLORE idle, motion enabled');
+  const interaction=[];
+  if(await page.getByRole('button',{name:'Restablecer vista'}).count()) {
+    interaction.push(await sample('Left-drag orbit, motion enabled',async()=>{
+      await page.mouse.move(750,660); await page.mouse.down();
+      await page.mouse.move(950,700,{steps:48}); await page.mouse.up();
+    },1000));
+    await page.waitForTimeout(2000);
+    interaction.push(await sample('After orbit idle, motion enabled'));
+    await page.getByRole('button',{name:'Restablecer vista'}).click();
+    await page.waitForTimeout(1500);
+    interaction.push(await sample('Robot rising, motion enabled (4s window)',()=>page.getByRole('button',{name:'Repetir bienvenida'}).click(),4000));
+    await page.waitForFunction(()=>document.querySelector('.spacefolio').dataset.phase==='HOST_GREETING');
+    await page.waitForTimeout(3000);
+    interaction.push(await sample('Greeting idle, motion enabled'));
+    await page.locator('.start-button').click();
+    await page.waitForFunction(()=>document.querySelector('.spacefolio').dataset.phase==='EXPLORE');
+    await page.waitForTimeout(3000);
+    interaction.push(await sample('After greeting idle, motion enabled'));
+    for(const idle of interaction.filter(s=>s.state.includes('idle'))) assert.equal(idle.frames,0,`${idle.state} keeps drawing`);
+  }
   const passes=await page.evaluate(()=>window.passSamples);
   const resources=await page.evaluate(()=>performance.getEntriesByType('resource').map(r=>({name:r.name.split('/').at(-1),bytes:r.encodedBodySize})).filter(r=>/glb|jpg|woff2/.test(r.name)));
-  const result={label,mode,renderer,viewport:'1440x900',cpuUnits:'100 percent equals one CPU core',warmupSeconds:8,samples:[intro,boarding,explore],passes,resources};
+  const result={label,mode,renderer,viewport:'1440x900',cpuUnits:'100 percent equals one CPU core',warmupSeconds:8,samples:[intro,boarding,explore,...interaction],passes,resources};
   assert.equal(intro.frames,0,'Intro keeps drawing while idle');
   assert.equal(explore.frames,0,'Exploration keeps drawing while idle');
   assert.ok(boarding.frames>0 && passes.length>=boarding.frames,'Missing render samples');

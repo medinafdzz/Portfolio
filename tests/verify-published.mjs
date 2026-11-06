@@ -1,0 +1,74 @@
+import { chromium } from '@playwright/test';
+import assert from 'node:assert/strict';
+import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { PerspectiveCamera, Vector3 } from 'three';
+import { objectPositions } from '../src/space/config.js';
+
+const url=process.argv[2]||'https://medinafdzz.is-a.dev/';
+const hash=data=>createHash('sha256').update(data).digest('hex');
+const browser=await chromium.launch({headless:true,args:['--use-angle=d3d11','--enable-gpu']});
+try {
+  const page=await browser.newPage({viewport:{width:1440,height:900}});
+  const errors=[];
+  let model;
+  page.on('pageerror',e=>errors.push(e.message));
+  page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+  page.on('response',response=>{
+    if(new URL(response.url()).pathname==='/models/spacefolio.glb') model=response.body().then(body=>({status:response.status(),sha256:hash(body)}));
+  });
+  const response=await page.goto(url,{timeout:45000});
+  await page.waitForFunction(()=>document.querySelector('.start-button')&&!document.querySelector('.start-button').disabled,null,{timeout:90000});
+  await page.screenshot({path:'artifacts/published-refinements-intro.png'});
+  await page.keyboard.press('Enter');
+  await page.waitForFunction(()=>document.querySelector('.spacefolio').dataset.phase==='EXPLORE');
+  await page.waitForTimeout(1200);
+  await page.screenshot({path:'artifacts/published-refinements-explore.png'});
+  const rect=await page.locator('canvas').boundingBox();
+  const camera=new PerspectiveCamera(40,rect.width/rect.height,.1,100);
+  camera.position.set(0,4.25,10.6); camera.lookAt(0,2.45,-1.3); camera.updateMatrixWorld();
+  const offsets=[[0,0,.16],[0,.8,.26],[0,.85,.15],[.17,0,.09],[0,.6,-.05],[0,0,.3]];
+  const headings=['Experiencia','Proyectos','Sobre mí','Formación','Tecnologías','Contacto'];
+  for(let i=0;i<6;i++) {
+    const p=new Vector3(...objectPositions[i]).add(new Vector3(...offsets[i])).project(camera);
+    await page.mouse.click(rect.x+(p.x+1)*rect.width/2,rect.y+(1-p.y)*rect.height/2);
+    await page.waitForFunction(()=>document.querySelector('.spacefolio').dataset.phase==='SECTION_OPEN');
+    assert.equal(await page.locator('#section-heading').textContent(),headings[i]);
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(()=>document.querySelector('.spacefolio').dataset.phase==='EXPLORE');
+    await page.waitForTimeout(1100);
+  }
+  await page.mouse.move(760,650); await page.mouse.down();
+  await page.mouse.move(900,690,{steps:12}); await page.mouse.up();
+  assert.equal(await page.locator('.spacefolio').getAttribute('data-phase'),'EXPLORE');
+  await page.screenshot({path:'artifacts/published-refinements-orbit.png'});
+  await page.getByRole('button',{name:'Restablecer vista'}).click();
+  await page.waitForTimeout(1000);
+  await page.getByRole('button',{name:'Repetir bienvenida'}).click();
+  await page.waitForFunction(()=>document.querySelector('.spacefolio').dataset.phase==='HOST_GREETING');
+  assert.match(await page.locator('.intro-card').textContent(),/¡Bienvenido a la nave espacial de medinafdzz!/);
+  await page.screenshot({path:'artifacts/published-refinements-greeting.png'});
+  await page.getByRole('button',{name:'EN — English'}).click();
+  assert.match(await page.locator('.intro-card').textContent(),/Welcome aboard medinafdzz's spaceship!/);
+  await page.locator('.start-button').click();
+  await page.waitForFunction(()=>document.querySelector('.spacefolio').dataset.phase==='EXPLORE');
+  const downloaded=await model;
+  assert.equal(downloaded.status,200);
+  assert.equal(downloaded.sha256,hash(await readFile('public/models/spacefolio.glb')));
+  const icon=await page.evaluate(async()=>({status:(await fetch('/icon.svg')).status,body:await(await fetch('/icon.svg')).text()}));
+  assert.equal(icon.status,200); assert.equal(hash(icon.body),hash(await readFile('public/icon.svg')));
+  const cv=await page.evaluate(async()=>{const r=await fetch('/CV.pdf');return{status:r.status,signature:(await r.text()).slice(0,4)};});
+  assert.deepEqual(cv,{status:200,signature:'%PDF'});
+  await page.setViewportSize({width:390,height:844});
+  await page.waitForTimeout(1200);
+  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+  await page.screenshot({path:'artifacts/published-refinements-mobile.png'});
+  await page.getByRole('button',{name:'Lightweight view',exact:true}).click();
+  await page.locator('[data-section="projects"]').click();
+  await page.waitForFunction(()=>document.querySelector('.spacefolio').dataset.phase==='SECTION_OPEN');
+  assert.equal(await page.locator('#section-heading').textContent(),'Projects');
+  assert.deepEqual(errors,[]);
+  const result={status:'PASSED',url:page.url(),access:'Public browser without authentication or bypass headers',initialStatus:response.status(),model:downloaded,icon:icon.status,cv,checks:['six real 3D clicks','boarding','orbit/reset','repeat greeting ES/EN','mobile','lightweight','local hashes'],errors,verifiedAt:new Date().toISOString()};
+  await writeFile('artifacts/published-refinements.json',JSON.stringify(result,null,2));
+  console.log(JSON.stringify(result,null,2));
+} finally {await browser.close();}

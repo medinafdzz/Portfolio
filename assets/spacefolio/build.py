@@ -465,7 +465,9 @@ continents = [
     [(-53, 59), (-22, 70), (-30, 82), (-58, 82), (-73, 69)],
     [(44, -13), (50, -17), (47, -26), (44, -25)],
 ]
-for outline in continents:
+regions = [(outline, 'land', 1.025) for outline in continents]
+regions.append(([(-13, 27), (4, 32), (24, 31), (34, 22), (28, 14), (12, 17), (-7, 15)], 'sand', 1.028))
+for outline, surface_material, surface_radius in regions:
     vertices, faces = [], []
     polygon = [Vector((x, y, 0)) for x, y in outline]
     for indices in tessellate_polygon([polygon]):
@@ -477,7 +479,7 @@ for outline in continents:
             for j in range(n + 1 - i):
                 v = tri[0] + (tri[1] - tri[0]) * (i / n) + (tri[2] - tri[0]) * (j / n)
                 rows[i, j] = len(vertices)
-                vertices.append(globe(v.x, v.y, 1.025))
+                vertices.append(globe(v.x, v.y, surface_radius))
         for i in range(n):
             for j in range(n - i):
                 faces.append((rows[i, j], rows[i + 1, j], rows[i, j + 1]))
@@ -487,7 +489,7 @@ for outline in continents:
         a, b, c = (Vector(vertices[v]) for v in face)
         if (b - a).cross(c - a).dot(a) < 0:
             faces[k] = tuple(reversed(face))
-    land = mesh(vertices, faces, 'land', True)
+    land = mesh(vertices, faces, surface_material, True)
     bpy.ops.object.select_all(action='DESELECT')
     land.select_set(True)
     land.data.normals_split_custom_set_from_vertices([v.co.normalized() for v in land.data.vertices])
@@ -495,19 +497,21 @@ for outline in continents:
     for a, b in zip(outline, outline[1:] + outline[:1]):
         steps = max(1, math.ceil(math.dist(a, b) / 5))
         coast.extend([(a[0] + (b[0] - a[0]) * i / steps, a[1] + (b[1] - a[1]) * i / steps) for i in range(steps)])
-    shore = [globe(lon, lat, radius) for lon, lat in coast for radius in [.999, 1.025]]
+    shore = [globe(lon, lat, radius) for lon, lat in coast for radius in [surface_radius - .026, surface_radius]]
     mesh(shore, [(i * 2, (i * 2 + 2) % len(shore), (i * 2 + 3) % len(shore), i * 2 + 1) for i in range(len(coast))], 'sand')
 # Mountain chains and forests remain low-poly, visible as genuine relief.
-for lon, lat in [(-70, -18), (-74, -9), (-72, -30), (-112, 42), (-120, 49), (7, 46), (14, 46), (39, 7), (82, 30), (91, 32)]:
+for lon, lat in [(-70, -18), (-74, -9), (-72, -30), (-112, 42), (-120, 49), (7, 46), (14, 46), (-6, 32), (2, 33), (39, 7), (82, 30), (91, 32)]:
     normal = point(globe(lon, lat))
     mountain = cylinder(.028, .095, material='rock', top=0, vertices=5)
     mountain.matrix_world = Matrix.Translation(normal * 1.06) @ normal.to_track_quat('Z', 'Y').to_matrix().to_4x4()
     cap = cylinder(.013, .04, material='cloud', top=0, vertices=5)
     cap.matrix_world = Matrix.Translation(normal * 1.095) @ normal.to_track_quat('Z', 'Y').to_matrix().to_4x4()
-for lon, lat in [(-63, -4), (-60, -10), (-55, -5), (18, 1), (23, 7), (28, -2), (29, 53), (39, 57), (-101, 54)]:
+for lon, lat in [(-63, -4), (-60, -10), (-55, -5), (18, 1), (23, 7), (28, -2), (12, 10), (16, 12), (20, 10), (29, 53), (39, 57), (19, 52), (-101, 54)]:
     normal = point(globe(lon, lat))
     tree = cylinder(.018, .065, material='leaf', top=0, vertices=6)
     tree.matrix_world = Matrix.Translation(normal * 1.055) @ normal.to_track_quat('Z', 'Y').to_matrix().to_4x4()
+for river in [[(31, 30), (31, 23), (32, 16), (30, 9), (31, 4)], [(-75, -5), (-68, -4), (-60, -3), (-50, -2)]]:
+    tube([globe(lon, lat, 1.032) for lon, lat in river], .0035, 'ocean', resolution=3, bevel_resolution=1)
 part('EarthLand')
 for lon, lat in [(-42, 33), (-17, -22), (18, 58), (58, 12), (-99, 20), (98, -26), (-145, -15)]:
     for i in range(3):

@@ -1,6 +1,6 @@
 # SPACEFOLIO: modelos, cámara y saludo del robot — Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Aplicar las mejoras visuales solicitadas, permitir explorar la cabina con el ratón y añadir el saludo repetible del robot, conservando el bajo consumo en reposo.
 
@@ -54,19 +54,19 @@ original proporcionado y conservar su licencia, sin modificar el binario.
 
 **Consumes:** coordenadas/paleta canónicas, generador existente y referencias inspeccionadas. **Produces:** GLB compartido con las piezas nuevas, nombres estables y montaje visual correcto.
 
-- [ ] Añadir primero comprobaciones de la nueva altura de Experiencia, silueta circular del medallón, auricular/cuerpo separados y nodo de planeta con geometría de relieve. Observar el fallo sobre el modelo anterior.
-- [ ] Elevar Experiencia en config.js y modelar su soporte al marco blanco, usando esa configuración en Blender sin duplicar coordenadas manualmente.
-- [ ] Generar medallón circular/«1», teléfono rojo y planeta estilizado. Mantener nombres de piezas consumidos por React o actualizar todos sus consumidores y pruebas en el mismo hito.
-- [ ] Reducir especialmente la teselación del cable telefónico: hélice con muestreo directo y sección pequeña; evitar multiplicar cada punto por una curva de alta resolución. No sacrificar la forma del auricular ni los detalles visibles.
+- [x] Añadir primero comprobaciones de la nueva altura de Experiencia, silueta circular del medallón, auricular/cuerpo separados y nodo de planeta con geometría de relieve. Observar el fallo sobre el modelo anterior.
+- [x] Elevar Experiencia en config.js y modelar su soporte al marco blanco, usando esa configuración en Blender sin duplicar coordenadas manualmente.
+- [x] Generar medallón circular/«1», teléfono rojo y planeta estilizado. Mantener nombres de piezas consumidos por React o actualizar todos sus consumidores y pruebas en el mismo hito.
+- [x] Reducir especialmente la teselación del cable telefónico: hélice con muestreo directo y sección pequeña; evitar multiplicar cada punto por una curva de alta resolución. No sacrificar la forma del auricular ni los detalles visibles.
 
   La línea base medida en el manifiesto actual es 48.816 triángulos para
   PhoneBase y 3.852 para PhoneReceiver. La referencia de teléfono declara
   2.346 caras en su API. Hay margen para mejorar la silueta y reducir bastante
   geometría invisible a esta escala; no se promete una reducción concreta de
   CPU antes de medir el resultado.
-- [ ] Incorporar el planeta al GLB compartido y sustituir la esfera fotográfica activa. Dejar de descargar las texturas de Tierra que ya no se usan; conservar las atribuciones que sigan correspondiendo a la Luna.
-- [ ] Mantener sombras horneadas únicamente donde no dependan de movimiento; no grabar sombras de piezas móviles en la mesa o el suelo.
-- [ ] Regenerar fuente/atlas/GLB con Draco local y comprobar UV, materiales, pivotes, tamaño y nombres. Revisar capturas de ambas cámaras y de objetos en diagonal. Ejecutar pruebas de recursos, colocación y seis clics reales; commit validado.
+- [x] Incorporar el planeta al GLB compartido y sustituir la esfera fotográfica activa. Dejar de descargar las texturas de Tierra que ya no se usan; conservar las atribuciones que sigan correspondiendo a la Luna.
+- [x] Mantener sombras horneadas únicamente donde no dependan de movimiento; no grabar sombras de piezas móviles en la mesa o el suelo.
+- [x] Regenerar fuente/atlas/GLB con Draco local y comprobar UV, materiales, pivotes, tamaño y nombres. Revisar capturas de ambas cámaras y de objetos en diagonal. Ejecutar pruebas de recursos, colocación y seis clics reales; commit validado.
 
 ## Hito 2: navegación con ratón y táctil sin consumo ocioso
 
@@ -74,13 +74,13 @@ original proporcionado y conservar su licencia, sin modificar el binario.
 
 **Consumes:** cámara, RenderBudget y estados actuales. **Produces:** un único dueño de la cámara, navegación manual limitada y restauración del punto de vista al cerrar paneles.
 
-- [ ] Escribir pruebas que fallen actualmente: arrastre izquierdo cambia orientación; derecho cambia objetivo; rueda cambia distancia; ninguno abre secciones por accidente.
-- [ ] Crear una instancia de OrbitControls con `autoRotate=false` y `enableDamping=false`. Sus eventos `change` solicitan render a través del presupuesto existente; no añadir un RAF ni `invalidate` directo que eluda los límites.
-- [ ] Comenzar con límites de azimut ±0.45 rad, polar 1.2–1.53 rad, distancia 8.5–15.5 y radio de desplazamiento del objetivo 1.6 unidades. Calibrar visualmente para impedir atravesar mesa, suelo o paredes y evitar enseñar el exterior sin acabar.
-- [ ] Coordinar objetivo/cámara con GSAP. Deshabilitar el control durante movimientos programados y paneles; guardar el encuadre manual antes de enfocar una sección y restaurarlo al cerrar. No reiniciar la vista en cada render React.
-- [ ] Distinguir clic de arrastre también en objetos y robot: botón principal y desplazamiento pequeño. Anular el menú contextual solo dentro del Canvas cuando se usa el botón derecho.
-- [ ] Añadir «Restablecer vista» con nombre accesible ES/EN y controles táctiles. Conservar rueda/desplazamiento de los paneles HTML y ajustar la fila de herramientas a 360px.
-- [ ] Comprobar las seis secciones después de orbitar, vista inicial/restablecida, cambio de tamaño, teclado y cero fotogramas en reposo tras soltar ratón/rueda. Commit validado.
+- [x] Escribir pruebas que fallen actualmente: arrastre izquierdo cambia orientación; derecho cambia objetivo; rueda cambia distancia; ninguno abre secciones por accidente.
+- [x] Crear una instancia de OrbitControls con `autoRotate=false` y `enableDamping=false`. Sus eventos `change` solicitan render a través del presupuesto existente; no añadir un RAF ni `invalidate` directo que eluda los límites.
+- [x] Comenzar con límites de azimut ±0.45 rad, polar 1.2–1.53 rad, distancia 8.5–15.5 y radio de desplazamiento del objetivo 1.6 unidades. Calibrar visualmente para impedir atravesar mesa, suelo o paredes y evitar enseñar el exterior sin acabar.
+- [x] Coordinar objetivo/cámara con GSAP. Deshabilitar el control durante movimientos programados y paneles; guardar el encuadre manual antes de enfocar una sección y restaurarlo al cerrar. No reiniciar la vista en cada render React.
+- [x] Distinguir clic de arrastre también en objetos y robot: botón principal y desplazamiento pequeño. Anular el menú contextual solo dentro del Canvas cuando se usa el botón derecho.
+- [x] Añadir «Restablecer vista» con nombre accesible ES/EN y controles táctiles. Conservar rueda/desplazamiento de los paneles HTML y ajustar la fila de herramientas a 360px.
+- [x] Comprobar las seis secciones después de orbitar, vista inicial/restablecida, cambio de tamaño, teclado y cero fotogramas en reposo tras soltar ratón/rueda. Commit validado.
 
 ## Hito 3: robot que vuelve a saludar
 
@@ -88,21 +88,21 @@ original proporcionado y conservar su licencia, sin modificar el binario.
 
 **Consumes:** rig articulado, recorrido inicial y estados de navegación. **Produces:** alternancia real entre asiento y saludo, con bocadillo y entrada por teclado coherentes.
 
-- [ ] Añadir tests de transiciones `EXPLORE -> HOST_RISING -> HOST_GREETING -> HOST_SITTING -> EXPLORE`; ignorar clics repetidos durante los movimientos. Mantener las garantías del primer INTRO/ENTERING.
-- [ ] Construir el recorrido con poses explícitas y reproducirlo hacia atrás/adelante; no depender de un timeline que se pierde al desmontar la vista 3D. Conservar articulaciones, pisada y sombra de contacto.
-- [ ] Dar al robot una zona de clic simple y una alternativa de teclado. El arrastre de cámara sobre él no debe activar el saludo.
-- [ ] Reutilizar el bocadillo proyectado desde `robot-ear`, con la frase nueva, traducción EN y el botón original. Enter y segundo clic sientan al robot; la escena queda totalmente parada al terminar.
-- [ ] Hacer deterministas movimiento reducido, cambio de idioma, pérdida de WebGL y cambio a vista ligera durante saludo/movimiento. Evitar callbacks obsoletos y coexistencia de dos animaciones del mismo rig.
-- [ ] Probar al menos tres ciclos completos, clic rápido, Enter, cámara y remontaje de la escena. Si el extra exige una reescritura desproporcionada, cerrar primero los demás hitos y registrar exactamente lo pendiente; no simular el gesto con un diálogo sin animación. Commit validado.
+- [x] Añadir tests de transiciones `EXPLORE -> HOST_RISING -> HOST_GREETING -> HOST_SITTING -> EXPLORE`; ignorar clics repetidos durante los movimientos. Mantener las garantías del primer INTRO/ENTERING.
+- [x] Construir el recorrido con poses explícitas y reproducirlo hacia atrás/adelante; no depender de un timeline que se pierde al desmontar la vista 3D. Conservar articulaciones, pisada y sombra de contacto.
+- [x] Dar al robot una zona de clic simple y una alternativa de teclado. El arrastre de cámara sobre él no debe activar el saludo.
+- [x] Reutilizar el bocadillo proyectado desde `robot-ear`, con la frase nueva, traducción EN y el botón original. Enter y segundo clic sientan al robot; la escena queda totalmente parada al terminar.
+- [x] Hacer deterministas movimiento reducido, cambio de idioma, pérdida de WebGL y cambio a vista ligera durante saludo/movimiento. Evitar callbacks obsoletos y coexistencia de dos animaciones del mismo rig.
+- [x] Probar al menos tres ciclos completos, clic rápido, Enter, cámara y remontaje de la escena. Si el extra exige una reescritura desproporcionada, cerrar primero los demás hitos y registrar exactamente lo pendiente; no simular el gesto con un diálogo sin animación. Commit validado.
 
 ## Hito 4: favicon y verificación final
 
 **Files:** `public/icon.svg`, `index.html` si cambia la referencia, pruebas existentes, `docs/VALIDATION.md`, `docs/PERFORMANCE.md` y documentación del generador.
 
-- [ ] Reproducir el brand-mark en SVG y comprobar el icono servido, no solo su fichero local. Revisar 16/32px, pestaña clara/oscura y contraste.
-- [ ] Ejecutar lint, 7 tests base más los nuevos, build, suite completa de navegador y smoke de producción bajo CSP real. Cero errores de consola, sin peticiones a descodificadores externos.
-- [ ] Revisar escritorio, ambas orientaciones de tablet y móvil 360/390/430px, ES/EN, seis secciones, tres ciclos del robot, clic/arrastre/rueda/táctil, foco y movimiento reducido. Corregir y repetir únicamente las comprobaciones afectadas, además del pase completo final.
-- [ ] Medir antes/después con mismo viewport y renderizador: transición, arrastre y reposo. Exigir cero fotogramas nuevos en ventanas ociosas después de navegar y saludar; registrar CPU principal/agregada, triángulos, llamadas y peso descargado.
+- [x] Reproducir el brand-mark en SVG y comprobar el icono servido, no solo su fichero local. Revisar 16/32px, pestaña clara/oscura y contraste.
+- [x] Ejecutar lint, 7 tests base más los nuevos, build, suite completa de navegador y smoke de producción bajo CSP real. Cero errores de consola, sin peticiones a descodificadores externos.
+- [x] Revisar escritorio, ambas orientaciones de tablet y móvil 360/390/430px, ES/EN, seis secciones, tres ciclos del robot, clic/arrastre/rueda/táctil, foco y movimiento reducido. Corregir y repetir únicamente las comprobaciones afectadas, además del pase completo final.
+- [x] Medir antes/después con mismo viewport y renderizador: transición, arrastre y reposo. Exigir cero fotogramas nuevos en ventanas ociosas después de navegar y saludar; registrar CPU principal/agregada, triángulos, llamadas y peso descargado.
 - [ ] Obtener revisión independiente del cambio completo, resolver defectos confirmados y registrar límites de dispositivo. Guardar el hito validado y verificar la versión publicada si se actualiza producción.
 
 ## Review Focus
