@@ -5,6 +5,21 @@ Branch: `feature/spacefolio-interactive-cabin`.
 
 ## Enclosed cabin and minimum-requirement revision
 
+Published and verified on2026-11-06,17:42UTC at https://medinafdzz.is-a.dev/.
+App commit `96cefd9d34fce6aa0613a260756f55e8044cc966`, deployment
+`dpl_9R6UpLchs6eMCFm5Bg3knw9QamSM`, READY. The public browser used no
+authentication or bypass headers. All six real3D clicks, orbit/reset, boarding,
+repeat greeting ES/EN, mobile/lightweight navigation and CV passed with zero
+console errors. A second public profile reporting2 cores/2GiB opened HTML
+without3D requests. Both served model hashes match the local binaries:
+
+- Full: `4a5f8300b641fa90a3389160b5bb57d74ca5958796183f58c7c43b54363d8f09`
+- CPU: `d356eff3af7ee3ec2a31d959453b93d71c59bca4a822394dc4da581cf8667baf`
+
+Reports: `artifacts/published-enclosed.json`, `published-enclosed-compat.json`
+and `enclosed-public-verification.log`. The final documentation-only commit
+does not alter the verified app/assets.
+
 Branch: `feature/spacefolio-enclosed-performance`, based on `6a48adc`.
 The cabin now has a closed pressure hull with a window aperture, a hinged laptop
 for Technologies, and a wall phone without cord geometry. The robot uses a

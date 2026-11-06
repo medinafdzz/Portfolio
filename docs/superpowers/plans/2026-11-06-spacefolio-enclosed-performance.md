@@ -31,8 +31,15 @@ Hitos:
 - [x] Vista ligera sin descargas3D y resolución que responde a carga inducida.
 - [x] Suite completa, build/CSP, CPU/RAM/frames antes/después en renderizadores
   equivalentes y ensayo de equipo limitado.
-- [ ] Revisión independiente, correcciones, commits finales y publicación
+- [x] Revisión independiente, correcciones, commits finales y publicación
   completa autorizada; verificar el dominio público y hashes servidos.
 
 Evidencias locales en `artifacts/enclosed-*`; baseline aislada en
 `artifacts/enclosed-baseline` para medición, sin modificar la versión base.
+
+Completado:24 escenarios de navegador,11 tests Node, lint/build/CSP, revisión
+independiente resuelta, mediciones hardware/software y ensayo limitado. Tras
+el pase completo se revalidaron los cambios de orientación/apoyo del portátil.
+Publicación de96cefd9 verificada en dominio público sin autenticación a17:42UTC,
+incluida la vista ligera automática y los hashes de ambos modelos. La3D fluida
+no se garantiza para cualquier hardware; el modo HTML evita ese requisito.
