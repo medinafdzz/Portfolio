@@ -52,7 +52,7 @@ function Laptop({ active, reducedMotion, motionScale }) {
   const texture=useMemo(()=>createDisplay('gear'),[]);
   useEffect(()=>()=>texture.dispose(),[texture]);
   useEffect(()=>{const tween=gsap.to(lid.current.rotation,{x:active?-.18:Math.PI/2,duration:reducedMotion?0:.65*motionScale,ease:'power2.inOut',onUpdate:requestRender});return()=>tween.kill();},[active,reducedMotion,requestRender,motionScale]);
-  return <group name="tech-laptop"><ModelPart part="LaptopBase"/><group ref={lid} name="laptop-lid" rotation={[Math.PI/2,0,0]} position={[0,.22,-.48]}>
+  return <group name="tech-laptop" position={[0,-.13,0]}><ModelPart part="LaptopBase"/><group ref={lid} name="laptop-lid" rotation={[Math.PI/2,0,0]} position={[0,.22,-.48]}>
     <ModelPart part="LaptopLid"/>
     <Screen texture={texture} size={[1.46,.79]} position={[0,.53,.059]}/>
   </group></group>;

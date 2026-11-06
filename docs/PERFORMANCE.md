@@ -82,9 +82,9 @@ capability reporting; it does **not** enforce a physical 2 GiB RAM limit.
 Raw evidence: `performance-enclosed-before-{hardware,software}.json`,
 `performance-enclosed-final-{hardware,software}.json` and
 `enclosed-low-end-performance.json` under ignored `artifacts/`.
-The native/CPU measurements cover the final rendering paths before the tiny
-return-yaw direction correction; that change was separately regression-tested
-and video-checked, with no renderer/asset/budget changes afterward.
+The native/CPU measurements cover the final rendering paths before the return
+orientation and desktop-support corrections. Those were separately regression
+tested and visually checked, with no renderer/asset/budget changes afterward.
 
 ## Previous: refined models, manual camera and reversible greeting
 

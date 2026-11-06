@@ -740,8 +740,8 @@ placements = {
     'BookBase': tr(positions[2]) @ tr((0, .85, 0), (-.6, -.08, -.06)),
     'MedalFrame': tr(positions[3], (0, 1.05, 0)),
     'MedalFace': tr(positions[3], (0, 1.05, 0)) @ tr((0, 0, .15)) @ Matrix.Diagonal((.84, .84, .84, 1)),
-    'LaptopBase': tr(positions[4]),
-    'LaptopLid': tr(positions[4]) @ tr((0, .22, -.48), (-.18, 0, 0)),
+    'LaptopBase': tr(positions[4]) @ tr((0, -.13, 0)),
+    'LaptopLid': tr(positions[4]) @ tr((0, .09, -.48), (-.18, 0, 0)),
     'PhoneBase': tr(positions[5], (0, -.3, 0)),
     'PhoneReceiver': tr(positions[5], (0, -.3, 0)) @ tr((0, 0, .12)),
 }

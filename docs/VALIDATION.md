@@ -48,6 +48,11 @@ forward-facing movement on the return leg; all11 Node tests, lint/build, the
 four camera/robot browser scenarios and the CSP smoke passed again. The actual
 animated cycle was recorded and visually inspected in
 `artifacts/enclosed-robot-motion.mp4` and `enclosed-robot-storyboard.png`.
+The laptop also has a world-height regression: its lower bound must sit just
+above the desktop (2.09–2.12). This caught a 0.13-unit gap; the offset was fixed
+in React and the editable Blender source, and the native laptop/room/responsive
+scenario, lint and build passed again. The published SVG checker normalizes
+Windows/Linux line endings; binary model hashes remain strict.
 Physical low-end PCs/phones, Safari and Firefox remain untested. The 3D bundle
 still exceeds Vite's 500kB warning threshold and Three/R3F retains its Clock
 deprecation warning; lightweight visitors do not download that bundle.

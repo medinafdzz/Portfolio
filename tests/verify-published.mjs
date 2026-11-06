@@ -56,7 +56,7 @@ try {
   assert.equal(downloaded.status,200);
   assert.equal(downloaded.sha256,hash(await readFile('public/models/spacefolio.glb')));
   const icon=await page.evaluate(async()=>({status:(await fetch('/icon.svg')).status,body:await(await fetch('/icon.svg')).text()}));
-  assert.equal(icon.status,200); assert.equal(hash(icon.body),hash(await readFile('public/icon.svg')));
+  assert.equal(icon.status,200); assert.equal(hash(icon.body.replaceAll('\r\n','\n')),hash((await readFile('public/icon.svg','utf8')).replaceAll('\r\n','\n')));
   const cv=await page.evaluate(async()=>{const r=await fetch('/CV.pdf');return{status:r.status,signature:(await r.text()).slice(0,4)};});
   assert.deepEqual(cv,{status:200,signature:'%PDF'});
   await page.setViewportSize({width:390,height:844});

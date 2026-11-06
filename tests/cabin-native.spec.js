@@ -10,7 +10,7 @@ test('enclosed ship, one-call unlit parts and a physical laptop hinge',async({pa
   await page.waitForTimeout(1000);
   const inspect=()=>page.evaluate(async()=>{
     const {_roots}=await import('/node_modules/.vite/deps/@react-three_fiber.js');
-    const {Vector2,Raycaster,Mesh}=await import('/node_modules/.vite/deps/three.js');
+    const {Vector2,Raycaster,Mesh,Box3}=await import('/node_modules/.vite/deps/three.js');
     const {scene,camera,gl}=[..._roots.values()].find(r=>r.store.getState().gl.domElement.isConnected).store.getState();
     scene.updateMatrixWorld(true);
     const hull=scene.getObjectByName('spaceship-hull').getObjectByProperty('isMesh',true);
@@ -19,12 +19,13 @@ test('enclosed ship, one-call unlit parts and a physical laptop hinge',async({pa
     cast.setFromCamera(new Vector2(0,0),camera);const windowClear=cast.intersectObject(hull).length===0;
     hull.raycast=()=>{};
     const materials=new Set();scene.traverse(o=>{if(o.isMesh)materials.add(o.material.type);});
-    return{edges,windowClear,materials:[...materials],shadows:gl.shadowMap.enabled,lights:scene.children.filter(o=>o.isLight).length,lid:scene.getObjectByName('laptop-lid').rotation.x,calls:gl.info.render.calls};
+    return{edges,windowClear,materials:[...materials],shadows:gl.shadowMap.enabled,lights:scene.children.filter(o=>o.isLight).length,lid:scene.getObjectByName('laptop-lid').rotation.x,laptopBottom:new Box3().setFromObject(scene.getObjectByName('tech-laptop')).min.y,calls:gl.info.render.calls};
   });
   const closed=await inspect();
   expect(closed.edges).toEqual([true,true,true,true,true,true]);expect(closed.windowClear).toBe(true);
   expect(closed.materials).toEqual(['MeshBasicMaterial']);expect(closed.shadows).toBe(false);expect(closed.lights).toBe(0);
   expect(closed.calls).toBeLessThan(45);expect(closed.lid).toBeCloseTo(Math.PI/2,3);
+  expect(closed.laptopBottom).toBeGreaterThan(2.09);expect(closed.laptopBottom).toBeLessThan(2.12);
   await page.screenshot({path:'artifacts/enclosed-desktop-explore.png'});
   const point=await page.evaluate(async()=>{
     const {_roots}=await import('/node_modules/.vite/deps/@react-three_fiber.js');const {Vector3}=await import('/node_modules/.vite/deps/three.js');
